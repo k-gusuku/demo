@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8"/>
+</head>
+<body>
+<div th:fragment="memberDetail_contents">
+    <div class="row">
+        <div class="col-sm-5">
+            <div class="page-header">
+                <h1>会員詳細</h1>
+            </div>
+            <form method="post" th:action="@{/memberDetail}" th:object="${memberForm}">
+                <table class="table table-bordered table-hover">
+                    <tr>
+                        <!-- 会員ID(入力不可) -->
+                        <th class="active col-sm-2">会員ID</th>
+                        <td class="col-sm-3">
+                            <div class="form-group">
+                                <input type="text" class="form-control" th:field="*{memberId}" readonly="readonly"/>
+                            </div>
+                        </td>
+                    </tr>
+                    <!-- 会員名 -->
+                    <tr>
+                        <th class="active">会員名</th>
+                        <td>
+                            <div class="form-group">
+                                <input type="text" class="form-control" th:field="*{memberName}"/>
+                            </div>
+                        </td>
+                    </tr>
+                    <!-- 生年月日 -->
+                    <tr>
+                        <th class="active">生年月日</th>
+                        <td>
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="yyyy/MM/dd"
+                                       th:field="*{birthday}"/>
+                            </div>
+                        </td>
+                    </tr>
+                    <!-- 年齢 -->
+                    <tr>
+                        <th class="active">年齢</th>
+                        <td>
+                            <div class="form-group">
+                                <input type="text" class="form-control" th:field="*{age}"/>
+                            </div>
+                        </td>
+                    </tr>
+                    <!-- 電話番号 -->
+                    <tr>
+                        <th class="active">電話番号</th>
+                        <td>
+                            <div class="form-group">
+                                <input type="text" class="form-control" th:field="*{phoneNumber}"/>
+                            </div>
+                        </td>
+                    </tr>
+                    <!-- 住所 -->
+                    <tr>
+                        <th class="active">住所</th>
+                        <td>
+                            <div class="form-group">
+                                <input type="text" class="form-control" th:field="*{address}"/>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+                <!-- 更新ボタン -->
+                <button class="btn btn-primary btn-lg pull-right" type="submit" name="update">
+                    更新
+                </button>
+                <!-- 削除ボタン -->
+                <button class="btn btn-danger btn-lg" type="submit" name="delete">
+                    削除
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

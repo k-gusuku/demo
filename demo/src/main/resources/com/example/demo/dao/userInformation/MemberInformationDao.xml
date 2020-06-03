@@ -1,0 +1,77 @@
+<?xml version="1.0"  encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.base.dao.memberInformation.MemberInformationDao">
+    <resultMap id="member" type="com.example.demo.base.dao.memberInformation.MemberInformationDto">
+        <id column="member_id" property="memberId"/>
+        <result column="member_name" property="memberName"/>
+        <result column="birthday" property="birthday"/>
+        <result column="age" property="age"/>
+        <result column="phone_number" property="phoneNumber"/>
+        <result column="address" property="address"/>
+        <result column="product_history_id" property="productHistoryId"/>
+        <result column="responsible_employee_id" property="responsibleEmployeeId"/>
+    </resultMap>
+
+    <insert id="insertOne" parameterType="com.example.demo.base.dao.memberInformation.MemberInformationDto">
+        INSERT INTO member(
+        member_id,
+        member_name,
+        birthday,
+        age,
+        phone_number,
+        address
+        )
+        VALUES(
+        #{memberId},
+        #{memberName},
+        #{birthday},
+        #{age},
+        #{phoneNumber},
+        #{address})
+    </insert>
+
+    <select id="selectOne" resultMap="member">
+        SELECT
+            member_id,
+            member_name,
+            birthday,
+            age,
+            phone_number,
+            address
+        FROM
+            member
+        WHERE
+            member_id = #{memberId}
+    </select>
+
+    <select id="selectMany" resultMap="member">
+        SELECT
+            member_id,
+            member_name,
+            birthday,
+            age,
+            phone_number,
+            address,
+            product_history_id,
+            responsible_employee_id
+        FROM
+            member
+    </select>
+
+    <update id="updateOne" parameterType="com.example.demo.base.dao.memberInformation.MemberInformationDto">
+        UPDATE member
+            SET
+              member_name = #{memberName},
+              birthday = #{birthday},
+              age = #{age},
+              phone_number = #{phoneNumber},
+              address = #{address}
+            WHERE
+              member_id = #{memberId}
+    </update>
+
+    <delete id="deleteOne" parameterType="string">
+        DELETE FROM member WHERE member_id = #{memberId}
+    </delete>
+</mapper>
