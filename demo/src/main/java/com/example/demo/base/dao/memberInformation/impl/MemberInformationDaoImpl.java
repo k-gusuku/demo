@@ -6,6 +6,7 @@ import com.example.demo.base.domain.memberInformation.MemberForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.dao.DataAccessException;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -17,28 +18,40 @@ public class MemberInformationDaoImpl implements MemberInformationDao {
     @Lazy
     MemberInformationDao dao;
 
+    @Autowired
+    JdbcTemplate jdbc;
+
     @Override
-    public int insertOne(MemberForm memberForm) throws DataAccessException{
+    public int insertOne(MemberForm memberForm) throws DataAccessException {
         return dao.insertOne(memberForm);
     }
 
     @Override
-    public MemberInformationDto selectOne(String memberId) throws DataAccessException{
+    public MemberInformationDto selectOne(String memberId) throws DataAccessException {
         return dao.selectOne(memberId);
     }
 
     @Override
-    public List<MemberInformationDto> selectMany() throws DataAccessException {
-        return dao.selectMany();
+    public List<MemberInformationDto> selectMany(String memberId, String memberName) throws DataAccessException {
+        return dao.selectMany(memberId, memberName);
     }
 
     @Override
-    public int updateOne(MemberInformationDto memberInformationDto) throws DataAccessException {
-        return dao.updateOne(memberInformationDto);
+    public int updateOne(MemberForm memberForm) throws DataAccessException {
+        return dao.updateOne(memberForm);
     }
 
     @Override
     public int deleteOne(String memberId) throws DataAccessException {
         return dao.deleteOne(memberId);
+    }
+
+    public void userCsvOut() throws DataAccessException {
+
+        String sql = "SELECT * FROM member";
+
+        MemberRowCallbackHandler handoler = new MemberRowCallbackHandler();
+
+        jdbc.query(sql, handoler);
     }
 }

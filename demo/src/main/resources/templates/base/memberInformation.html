@@ -9,6 +9,18 @@
     <div class="page-header">
         <h1>会員情報画面</h1>
     </div>
+    <form method="get" action="/memberInformation_contents" th:object="${memberForm}">
+        <div class="form-group">
+            <label>会員ID</label>
+            <input type="text" th:field="*{memberId}"/>
+        </div>
+        <div class="form-group">
+            <label>会員名</label>
+            <input type="text" th:field="*{memberName}"/>
+        </div>
+        <button class="btn btn-primary" type="submit">検索</button>
+    </form>
+    <br/>
     <table class="table table-bordered table-hover table-striped">
         <tr>
             <th class="info col-sm-2">会員ID</th>

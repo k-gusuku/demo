@@ -1,22 +1,26 @@
 package com.example.demo.base.controller;
 
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 
-public interface HomeController {
+@Controller
+public class HomeController {
 
-    /**
-     *ホーム画面遷移用getメソッド
-     *
-     * @param model model
-     * @return ホーム画面へ遷移
-     */
-    public String getHome(Model model);
+    @GetMapping("/home")
+    public String getHome(Model model) {
 
-    /**
-     *ホーム画面遷移用postメソッド
-     *
-     * @param model model
-     * @return ホーム画面へ遷移
-     */
-    public String postHome(Model model);
+        model.addAttribute("contents", "base/home::home_contents");
+
+        return "base/homeLayout";
+    }
+
+    @PostMapping("/home")
+    public String postHome(Model model) {
+
+        model.addAttribute("contents", "base/home::home_contents");
+
+        return "base/homeLayout";
+    }
 }

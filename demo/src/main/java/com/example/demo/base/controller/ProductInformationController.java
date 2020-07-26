@@ -1,14 +1,17 @@
 package com.example.demo.base.controller;
 
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 
-public interface ProductInformationController {
+@Controller
+public class ProductInformationController {
 
-    /**
-     * 商品情報画面遷移用getメソッド
-     *
-     * @param model model
-     * @return 商品情報画面へ遷移
-     */
-    public String getProductInformation(Model model);
+    @GetMapping("/productInformation_contents")
+    public String getProductInformation(Model model) {
+
+        model.addAttribute("contents", "base/productInformation::productInformation_contents");
+
+        return "base/homeLayout";
+    }
 }

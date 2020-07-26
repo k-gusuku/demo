@@ -34,16 +34,16 @@ public interface MemberInformationDao {
      * @throws DataAccessException データ取得時に投げられるエラー
      */
     //memberテーブルの全データを取得
-    List<MemberInformationDto> selectMany() throws DataAccessException;
+    List<MemberInformationDto> selectMany(String memberId, String memberName) throws DataAccessException;
 
     /**
      * 会員テーブルから1件データを更新.
      *
-     * @param memberInformationDto 更新データ
+     * @param memberForm 更新データ
      * @return データ更新件数
      * @throws DataAccessException データ更新時に投げられるエラー
      */
-    int updateOne(MemberInformationDto memberInformationDto) throws DataAccessException;
+    int updateOne(MemberForm memberForm) throws DataAccessException;
 
     /**
      * 会員テーブルから1件データを削除.
@@ -53,4 +53,11 @@ public interface MemberInformationDao {
      * @throws DataAccessException データ削除時に投げられるエラー
      */
     int deleteOne(String userId) throws DataAccessException;
+
+    /**
+     * SQL取得結果をサーバーにCSVで保存.
+     *
+     * @throws DataAccessException CSV保存時に投げられるエラー
+     */
+    void userCsvOut() throws DataAccessException;
 }

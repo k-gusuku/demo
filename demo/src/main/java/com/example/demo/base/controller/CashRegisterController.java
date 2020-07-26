@@ -1,14 +1,15 @@
 package com.example.demo.base.controller;
 
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 
-public interface CashRegisterController {
+@Controller
+public class CashRegisterController {
 
-    /**
-     * レジ画面遷移用getメソッド
-     *
-     * @param model model
-     * @return レジ画面へ遷移
-     */
-    public String getCashRegister(Model model);
+    @GetMapping("/cashRegister_contents")
+    public String getCashRegister(Model model) {
+        model.addAttribute("contents", "base/cashRegister::cashRegister_contents");
+        return "base/homeLayout";
+    }
 }

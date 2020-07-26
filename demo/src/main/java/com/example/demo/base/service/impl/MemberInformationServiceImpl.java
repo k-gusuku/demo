@@ -1,5 +1,10 @@
 package com.example.demo.base.service.impl;
 
+import java.io.IOException;
+import java.nio.file.FileSystem;
+import java.nio.file.FileSystems;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.List;
 
 import com.example.demo.base.dao.memberInformation.MemberInformationDto;
@@ -7,6 +12,7 @@ import com.example.demo.base.domain.memberInformation.MemberForm;
 import com.example.demo.base.service.MemberInformationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 import com.example.demo.base.dao.memberInformation.MemberInformationDao;
 
@@ -24,7 +30,7 @@ public class MemberInformationServiceImpl implements MemberInformationService {
 
         boolean result = false;
 
-        if(rowNumber>0){
+        if (rowNumber > 0) {
             result = true;
         }
         return result;
@@ -38,19 +44,19 @@ public class MemberInformationServiceImpl implements MemberInformationService {
     }
 
     @Override
-    public List<MemberInformationDto>
-    selectMany() {
-        return dao.selectMany();
+    public List<MemberInformationDto> selectMany(String memberId, String memberName) {
+        return dao.selectMany(memberId, memberName);
     }
 
     @Override
-    public boolean updateOne(MemberInformationDto memberInformationDto) {
 
-        int rowNumber = dao.updateOne(memberInformationDto);
+    public boolean updateOne(MemberForm memberForm) {
+
+        int rowNumber = dao.updateOne(memberForm);
 
         boolean result = false;
 
-        if(rowNumber>0){
+        if (rowNumber > 0) {
             result = true;
         }
         return result;
@@ -63,9 +69,30 @@ public class MemberInformationServiceImpl implements MemberInformationService {
 
         boolean result = false;
 
-        if(rowNumber>0){
+        if (rowNumber > 0) {
             result = true;
         }
         return result;
+    }
+
+    @Override
+    public void memberCsvOut() throws DataAccessException {
+        //CSV出力
+        dao.userCsvOut();
+    }
+
+    @Override
+    public byte[] getFile(String fileName) throws IOException {
+
+        // ファイルシステム(デフォルト)の取得
+        FileSystem fs = FileSystems.getDefault();
+
+        // ファイル取得
+        Path p = fs.getPath(fileName);
+
+        // ファイルをbyte配列に変換
+        byte[] bytes = Files.readAllBytes(p);
+
+        return bytes;
     }
 }

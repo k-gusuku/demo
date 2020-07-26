@@ -13,7 +13,7 @@
         <result column="responsible_employee_id" property="responsibleEmployeeId"/>
     </resultMap>
 
-    <insert id="insertOne" parameterType="com.example.demo.base.dao.memberInformation.MemberInformationDto">
+    <insert id="insertOne" parameterType="com.example.demo.base.domain.memberInformation.MemberForm">
         INSERT INTO member(
         member_id,
         member_name,
@@ -47,19 +47,30 @@
 
     <select id="selectMany" resultMap="member">
         SELECT
-            member_id,
-            member_name,
-            birthday,
-            age,
-            phone_number,
-            address,
-            product_history_id,
-            responsible_employee_id
+        member_id,
+        member_name,
+        birthday,
+        age,
+        phone_number,
+        address,
+        product_history_id,
+        responsible_employee_id
         FROM
-            member
+        member
+        <if test="memberId != '' or memberName != ''">
+            <where>
+                <if test="memberId != ''">
+                    member_id = #{memberId}
+                </if>
+                <if test="memberName != ''">
+                    OR
+                    member_Name LIKE '%${memberName}%'
+                </if>
+            </where>
+        </if>
     </select>
 
-    <update id="updateOne" parameterType="com.example.demo.base.dao.memberInformation.MemberInformationDto">
+    <update id="updateOne" parameterType="com.example.demo.base.domain.memberInformation.MemberForm">
         UPDATE member
             SET
               member_name = #{memberName},
