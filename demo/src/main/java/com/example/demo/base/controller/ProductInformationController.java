@@ -10,7 +10,7 @@ public class ProductInformationController {
     @GetMapping("/productInformation_contents")
     public String getProductInformation(Model model) {
 
-        model.addAttribute("contents", "base/productInformation::productInformation_contents");
+        model.addAttribute("contents", "base/product/productInformation::productInformation_contents");
 
         return "base/homeLayout";
     }

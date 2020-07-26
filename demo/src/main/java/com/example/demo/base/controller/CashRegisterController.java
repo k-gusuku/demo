@@ -9,7 +9,7 @@ public class CashRegisterController {
 
     @GetMapping("/cashRegister_contents")
     public String getCashRegister(Model model) {
-        model.addAttribute("contents", "base/cashRegister::cashRegister_contents");
+        model.addAttribute("contents", "base/register/cashRegister::cashRegister_contents");
         return "base/homeLayout";
     }
 }

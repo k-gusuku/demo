@@ -28,7 +28,7 @@ public class MemberInformationController {
     @GetMapping("/memberInformation_contents")
     public String getMemberInformation(@ModelAttribute MemberForm form, Model model) {
 
-        model.addAttribute("contents", "base/memberInformation::memberInformation_contents");
+        model.addAttribute("contents", "base/member/memberInformation::memberInformation_contents");
 
         List<MemberInformationDto> memberInformationDtoList = memberInformationServiceImpl.selectMany(form.getMemberId(), form.getMemberName());
 
@@ -40,7 +40,7 @@ public class MemberInformationController {
     //新規会員登録のGETメソッド
     @GetMapping("/newMemberRegistration_contents")
     public String getNewMemberRegistration(@ModelAttribute MemberForm form, Model model) {
-        model.addAttribute("contents", "base/newMemberRegistration::newMemberRegistration_contents");
+        model.addAttribute("contents", "base/member/newMemberRegistration::newMemberRegistration_contents");
         return "base/homeLayout";
     }
 
@@ -79,7 +79,7 @@ public class MemberInformationController {
 
         System.out.println("memberId =" + memberId);
 
-        model.addAttribute("contents", "base/memberDetail::memberDetail_contents");
+        model.addAttribute("contents", "base/member/memberDetail::memberDetail_contents");
 
         if (memberId != null && memberId.length() > 0) {
 
