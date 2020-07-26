@@ -3,7 +3,6 @@ package com.example.demo.base.dao.memberInformation;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.validation.constraints.Pattern;
 import java.util.Date;
 
 @Data

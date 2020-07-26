@@ -3,24 +3,24 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.demo.base.dao.memberInformation.MemberInformationDao">
     <resultMap id="member" type="com.example.demo.base.dao.memberInformation.MemberInformationDto">
-        <id column="member_id" property="memberId"/>
-        <result column="member_name" property="memberName"/>
-        <result column="birthday" property="birthday"/>
-        <result column="age" property="age"/>
-        <result column="phone_number" property="phoneNumber"/>
-        <result column="address" property="address"/>
-        <result column="product_history_id" property="productHistoryId"/>
-        <result column="responsible_employee_id" property="responsibleEmployeeId"/>
+        <id column="MEMBER_ID" property="memberId"/>
+        <result column="MEMBER_NAME" property="memberName"/>
+        <result column="BIRTHDAY" property="birthday"/>
+        <result column="AGE" property="age"/>
+        <result column="PHONE_NUMBER" property="phoneNumber"/>
+        <result column="ADDRESS" property="address"/>
+        <result column="PRODUCT_HISTORY_ID" property="productHistoryId"/>
+        <result column="RESPONSIBLE_EMPLOYEE_ID" property="responsibleEmployeeId"/>
     </resultMap>
 
     <insert id="insertOne" parameterType="com.example.demo.base.domain.memberInformation.MemberForm">
-        INSERT INTO member(
-        member_id,
-        member_name,
-        birthday,
-        age,
-        phone_number,
-        address
+        INSERT INTO MEMBER(
+        MEMBER_ID,
+        MEMBER_NAME,
+        BIRTHDAY,
+        AGE,
+        PHONE_NUMBER,
+        ADDRESS
         )
         VALUES(
         #{memberId},
@@ -33,56 +33,56 @@
 
     <select id="selectOne" resultMap="member">
         SELECT
-            member_id,
-            member_name,
-            birthday,
-            age,
-            phone_number,
-            address
+            MEMBER_ID,
+            MEMBER_NAME,
+            BIRTHDAY,
+            AGE,
+            PHONE_NUMBER,
+            ADDRESS
         FROM
-            member
+            MEMBER
         WHERE
-            member_id = #{memberId}
+            MEMBER_ID = #{memberId}
     </select>
 
     <select id="selectMany" resultMap="member">
         SELECT
-        member_id,
-        member_name,
-        birthday,
-        age,
-        phone_number,
-        address,
-        product_history_id,
-        responsible_employee_id
+        MEMBER_ID,
+        MEMBER_NAME,
+        BIRTHDAY,
+        AGE,
+        PHONE_NUMBER,
+        ADDRESS,
+        PRODUCT_HISTORY_ID,
+        RESPONSIBLE_EMPLOYEE_ID
         FROM
-        member
+        MEMBER
         <if test="memberId != '' or memberName != ''">
             <where>
                 <if test="memberId != ''">
-                    member_id = #{memberId}
+                    MEMBER_ID = #{memberId}
                 </if>
                 <if test="memberName != ''">
                     OR
-                    member_Name LIKE '%${memberName}%'
+                    MEMBER_NAME LIKE '%${memberName}%'
                 </if>
             </where>
         </if>
     </select>
 
     <update id="updateOne" parameterType="com.example.demo.base.domain.memberInformation.MemberForm">
-        UPDATE member
+        UPDATE MEMBER
             SET
-              member_name = #{memberName},
-              birthday = #{birthday},
-              age = #{age},
-              phone_number = #{phoneNumber},
-              address = #{address}
+              MEMBER_NAME = #{memberName},
+              BIRTHDAY = #{birthday},
+              AGE = #{age},
+              PHONE_NUMBER = #{phoneNumber},
+              ADDRESS = #{address}
             WHERE
-              member_id = #{memberId}
+              MEMBER_ID = #{memberId}
     </update>
 
     <delete id="deleteOne" parameterType="string">
-        DELETE FROM member WHERE member_id = #{memberId}
+        DELETE FROM MEMBER WHERE MEMBER_ID = #{memberId}
     </delete>
 </mapper>
