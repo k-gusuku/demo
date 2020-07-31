@@ -1,0 +1,36 @@
+<?xml version="1.0"  encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.base.dao.productInformation.ProductInformationDao">
+    <resultMap id="product" type="com.example.demo.base.dao.productInformation.ProductInformationDto">
+        <id column="PRODUCT_ID" property="productId"/>
+        <result column="PRODUCT_NAME" property="productName"/>
+        <result column="PRODUCT_PRICE" property="productPrice"/>
+        <result column="PRODUCT_TYPE" property="productType"/>
+        <result column="PRODUCT_RENTAL_DAY_PRICE" property="productRentalDayPrice"/>
+        <result column="PRODUCT_RENTAL_WEEK_PRICE" property="productRentalWeekPrice"/>
+        <result column="SALE_MEMBER_ID" property="saleMemberId"/>
+        <result column="RENTAL_MEMBER_ID" property="RentalMemberId"/>
+        <result column="SALE_DAY" property="SaleDay"/>
+        <result column="RENTAL_DAY" property="RentalDay"/>
+        <result column="RENTAL_RETURN_DAY" property="RentalReturnDay"/>
+        <result column="RENTAL_RETURN_PLANS_DAY" property="RentalReturnPlansDay"/>
+    </resultMap>
+
+    <select id="selectMany" resultMap="product">
+        SELECT
+        PRODUCT_ID,
+        PRODUCT_NAME,
+        PRODUCT_PRICE,
+        PRODUCT_TYPE,
+        PRODUCT_RENTAL_DAY_PRICE,
+        PRODUCT_RENTAL_WEEK_PRICE,
+        MEMBER_ID,
+        SALE_DAY,
+        RENTAL_DAY,
+        RENTAL_RETURN_DAY,
+        RENTAL_RETURN_PLANS_DAY
+        FROM
+        PRODUCT
+    </select>
+</mapper>

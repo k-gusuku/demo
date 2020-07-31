@@ -28,6 +28,8 @@ public interface MemberInformationService {
     /**
      * 会員テーブルから全データを取得する.
      *
+     * @param memberId 会員ID
+     * @param memberName 会員名
      * @return 取得データ
      */
     List<MemberInformationDto> selectMany(String memberId, String memberName);

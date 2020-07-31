@@ -1,4 +1,4 @@
-package com.example.demo.base.dao.productInformation;
+package com.example.demo.base.domain.productInformation;
 
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -6,7 +6,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import java.util.Date;
 
 @Data
-public class ProductInformationDto {
+public class ProductForm {
 
     /**
      * 商品ID
@@ -39,9 +39,14 @@ public class ProductInformationDto {
     private int productRentalWeekPrice;
 
     /**
-     * 会員ID
+     * 販売会員ID
      */
-    private int memberId;
+    private int saleMemberId;
+
+    /**
+     * レンタル会員ID
+     */
+    private int rentalMemberId;
 
     /**
      * 販売日
