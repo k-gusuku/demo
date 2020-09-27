@@ -1,9 +1,20 @@
-package com.example.demo.base.domain.productInformation;
+package com.example.demo.base.domain.memberHistory;
 
 import lombok.Data;
 
+import java.util.Date;
+
 @Data
-public class ProductForm {
+public class MemberHistoryForm {
+    /**
+     * 会員ID
+     */
+    private String memberId;
+
+    /**
+     * 会員名
+     */
+    private String memberName;
 
     /**
      * 商品ID
@@ -26,9 +37,9 @@ public class ProductForm {
     private String productType;
 
     /**
-     * 会員ID
+     * 販売日
      */
-    private String memberId;
+    private Date saleDay;
 
     /**
      * 従業員ID

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org"
+<html lang="ja" xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
     <meta charset="UTF-8"/>
@@ -29,8 +29,6 @@
             <th class="info col-sm-2">年齢</th>
             <th class="info col-sm-2">電話番号</th>
             <th class="info col-sm-2">住所</th>
-            <th class="info col-sm-2">購入履歴商品ID</th>
-            <th class="info col-sm-2">販売担当</th>
             <th class="info col-sm-2"></th>
         </tr>
         <tr th:each="member:${memberInformationDtoList}">
@@ -40,8 +38,6 @@
             <td th:text="${member.age}"></td>
             <td th:text="${member.phoneNumber}"></td>
             <td th:text="${member.address}"></td>
-            <td th:text="${member.productHistoryId}"></td>
-            <td th:text="${member.responsibleEmployeeId}"></td>
             <td>
                 <a class="btn btn-primary" th:href="@{'/memberDetail/'+${member.memberId}}">詳細</a>
             </td>

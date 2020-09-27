@@ -1,7 +1,10 @@
 package com.example.demo.base.service;
 
 import com.example.demo.base.dao.productInformation.ProductInformationDto;
+import com.example.demo.base.domain.productInformation.ProductForm;
+import org.springframework.dao.DataAccessException;
 
+import java.io.IOException;
 import java.util.List;
 
 public interface ProductInformationService {
@@ -14,4 +17,52 @@ public interface ProductInformationService {
      * @return 取得データ
      */
     List<ProductInformationDto> selectMany(String productId, String productName);
+
+    /**
+     * 商品テーブルに1件データを作成する.
+     *
+     * @param productForm 作成データ
+     * @return 作成データ
+     */
+    boolean insertOne(ProductForm productForm);
+
+    /**
+     * 商品テーブルから1件データを取得する.
+     *
+     * @param productId 商品ID
+     * @return 取得データ
+     */
+    ProductInformationDto selectOne(String productId);
+
+    /**
+     * 商品テーブルを1件更新する.
+     *
+     * @param productForm 更新する商品ID
+     * @return 更新の有無
+     */
+    boolean updateOne(ProductForm productForm);
+
+    /**
+     * 商品テーブルから1件データを削除する.
+     *
+     * @param productId 削除する商品ID
+     * @return 削除の有無
+     */
+    boolean deleteOne(String productId);
+
+    /**
+     * 商品情報一覧をCSV出力する.
+     *
+     * @throws IOException 商品情報一覧取得時に投げられるエラー.
+     */
+    void productCsvOut() throws DataAccessException;
+
+    /**
+     * サーバーに保存されているファイルを取得して、byte配列に変換する.
+     *
+     * @param fileName
+     * @return byte配列に変換されたデータ
+     * @throws IOException byte配列への変換時に投げられるエラー.
+     */
+    byte[] getFile(String fileName) throws IOException;
 }

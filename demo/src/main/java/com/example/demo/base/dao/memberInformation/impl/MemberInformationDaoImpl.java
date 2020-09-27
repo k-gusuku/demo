@@ -46,12 +46,13 @@ public class MemberInformationDaoImpl implements MemberInformationDao {
         return dao.deleteOne(memberId);
     }
 
-    public void userCsvOut() throws DataAccessException {
+    @Override
+    public void memberCsvOut() throws DataAccessException {
 
-        String sql = "SELECT * FROM member";
+        String sql = "SELECT * FROM MEMBER";
 
-        MemberRowCallbackHandler handoler = new MemberRowCallbackHandler();
+        MemberRowCallbackHandler handler = new MemberRowCallbackHandler();
 
-        jdbc.query(sql, handoler);
+        jdbc.query(sql, handler);
     }
 }

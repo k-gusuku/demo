@@ -1,9 +1,11 @@
 package com.example.demo.base.dao.memberInformation;
 
+import com.example.demo.base.dao.memberHistory.MemberHistoryDto;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
+import java.util.List;
 
 @Data
 public class MemberInformationDto {
@@ -39,13 +41,6 @@ public class MemberInformationDto {
      */
     private String address;
 
-    /**
-     * 購入履歴商品ID
-     */
-    private int productHistoryId;
-
-    /**
-     * 販売担当
-     */
-    private int responsibleEmployeeId;
+    // 関連エンティティ
+    private List<MemberHistoryDto> memberHistories;
 }

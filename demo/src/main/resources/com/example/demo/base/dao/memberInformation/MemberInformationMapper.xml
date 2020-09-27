@@ -9,8 +9,6 @@
         <result column="AGE" property="age"/>
         <result column="PHONE_NUMBER" property="phoneNumber"/>
         <result column="ADDRESS" property="address"/>
-        <result column="PRODUCT_HISTORY_ID" property="productHistoryId"/>
-        <result column="RESPONSIBLE_EMPLOYEE_ID" property="responsibleEmployeeId"/>
     </resultMap>
 
     <insert id="insertOne" parameterType="com.example.demo.base.domain.memberInformation.MemberForm">
@@ -52,9 +50,7 @@
         BIRTHDAY,
         AGE,
         PHONE_NUMBER,
-        ADDRESS,
-        PRODUCT_HISTORY_ID,
-        RESPONSIBLE_EMPLOYEE_ID
+        ADDRESS
         FROM
         MEMBER
         <if test="memberId != '' or memberName != ''">

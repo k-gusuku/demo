@@ -1,0 +1,72 @@
+<?xml version="1.0"  encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.base.dao.productInformation.ProductInformationDao">
+    <resultMap id="product" type="com.example.demo.base.dao.productInformation.ProductInformationDto">
+        <id column="PRODUCT_ID" property="productId"/>
+        <result column="PRODUCT_NAME" property="productName"/>
+        <result column="PRODUCT_PRICE" property="productPrice"/>
+        <result column="PRODUCT_TYPE" property="productType"/>
+    </resultMap>
+
+    <select id="selectMany" resultMap="product">
+        SELECT
+        PRODUCT_ID,
+        PRODUCT_NAME,
+        PRODUCT_PRICE,
+        PRODUCT_TYPE
+        FROM
+        PRODUCT
+        <if test="productId != '' or productName != ''">
+            <where>
+                <if test="productId != ''">
+                    PRODUCT_ID = #{productId}
+                </if>
+                <if test="productName != ''">
+                    OR
+                    PRODUCT_NAME LIKE '%${productName}%'
+                </if>
+            </where>
+        </if>
+    </select>
+
+    <insert id="insertOne" parameterType="com.example.demo.base.domain.productInformation.ProductForm">
+        INSERT INTO PRODUCT(
+        PRODUCT_ID,
+        PRODUCT_NAME,
+        PRODUCT_PRICE,
+        PRODUCT_TYPE
+        )
+        VALUES(
+        #{productId},
+        #{productName},
+        #{productPrice},
+        #{productType})
+    </insert>
+
+    <select id="selectOne" resultMap="product">
+        SELECT
+            PRODUCT_ID,
+            PRODUCT_NAME,
+            PRODUCT_PRICE,
+            PRODUCT_TYPE
+        FROM
+            PRODUCT
+        WHERE
+            PRODUCT_ID = #{productId}
+    </select>
+
+    <update id="updateOne" parameterType="com.example.demo.base.domain.productInformation.ProductForm">
+        UPDATE PRODUCT
+            SET
+              PRODUCT_NAME = #{productName},
+              PRODUCT_PRICE = #{productPrice},
+              PRODUCT_TYPE = #{productType}
+            WHERE
+              PRODUCT_ID = #{productId}
+    </update>
+
+    <delete id="deleteOne" parameterType="string">
+        DELETE FROM PRODUCT WHERE PRODUCT_ID = #{productId}
+    </delete>
+</mapper>

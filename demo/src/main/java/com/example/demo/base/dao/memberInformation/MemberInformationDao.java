@@ -1,10 +1,10 @@
 package com.example.demo.base.dao.memberInformation;
 
-import java.util.List;
-
 import com.example.demo.base.domain.memberInformation.MemberForm;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.dao.DataAccessException;
+
+import java.util.List;
 
 @Mapper
 public interface MemberInformationDao {
@@ -28,12 +28,13 @@ public interface MemberInformationDao {
     MemberInformationDto selectOne(String userId) throws DataAccessException;
 
     /**
-     * 会員テーブルから全件データを取得.
+     * 商品テーブルから複数件データを取得.
      *
+     * @param memberId 会員ID
+     * @param memberName 会員名
      * @return 取得データ
      * @throws DataAccessException データ取得時に投げられるエラー
      */
-    //memberテーブルの全データを取得
     List<MemberInformationDto> selectMany(String memberId, String memberName) throws DataAccessException;
 
     /**
@@ -59,5 +60,5 @@ public interface MemberInformationDao {
      *
      * @throws DataAccessException CSV保存時に投げられるエラー
      */
-    void userCsvOut() throws DataAccessException;
+    void memberCsvOut() throws DataAccessException;
 }

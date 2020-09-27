@@ -1,10 +1,10 @@
 package com.example.demo.base.controller;
 
-import java.io.IOException;
-import java.util.List;
-
+import com.example.demo.base.dao.memberHistory.MemberHistoryDto;
 import com.example.demo.base.dao.memberInformation.MemberInformationDto;
 import com.example.demo.base.domain.memberInformation.MemberForm;
+import com.example.demo.base.service.impl.MemberHistoryServiceImpl;
+import com.example.demo.base.service.impl.MemberInformationServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -13,10 +13,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
-import com.example.demo.base.service.impl.MemberInformationServiceImpl;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+
+import java.io.IOException;
+import java.util.List;
 
 @Controller
 public class MemberInformationController {
@@ -24,7 +26,10 @@ public class MemberInformationController {
     @Autowired
     MemberInformationServiceImpl memberInformationServiceImpl;
 
-    //会員情報のGET用メソッド
+    @Autowired
+    MemberHistoryServiceImpl memberHistoryService;
+
+    //会員情報取得のGET用メソッド
     @GetMapping("/memberInformation_contents")
     public String getMemberInformation(@ModelAttribute MemberForm form, Model model) {
 
@@ -73,30 +78,6 @@ public class MemberInformationController {
         return "base/login";
     }
 
-    //会員詳細画面のGETメソッド
-    @GetMapping("/memberDetail/{id:.+}")
-    public String getMemberDetail(@ModelAttribute MemberForm memberForm, Model model, @PathVariable("id") String memberId) {
-
-        System.out.println("memberId =" + memberId);
-
-        model.addAttribute("contents", "base/member/memberDetail::memberDetail_contents");
-
-        if (memberId != null && memberId.length() > 0) {
-
-            MemberInformationDto memberInformationDto = memberInformationServiceImpl.selectOne(memberId);
-
-            memberForm.setMemberId(memberInformationDto.getMemberId()); //会員ID
-            memberForm.setMemberName(memberInformationDto.getMemberName()); //会員名
-            memberForm.setBirthday(memberInformationDto.getBirthday()); //生年月日
-            memberForm.setAge(memberInformationDto.getAge()); //年齢
-            memberForm.setPhoneNumber(memberInformationDto.getPhoneNumber()); //電話番号
-            memberForm.setAddress(memberInformationDto.getAddress()); //住所
-
-            model.addAttribute("memberForm", memberForm);
-        }
-        return "base/homeLayout";
-    }
-
     //更新用のpostメソッド
     @PostMapping(value = "/memberDetail", params = "update")
     public String postMemberDetailUpdate(@ModelAttribute MemberForm memberForm, Model model) {
@@ -112,6 +93,34 @@ public class MemberInformationController {
         return getMemberInformation(memberForm, model);
     }
 
+    //会員詳細画面のGETメソッド
+    @GetMapping("/memberDetail/{id:.+}")
+    public String getMemberDetail(@ModelAttribute MemberForm memberForm, Model model, @PathVariable("id") String memberId) {
+
+        System.out.println("memberId =" + memberId);
+
+        model.addAttribute("contents", "base/member/memberDetail::memberDetail_contents");
+
+        if (memberId != null && memberId.length() > 0) {
+
+            MemberInformationDto memberInformationDto = memberInformationServiceImpl.selectOne(memberId);
+
+            List<MemberHistoryDto> memberHistoryDtoList = memberHistoryService.selectMemberHistory(memberId);
+
+            memberForm.setMemberId(memberInformationDto.getMemberId()); //会員ID
+            memberForm.setMemberName(memberInformationDto.getMemberName()); //会員名
+            memberForm.setBirthday(memberInformationDto.getBirthday()); //生年月日
+            memberForm.setAge(memberInformationDto.getAge()); //年齢
+            memberForm.setPhoneNumber(memberInformationDto.getPhoneNumber()); //電話番号
+            memberForm.setAddress(memberInformationDto.getAddress()); //住所
+
+            model.addAttribute("memberForm", memberForm);
+            model.addAttribute("memberHistoryDtoList", memberHistoryDtoList);
+        }
+        return "base/homeLayout";
+    }
+
+    //会員情報削除画面のPOSTメソッド
     @PostMapping(value = "/memberDetail", params = "delete")
     public String postMemberDelete(@ModelAttribute MemberForm memberForm, Model model) {
 
@@ -146,7 +155,7 @@ public class MemberInformationController {
 
         HttpHeaders header = new HttpHeaders();
         header.add("Content-Type", "text/csv; charset=UTF-8");
-        header.setContentDispositionFormData("filename", "sample.csv");
+        header.setContentDispositionFormData("filename", "member.csv");
 
         // memberInformation.csvを戻す
         return new ResponseEntity<>(bytes, header, HttpStatus.OK);

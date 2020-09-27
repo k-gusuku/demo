@@ -1,9 +1,10 @@
 package com.example.demo.base.service.impl;
 
-import com.example.demo.base.dao.memberInformation.MemberInformationDao;
-import com.example.demo.base.dao.memberInformation.MemberInformationDto;
+import com.example.demo.base.dao.employeeInformation.EmployeeInformationDao;
+import com.example.demo.base.dao.employeeInformation.EmployeeInformationDto;
+import com.example.demo.base.domain.employee.EmployeeForm;
 import com.example.demo.base.domain.memberInformation.MemberForm;
-import com.example.demo.base.service.MemberInformationService;
+import com.example.demo.base.service.EmployeeInformationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.dao.DataAccessException;
@@ -17,41 +18,28 @@ import java.nio.file.Path;
 import java.util.List;
 
 @Service
-public class MemberInformationServiceImpl implements MemberInformationService {
+public class EmployeeInformationServiceImpl implements EmployeeInformationService {
 
     @Autowired
-    @Qualifier("MemberInformationDaoImpl")
-    MemberInformationDao dao;
+    @Qualifier("EmployeeInformationDaoImpl")
+    EmployeeInformationDao dao;
 
     @Override
-    public boolean insertOne(MemberForm memberForm) {
-
-        int rowNumber = dao.insertOne(memberForm);
-
-        boolean result = false;
-
-        if (rowNumber > 0) {
-            result = true;
-        }
-        return result;
+    public List<EmployeeInformationDto> selectMany(String employeeId, String employeeName) {
+        return dao.selectMany(employeeId, employeeName);
     }
 
     @Override
-    public MemberInformationDto selectOne(String memberId) {
+    public EmployeeInformationDto selectOne(String employeeId) {
 
         //selectOne実行
-        return dao.selectOne(memberId);
+        return dao.selectOne(employeeId);
     }
 
     @Override
-    public List<MemberInformationDto> selectMany(String memberId, String memberName) {
-        return dao.selectMany(memberId, memberName);
-    }
+    public boolean updateOne(EmployeeForm employeeForm) {
 
-    @Override
-    public boolean updateOne(MemberForm memberForm) {
-
-        int rowNumber = dao.updateOne(memberForm);
+        int rowNumber = dao.updateOne(employeeForm);
 
         boolean result = false;
 
@@ -62,9 +50,9 @@ public class MemberInformationServiceImpl implements MemberInformationService {
     }
 
     @Override
-    public boolean deleteOne(String memberId) {
+    public boolean deleteOne(String employeeId) {
 
-        int rowNumber = dao.deleteOne(memberId);
+        int rowNumber = dao.deleteOne(employeeId);
 
         boolean result = false;
 
@@ -75,9 +63,22 @@ public class MemberInformationServiceImpl implements MemberInformationService {
     }
 
     @Override
-    public void memberCsvOut() throws DataAccessException {
+    public boolean insertOne(EmployeeForm employeeForm) {
+
+        int rowNumber = dao.insertOne(employeeForm);
+
+        boolean result = false;
+
+        if (rowNumber > 0) {
+            result = true;
+        }
+        return result;
+    }
+
+    @Override
+    public void employeeCsvOut() throws DataAccessException {
         //CSV出力
-        dao.memberCsvOut();
+        dao.employeeCsvOut();
     }
 
     @Override

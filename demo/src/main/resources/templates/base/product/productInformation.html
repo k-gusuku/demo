@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org"
+<html lang="ja" xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
     <meta charset="UTF-8"/>
@@ -9,19 +9,24 @@
     <div class="page-header">
         <h1>商品情報画面</h1>
     </div>
+    <form method="get" action="/productInformation_contents" th:object="${productForm}">
+        <div class="form-group">
+            <label>商品ID</label>
+            <input type="text" th:field="*{productId}"/>
+        </div>
+        <div class="form-group">
+            <label>商品名</label>
+            <input type="text" th:field="*{productName}"/>
+        </div>
+        <button class="btn btn-primary" type="submit">検索</button>
+    </form>
+    <br/>
     <table class="table table-bordered table-hover table-striped">
         <tr>
             <th class="info col-sm-2">商品ID</th>
             <th class="info col-sm-2">商品名</th>
             <th class="info col-sm-2">商品金額</th>
             <th class="info col-sm-2">商品の種類</th>
-            <th class="info col-sm-2">日別商品レンタル金額</th>
-            <th class="info col-sm-2">週別商品レンタル金額</th>
-            <th class="info col-sm-2">会員ID</th>
-            <th class="info col-sm-2">販売日</th>
-            <th class="info col-sm-2">貸出日</th>
-            <th class="info col-sm-2">返却日</th>
-            <th class="info col-sm-2">返却予定日</th>
             <th class="info col-sm-2"></th>
         </tr>
         <tr th:each="product:${productInformationDtoList}">
@@ -29,18 +34,14 @@
             <td th:text="${product.productName}"></td>
             <td th:text="${product.productPrice}"></td>
             <td th:text="${product.productType}"></td>
-            <td th:text="${product.productRentalDayPrice}"></td>
-            <td th:text="${product.productRentalWeekPrice}"></td>
-            <td th:text="${product.memberId}"></td>
-            <td th:text="${#dates.format(product.saleDay,'YYYY/MM/dd')}"></td>
-            <td th:text="${#dates.format(product.rentalDay,'YYYY/MM/dd')}"></td>
-            <td th:text="${#dates.format(product.rentalReturnDay,'YYYY/MM/dd')}"></td>
-            <td th:text="${#dates.format(product.rentalReturnPlansDay,'YYYY/MM/dd')}"></td>
             <td>
                 <a class="btn btn-primary" th:href="@{'/productDetail/'+${product.productId}}">詳細</a>
             </td>
         </tr>
     </table>
+    <a th:href="@{'/newProductRegistration_contents'}">新規商品登録はこちら</a><br/>
+    <label class="text-info" th:text="${result}">結果表示</label><br/>
+    <a class="btn btn-primary" th:href="@{'/productList/csv'}">CSV出力</a>
 </div>
 </body>
 </html>

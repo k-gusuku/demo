@@ -1,4 +1,4 @@
-package com.example.demo.base.dao.memberInformation.impl;
+package com.example.demo.base.dao.employeeInformation.impl;
 
 import org.springframework.jdbc.core.RowCallbackHandler;
 
@@ -9,24 +9,20 @@ import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class MemberRowCallbackHandler implements RowCallbackHandler {
+public class EmployeeRowCallbackHandler implements RowCallbackHandler {
 
     @Override
     public void processRow(ResultSet rs) throws SQLException {
         try {
 
-            File file = new File("memberInformation.csv");
+            File file = new File("employeeInformation.csv");
             FileWriter fw = new FileWriter(file.getAbsoluteFile());
             BufferedWriter bw = new BufferedWriter(fw);
 
             do {
 
-                String str = rs.getString("MEMBER_ID") + ","
-                        + rs.getString("MEMBER_NAME") + ","
-                        + rs.getDate("BIRTHDAY") + ","
-                        + rs.getInt("AGE") + ","
-                        + rs.getInt("PHONE_NUMBER") + ","
-                        + rs.getString("ADDRESS");
+                String str = rs.getString("EMPLOYEE_ID") + ","
+                        + rs.getString("EMPLOYEE_NAME");
 
                 bw.write(str);
                 bw.newLine();

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8">
+    <link th:href="@{/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css}" rel="stylesheet"/>
+    <script th:src="@{/webjars/jquery/1.11.1/jquery.min.js}"></script>
+    <script th:src="@{/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js}"></script>
+</head>
+<body>
+
+</body>
+<div th:fragment="newProductRegistration_contents">
+    <div class="col-sm-5">
+        <div class="page-header">
+            <h1>新規会員登録</h1>
+        </div>
+        <form method="post" th:action="@{/newProductRegistration_contents}" th:object="${productForm}">
+            <table class="table table-bordered table-hover">
+                <!-- 商品IDの入力エリア -->
+                <tr>
+                    <th class="active col-sm-3">商品ID</th>
+                    <td>
+                        <div class="form-group">
+                            <input type="text" class="form-control" th:field="*{productId}"/>
+                        </div>
+                    </td>
+                </tr>
+                <!-- 商品名の入力エリア -->
+                <tr>
+                    <th class="active">商品名</th>
+                    <td>
+                        <div class="form-group">
+                            <input type="text" class="form-control" th:field="*{productName}"/>
+                        </div>
+                    </td>
+                </tr>
+                <!-- 商品金額の入力エリア -->
+                <tr>
+                    <th class="active">商品金額</th>
+                    <td>
+                        <div class="form-group">
+                            <input type="text" class="form-control" th:field="*{productPrice}"/>
+                        </div>
+                    </td>
+                </tr>
+                <!-- 商品の種類の入力エリア -->
+                <tr>
+                    <th class="active">商品の種類</th>
+                    <td>
+                        <div class="form-group">
+                            <input type="text" class="form-control" th:field="*{productType}"/>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+            <ui>
+                <li th:each="error:${#fields.detailedErrors()}">
+                    <span th:text="${error.message}">Error message</span>
+                </li>
+            </ui>
+            <!-- 会員登録ボタン -->
+            <button class="btn btn-primary" type="submit">
+                商品登録
+            </button>
+        </form>
+    </div>
+</div>
+</html>
