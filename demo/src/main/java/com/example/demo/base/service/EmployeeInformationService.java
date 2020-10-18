@@ -1,13 +1,20 @@
 package com.example.demo.base.service;
 
 import com.example.demo.base.dao.employeeInformation.EmployeeInformationDto;
-import com.example.demo.base.domain.employee.EmployeeForm;
 import org.springframework.dao.DataAccessException;
 
 import java.io.IOException;
 import java.util.List;
 
 public interface EmployeeInformationService {
+
+    /**
+     * 従業員テーブルから1件データを取得する.
+     *
+     * @param employeeId 従業員ID
+     * @return 取得データ
+     */
+    EmployeeInformationDto selectOne(String employeeId);
 
     /**
      * 従業員テーブルからデータを取得する.
@@ -19,20 +26,20 @@ public interface EmployeeInformationService {
     List<EmployeeInformationDto> selectMany(String employeeId, String employeeName);
 
     /**
-     * 従業員テーブルから1件データを取得する.
-     *
-     * @param employeeId 従業員ID
-     * @return 取得データ
-     */
-    EmployeeInformationDto selectOne(String employeeId);
-
-    /**
      * 従業員テーブルを1件更新する.
      *
-     * @param employeeForm 更新するデータ
+     * @param employeeInformationDto 更新するデータ
      * @return 更新の有無
      */
-    boolean updateOne(EmployeeForm employeeForm);
+    boolean updateOne(EmployeeInformationDto employeeInformationDto);
+
+    /**
+     * 従業員テーブに1件データを作製する.
+     *
+     * @param employeeInformationDto 作製データ
+     * @return 作製データ
+     */
+    boolean insertOne(EmployeeInformationDto employeeInformationDto);
 
     /**
      * 従業員テーブルから1件データを削除する.
@@ -41,14 +48,6 @@ public interface EmployeeInformationService {
      * @return 削除の有無
      */
     boolean deleteOne(String employeeId);
-
-    /**
-     * 従業員テーブに1件データを作製する.
-     *
-     * @param employeeForm 作製データ
-     * @return 作製データ
-     */
-    boolean insertOne(EmployeeForm employeeForm);
 
     /**
      * 従業員情報一覧をCSV出力する.

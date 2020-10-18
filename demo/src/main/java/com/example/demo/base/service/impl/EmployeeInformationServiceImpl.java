@@ -2,8 +2,6 @@ package com.example.demo.base.service.impl;
 
 import com.example.demo.base.dao.employeeInformation.EmployeeInformationDao;
 import com.example.demo.base.dao.employeeInformation.EmployeeInformationDto;
-import com.example.demo.base.domain.employee.EmployeeForm;
-import com.example.demo.base.domain.memberInformation.MemberForm;
 import com.example.demo.base.service.EmployeeInformationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -37,9 +35,22 @@ public class EmployeeInformationServiceImpl implements EmployeeInformationServic
     }
 
     @Override
-    public boolean updateOne(EmployeeForm employeeForm) {
+    public boolean insertOne(EmployeeInformationDto employeeInformationDto) {
 
-        int rowNumber = dao.updateOne(employeeForm);
+        int rowNumber = dao.insertOne(employeeInformationDto);
+
+        boolean result = false;
+
+        if (rowNumber > 0) {
+            result = true;
+        }
+        return result;
+    }
+
+    @Override
+    public boolean updateOne(EmployeeInformationDto employeeInformationDto) {
+
+        int rowNumber = dao.updateOne(employeeInformationDto);
 
         boolean result = false;
 
@@ -53,19 +64,6 @@ public class EmployeeInformationServiceImpl implements EmployeeInformationServic
     public boolean deleteOne(String employeeId) {
 
         int rowNumber = dao.deleteOne(employeeId);
-
-        boolean result = false;
-
-        if (rowNumber > 0) {
-            result = true;
-        }
-        return result;
-    }
-
-    @Override
-    public boolean insertOne(EmployeeForm employeeForm) {
-
-        int rowNumber = dao.insertOne(employeeForm);
 
         boolean result = false;
 

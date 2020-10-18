@@ -24,7 +24,7 @@ public class EmployeeInformationController {
     @Autowired
     EmployeeInformationServiceImpl employeeInformationServiceImpl;
 
-    //従業員情報のGET用メソッド
+    // 従業員情報のGET用メソッド
     @GetMapping("/employeeInformation_contents")
     public String getEmployeeInformation(@ModelAttribute EmployeeForm form, Model model) {
 
@@ -57,22 +57,71 @@ public class EmployeeInformationController {
         return "base/homeLayout";
     }
 
+    // 新規従業員登録のGETメソッド
+    @GetMapping("/newEmployeeRegistration_contents")
+    public String getNewEmployeeRegistration(@ModelAttribute EmployeeForm form, Model model) {
+        model.addAttribute("contents", "base/employee/newEmployeeRegistration::newEmployeeRegistration_contents");
+        return "base/homeLayout";
+    }
+
+    // 新規従業員登録のPOSTメソッド
+    @PostMapping("/newEmployeeRegistration_contents")
+    public String postNewEmployeeRegistration(@ModelAttribute EmployeeForm employeeForm, BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()) {
+            return getNewEmployeeRegistration(employeeForm, model);
+        }
+        System.out.println(employeeForm);
+
+        EmployeeInformationDto employeeInformationDto = new EmployeeInformationDto();
+
+        employeeInformationDto.setEmployeeId(employeeForm.getEmployeeId()); // 従業員ID
+        employeeInformationDto.setEmployeeName(employeeForm.getEmployeeName()); // 従業員名
+        employeeInformationDto.setPassword(employeeForm.getPassword()); // パスワード
+        employeeInformationDto.setRole("ROLE_ADMIN"); // 権限
+
+        boolean result = employeeInformationServiceImpl.insertOne(employeeInformationDto);
+
+        //会員登録結果の判定
+        if (result = true) {
+            System.out.println("insert成功");
+        } else {
+            System.out.println("insert失敗");
+        }
+
+        // 従業員情報画面の検索結果用に従業員IDと従業員名を空にする。
+        employeeForm.setEmployeeId("");
+        employeeForm.setEmployeeName("");
+
+        return getEmployeeInformation(employeeForm, model);
+    }
+
     // 更新用のpostメソッド
     @PostMapping(value = "/employeeDetail", params = "update")
     public String postEmployeeDetailUpdate(@ModelAttribute EmployeeForm employeeForm, Model model) {
         System.out.println("更新ボタンの処理");
 
-        boolean result = employeeInformationServiceImpl.updateOne(employeeForm);
+        EmployeeInformationDto employeeInformationDto = new EmployeeInformationDto();
+        employeeInformationDto.setEmployeeId(employeeForm.getEmployeeId());
+        employeeInformationDto.setPassword(employeeForm.getPassword());
+        employeeInformationDto.setEmployeeName(employeeForm.getEmployeeName());
+        employeeInformationDto.setRole("ROLE_ADMIN");
+
+        boolean result = employeeInformationServiceImpl.updateOne(employeeInformationDto);
 
         if (result) {
             model.addAttribute("result", "更新成功");
         } else {
             model.addAttribute("result", "更新失敗");
         }
+
+        // 従業員情報画面の検索結果用に従業員IDと従業員名を空にする。
+        employeeForm.setEmployeeId("");
+        employeeForm.setEmployeeName("");
+
         return getEmployeeInformation(employeeForm, model);
     }
 
-    //従業員情報削除画面のPOSTメソッド
+    // 従業員情報削除画面のPOSTメソッド
     @PostMapping(value = "/employeeDetail", params = "delete")
     public String postEmployeeDelete(@ModelAttribute EmployeeForm employeeForm, Model model) {
 
@@ -85,41 +134,12 @@ public class EmployeeInformationController {
         } else {
             model.addAttribute("result", "削除失敗");
         }
+
+        // 従業員情報画面の検索結果用に従業員IDと従業員名を空にする。
+        employeeForm.setEmployeeId("");
+        employeeForm.setEmployeeName("");
+
         return getEmployeeInformation(employeeForm, model);
-    }
-
-    //新規従業員登録のGETメソッド
-    @GetMapping("/newEmployeeRegistration_contents")
-    public String getNewEmployeeRegistration(@ModelAttribute EmployeeForm form, Model model) {
-        model.addAttribute("contents", "base/employee/newEmployeeRegistration::newEmployeeRegistration_contents");
-        return "base/homeLayout";
-    }
-
-    // 新規従業員登録のPOSTメソッド
-    @PostMapping("/newEmployeeRegistration_contents")
-    public String postNewEmployeeRegistration(@ModelAttribute EmployeeForm form, BindingResult bindingResult, Model model) {
-        if (bindingResult.hasErrors()) {
-            return getNewEmployeeRegistration(form, model);
-        }
-        System.out.println(form);
-
-        EmployeeForm employeeForm = new EmployeeForm();
-
-        employeeForm.setEmployeeId(form.getEmployeeId()); //従業員ID
-        employeeForm.setEmployeeName(form.getEmployeeName()); //従業員名
-        employeeForm.setPassword(form.getPassword());
-        employeeForm.setRole(form.getRole());
-
-        boolean result = employeeInformationServiceImpl.insertOne(employeeForm);
-
-        //会員登録結果の判定
-        if (result = true) {
-            System.out.println("insert成功");
-        } else {
-            System.out.println("insert失敗");
-        }
-
-        return "base/login";
     }
 
     // 従業員一覧のCSV出力処理

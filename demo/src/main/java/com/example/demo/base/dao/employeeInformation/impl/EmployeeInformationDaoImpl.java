@@ -3,7 +3,6 @@ package com.example.demo.base.dao.employeeInformation.impl;
 
 import com.example.demo.base.dao.employeeInformation.EmployeeInformationDao;
 import com.example.demo.base.dao.employeeInformation.EmployeeInformationDto;
-import com.example.demo.base.domain.employee.EmployeeForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.dao.DataAccessException;
@@ -37,22 +36,22 @@ public class EmployeeInformationDaoImpl implements EmployeeInformationDao {
     }
 
     @Override
-    public int updateOne(EmployeeForm employeeForm) throws DataAccessException {
-        return dao.updateOne(employeeForm);
+    public int insertOne(EmployeeInformationDto employeeInformationDto) throws DataAccessException {
+
+        String password = passwordEncoder.encode(employeeInformationDto.getPassword());
+        employeeInformationDto.setPassword(password);
+
+        return dao.insertOne(employeeInformationDto);
+    }
+
+    @Override
+    public int updateOne(EmployeeInformationDto employeeInformationDto) throws DataAccessException {
+        return dao.updateOne(employeeInformationDto);
     }
 
     @Override
     public int deleteOne(String employeeId) throws DataAccessException {
         return dao.deleteOne(employeeId);
-    }
-
-    @Override
-    public int insertOne(EmployeeForm employeeForm) throws DataAccessException {
-
-        String password = passwordEncoder.encode(employeeForm.getPassword());
-        employeeForm.setPassword(password);
-
-        return dao.insertOne(employeeForm);
     }
 
     @Override
