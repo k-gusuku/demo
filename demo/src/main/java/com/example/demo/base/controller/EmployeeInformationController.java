@@ -37,7 +37,7 @@ public class EmployeeInformationController {
         return "base/homeLayout";
     }
 
-    //従業員詳細画面のGETメソッド
+    // 従業員詳細画面のGETメソッド
     @GetMapping("/employeeDetail/{id:.+}")
     public String getEmployeeDetail(@ModelAttribute EmployeeForm employeeForm, Model model, @PathVariable("id") String employeeId) {
 
@@ -57,7 +57,7 @@ public class EmployeeInformationController {
         return "base/homeLayout";
     }
 
-    //更新用のpostメソッド
+    // 更新用のpostメソッド
     @PostMapping(value = "/employeeDetail", params = "update")
     public String postEmployeeDetailUpdate(@ModelAttribute EmployeeForm employeeForm, Model model) {
         System.out.println("更新ボタンの処理");
@@ -95,7 +95,7 @@ public class EmployeeInformationController {
         return "base/homeLayout";
     }
 
-    //新規従業員登録のPOSTメソッド
+    // 新規従業員登録のPOSTメソッド
     @PostMapping("/newEmployeeRegistration_contents")
     public String postNewEmployeeRegistration(@ModelAttribute EmployeeForm form, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
@@ -107,6 +107,8 @@ public class EmployeeInformationController {
 
         employeeForm.setEmployeeId(form.getEmployeeId()); //従業員ID
         employeeForm.setEmployeeName(form.getEmployeeName()); //従業員名
+        employeeForm.setPassword(form.getPassword());
+        employeeForm.setRole(form.getRole());
 
         boolean result = employeeInformationServiceImpl.insertOne(employeeForm);
 

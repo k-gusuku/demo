@@ -40,11 +40,11 @@ public interface EmployeeInformationDao {
     /**
      * 従業員テーブルから1件データを削除.
      *
-     * @param memberId 削除データ会員ID
+     * @param employeeId 削除データ会員ID
      * @return データ削除件数
      * @throws DataAccessException データ削除時に投げられるエラー
      */
-    int deleteOne(String memberId) throws DataAccessException;
+    int deleteOne(String employeeId) throws DataAccessException;
 
     /**
      * 従業員テーブルに1件データを作成.

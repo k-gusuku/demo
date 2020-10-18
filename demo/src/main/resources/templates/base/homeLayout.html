@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="ja" xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
     <meta charset="UTF-8"/>
     <!-- Bootstrapの設定 -->
@@ -34,11 +35,17 @@
             <ui class="nav nav-pills nav-stacked">
                 <li role="presentation">
                     <a th:href="@{'/memberInformation_contents'}">会員情報画面はこちら</a>
-                    <br/>
+                </li>
+                <br/>
+                <li role="presentation">
                     <a th:href="@{'/productInformation_contents'}">商品情報画面はこちら</a>
-                    <br/>
+                </li>
+                <br/>
+                <li role="presentation">
                     <a th:href="@{'/cashRegister_contents'}">レジシステム画面はこちら</a>
-                    <br/>
+                </li>
+                <br/>
+                <li role="presentation" sec:authorize="hasRole('ADMIN')">
                     <a th:href="@{'/employeeInformation_contents'}">従業員情報画面はこちら</a>
                 </li>
             </ui>

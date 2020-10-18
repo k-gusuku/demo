@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -21,6 +22,9 @@ public class EmployeeInformationDaoImpl implements EmployeeInformationDao {
 
     @Autowired
     JdbcTemplate jdbc;
+
+    @Autowired
+    PasswordEncoder passwordEncoder;
 
     @Override
     public List<EmployeeInformationDto> selectMany(String employeeId, String employeeName) throws DataAccessException {
@@ -44,6 +48,10 @@ public class EmployeeInformationDaoImpl implements EmployeeInformationDao {
 
     @Override
     public int insertOne(EmployeeForm employeeForm) throws DataAccessException {
+
+        String password = passwordEncoder.encode(employeeForm.getPassword());
+        employeeForm.setPassword(password);
+
         return dao.insertOne(employeeForm);
     }
 

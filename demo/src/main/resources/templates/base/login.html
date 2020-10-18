@@ -9,13 +9,21 @@
     <title>Login</title>
 </head>
 <body class="text-center">
+
 <h1>Login</h1>
+
 <form method="post" action="/home">
+    <!-- ログインエラーメッセージ -->
+    <P th:if="${session['SPRING_SECURITY_LAST_EXCEPTION']} != null"
+       th:text="${session['SPRING_SECURITY_LAST_EXCEPTION'].message}"
+       class="text-danger">
+        ログインエラーメッセージ
+    </P>
     <label>ユーザーID</label>
-    <input type="text"/><br/>
+    <input type="text" name="employeeId"/><br/>
     <br/>
     <label>パスワード</label>
-    <input type="password"/><br/>
+    <input type="password" name="password"/><br/>
     <br/>
     <button class="btn btn-primary" type="submit">ログイン</button>
 </form>
