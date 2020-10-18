@@ -23,15 +23,15 @@ public class EmployeeInformationServiceImpl implements EmployeeInformationServic
     EmployeeInformationDao dao;
 
     @Override
-    public List<EmployeeInformationDto> selectMany(String employeeId, String employeeName) {
-        return dao.selectMany(employeeId, employeeName);
-    }
-
-    @Override
     public EmployeeInformationDto selectOne(String employeeId) {
 
         //selectOne実行
         return dao.selectOne(employeeId);
+    }
+
+    @Override
+    public List<EmployeeInformationDto> selectMany(String employeeId, String employeeName) {
+        return dao.selectMany(employeeId, employeeName);
     }
 
     @Override

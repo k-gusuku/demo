@@ -1,7 +1,7 @@
 package com.example.demo.base.controller;
 
+import com.example.demo.base.dao.memberHistory.MemberHistoryDto;
 import com.example.demo.base.dao.productInformation.ProductInformationDto;
-import com.example.demo.base.domain.memberHistory.MemberHistoryForm;
 import com.example.demo.base.domain.productInformation.ProductForm;
 import com.example.demo.base.service.impl.MemberHistoryServiceImpl;
 import com.example.demo.base.service.impl.ProductInformationServiceImpl;
@@ -59,7 +59,7 @@ public class CashRegisterController {
         return "base/homeLayout";
     }
 
-    // 新規商品登録のGETメソッド
+    // 新規商品履歴登録のGETメソッド
     @GetMapping("/productPurchase_contents")
     public String getProductPurchase(@ModelAttribute ProductForm ProductForm, Model model) {
         model.addAttribute("contents", "base/product/productPurchase::productPurchase_contents");
@@ -74,20 +74,18 @@ public class CashRegisterController {
         }
         System.out.println(form);
 
-        MemberHistoryForm memberHistoryForm = new MemberHistoryForm();
+        MemberHistoryDto memberHistoryDto = new MemberHistoryDto();
 
-        memberHistoryForm.setProductId(form.getProductId()); // 商品ID
-        memberHistoryForm.setProductName(form.getProductName()); // 商品名
-        memberHistoryForm.setProductPrice(form.getProductPrice()); // 商品金額
-        memberHistoryForm.setProductType(form.getProductType()); // 商品の種類
-        memberHistoryForm.setMemberId(form.getMemberId()); //会員ID
-        memberHistoryForm.setEmployeeId(form.getEmployeeId()); //従業員ID
-        memberHistoryForm.setEmployeeName(form.getEmployeeName()); //従業員名
+        memberHistoryDto.setProductId(form.getProductId()); // 商品ID
+        memberHistoryDto.setProductName(form.getProductName()); // 商品名
+        memberHistoryDto.setProductPrice(form.getProductPrice()); // 商品金額
+        memberHistoryDto.setProductType(form.getProductType()); // 商品の種類
+        memberHistoryDto.setMemberId(form.getMemberId()); //会員ID
 
-        boolean memberHistoryResult = memberHistoryService.insertOne(memberHistoryForm);
+        boolean memberHistoryResult = memberHistoryService.insertOne(memberHistoryDto);
 
         // 会員履歴登録結果の判定
-        if (memberHistoryResult = true) {
+        if (memberHistoryResult) {
             System.out.println("insert成功");
         } else {
             System.out.println("insert失敗");

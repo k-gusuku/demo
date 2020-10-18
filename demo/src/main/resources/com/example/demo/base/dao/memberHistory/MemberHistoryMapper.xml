@@ -14,6 +14,10 @@
         <result column="EMPLOYEE_NAME" property="employeeName"/>
     </resultMap>
 
+    <!--+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+    <!-- SELECT -->
+    <!--+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+
     <select id="selectMemberHistory" resultMap="memberHistory">
         SELECT
         MEMBER_ID,
@@ -22,37 +26,64 @@
         PRODUCT_NAME,
         PRODUCT_PRICE,
         PRODUCT_TYPE,
-        SALE_DAY,
-        EMPLOYEE_ID,
-        EMPLOYEE_NAME
+        SALE_DAY
         FROM
         MEMBER_HISTORY
         WHERE
         MEMBER_ID = #{memberId}
     </select>
 
+    <!--+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+    <!-- INSERT -->
+    <!--+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+
     <insert id="insertOne" parameterType="com.example.demo.base.domain.memberHistory.MemberHistoryForm">
-        INSERT INTO MEMBER_HISTORY(
-        MEMBER_ID,
-        MEMBER_NAME,
-        PRODUCT_ID,
-        PRODUCT_NAME,
-        PRODUCT_PRICE,
-        PRODUCT_TYPE,
-        SALE_DAY,
-        EMPLOYEE_ID,
-        EMPLOYEE_NAME
-        )
-        VALUES(
-        #{memberId},
-        #{memberName},
-        #{productId},
-        #{productName},
-        #{productPrice},
-        #{productType},
-        CURRENT_TIMESTAMP(),
-        #{employeeId},
-        #{employeeName}
-        )
+        INSERT INTO MEMBER_HISTORY
+        <trim suffixOverrides="," suffix=")" prefix="(">
+            <if test="memberId != null">
+                MEMBER_ID,
+            </if>
+            <if test="memberName != null">
+                MEMBER_NAME,
+            </if>
+            <if test="productId != null">
+                PRODUCT_ID,
+            </if>
+            <if test="productName != null">
+                PRODUCT_NAME,
+            </if>
+            <if test="productPrice != null">
+                PRODUCT_PRICE,
+            </if>
+            <if test="productType != null">
+                PRODUCT_TYPE,
+            </if>
+            <if test="saleDay != null">
+                SALE_DAY,
+            </if>
+        </trim>
+        <trim suffixOverrides="," suffix=")" prefix="values(">
+            <if test="memberId != null">
+                #{memberId},
+            </if>
+            <if test="memberName != null">
+                #{memberName},
+            </if>
+            <if test="productId != null">
+                #{productId},
+            </if>
+            <if test="productName != null">
+                #{productName},
+            </if>
+            <if test="productPrice != null">
+                #{productPrice},
+            </if>
+            <if test="productType != null">
+                #{productType},
+            </if>
+            <if test="saleDay != null">
+                #{saleDay},
+            </if>
+        </trim>
     </insert>
 </mapper>

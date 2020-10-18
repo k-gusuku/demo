@@ -41,14 +41,4 @@ public class MemberHistoryDto {
      * 販売日
      */
     private Date saleDay;
-
-    /**
-     * 従業員ID
-     */
-    private String employeeId;
-
-    /**
-     * 従業員名
-     */
-    private String employeeName;
 }

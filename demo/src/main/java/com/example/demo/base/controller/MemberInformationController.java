@@ -29,7 +29,7 @@ public class MemberInformationController {
     @Autowired
     MemberHistoryServiceImpl memberHistoryService;
 
-    //会員情報取得のGET用メソッド
+    // 会員情報取得のGET用メソッド
     @GetMapping("/memberInformation_contents")
     public String getMemberInformation(@ModelAttribute MemberForm form, Model model) {
 
@@ -42,58 +42,7 @@ public class MemberInformationController {
         return "base/homeLayout";
     }
 
-    //新規会員登録のGETメソッド
-    @GetMapping("/newMemberRegistration_contents")
-    public String getNewMemberRegistration(@ModelAttribute MemberForm form, Model model) {
-        model.addAttribute("contents", "base/member/newMemberRegistration::newMemberRegistration_contents");
-        return "base/homeLayout";
-    }
-
-    //新規会員登録のPOSTメソッド
-    @PostMapping("/newMemberRegistration_contents")
-    public String postNewMemberRegistration(@ModelAttribute MemberForm form, BindingResult bindingResult, Model model) {
-        if (bindingResult.hasErrors()) {
-            return getNewMemberRegistration(form, model);
-        }
-        System.out.println(form);
-
-        MemberForm memberForm = new MemberForm();
-
-        memberForm.setMemberId(form.getMemberId()); //会員ID
-        memberForm.setMemberName(form.getMemberName()); //会員名
-        memberForm.setBirthday(form.getBirthday()); //生年月日
-        memberForm.setAge(form.getAge()); //年齢
-        memberForm.setPhoneNumber(form.getPhoneNumber()); //電話番号
-        memberForm.setAddress(form.getAddress()); //住所
-
-        boolean result = memberInformationServiceImpl.insertOne(memberForm);
-
-        //会員登録結果の判定
-        if (result = true) {
-            System.out.println("insert成功");
-        } else {
-            System.out.println("insert失敗");
-        }
-
-        return "base/login";
-    }
-
-    //更新用のpostメソッド
-    @PostMapping(value = "/memberDetail", params = "update")
-    public String postMemberDetailUpdate(@ModelAttribute MemberForm memberForm, Model model) {
-        System.out.println("更新ボタンの処理");
-
-        boolean result = memberInformationServiceImpl.updateOne(memberForm);
-
-        if (result) {
-            model.addAttribute("result", "更新成功");
-        } else {
-            model.addAttribute("result", "更新失敗");
-        }
-        return getMemberInformation(memberForm, model);
-    }
-
-    //会員詳細画面のGETメソッド
+    // 会員詳細画面のGETメソッド
     @GetMapping("/memberDetail/{id:.+}")
     public String getMemberDetail(@ModelAttribute MemberForm memberForm, Model model, @PathVariable("id") String memberId) {
 
@@ -120,7 +69,77 @@ public class MemberInformationController {
         return "base/homeLayout";
     }
 
-    //会員情報削除画面のPOSTメソッド
+    // 新規会員登録のGETメソッド
+    @GetMapping("/newMemberRegistration_contents")
+    public String getNewMemberRegistration(@ModelAttribute MemberForm form, Model model) {
+        model.addAttribute("contents", "base/member/newMemberRegistration::newMemberRegistration_contents");
+        return "base/homeLayout";
+    }
+
+    // 新規会員登録のPOSTメソッド
+    @PostMapping("/newMemberRegistration_contents")
+    public String postNewMemberRegistration(@ModelAttribute MemberForm memberForm, BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()) {
+            return getNewMemberRegistration(memberForm, model);
+        }
+        System.out.println(memberForm);
+
+        MemberInformationDto memberInformationDto = new MemberInformationDto();
+
+        memberInformationDto.setMemberId(memberForm.getMemberId()); // 会員ID
+        memberInformationDto.setPassword(memberForm.getPassword()); // パスワード
+        memberInformationDto.setMemberName(memberForm.getMemberName()); // 会員名
+        memberInformationDto.setRole("ROLE_GENERAL"); // 権限
+        memberInformationDto.setBirthday(memberForm.getBirthday()); // 生年月日
+        memberInformationDto.setAge(memberForm.getAge()); // 年齢
+        memberInformationDto.setPhoneNumber(memberForm.getPhoneNumber()); // 電話番号
+        memberInformationDto.setAddress(memberForm.getAddress()); // 住所
+
+        boolean result = memberInformationServiceImpl.insertOne(memberInformationDto);
+
+        // 会員登録結果の判定
+        if (result = true) {
+            System.out.println("insert成功");
+        } else {
+            System.out.println("insert失敗");
+        }
+
+        // 会員情報画面の検索結果用に従業員IDと従業員名を空にする。
+        memberForm.setMemberId("");
+        memberForm.setMemberName("");
+
+        return getMemberInformation(memberForm, model);
+    }
+
+    // 更新用のpostメソッド
+    @PostMapping(value = "/memberDetail", params = "update")
+    public String postMemberDetailUpdate(@ModelAttribute MemberForm memberForm, Model model) {
+        System.out.println("更新ボタンの処理");
+
+        MemberInformationDto memberInformationDto = new MemberInformationDto();
+        memberInformationDto.setMemberId(memberForm.getMemberId());
+        memberInformationDto.setMemberName(memberForm.getMemberName());
+        memberInformationDto.setBirthday(memberForm.getBirthday());
+        memberInformationDto.setAge(memberForm.getAge());
+        memberInformationDto.setPhoneNumber(memberForm.getPhoneNumber());
+        memberInformationDto.setAddress(memberForm.getAddress());
+
+        boolean result = memberInformationServiceImpl.updateOne(memberInformationDto);
+
+        if (result) {
+            model.addAttribute("result", "更新成功");
+        } else {
+            model.addAttribute("result", "更新失敗");
+        }
+
+        // 会員情報画面の検索結果用に従業員IDと従業員名を空にする。
+        memberForm.setMemberId("");
+        memberForm.setMemberName("");
+
+        return getMemberInformation(memberForm, model);
+    }
+
+    // 会員情報削除画面のPOSTメソッド
     @PostMapping(value = "/memberDetail", params = "delete")
     public String postMemberDelete(@ModelAttribute MemberForm memberForm, Model model) {
 
@@ -133,6 +152,11 @@ public class MemberInformationController {
         } else {
             model.addAttribute("result", "削除失敗");
         }
+
+        // 会員情報画面の検索結果用に従業員IDと従業員名を空にする。
+        memberForm.setMemberId("");
+        memberForm.setMemberName("");
+
         return getMemberInformation(memberForm, model);
     }
 

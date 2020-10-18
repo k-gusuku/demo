@@ -81,8 +81,8 @@ public class EmployeeInformationController {
 
         boolean result = employeeInformationServiceImpl.insertOne(employeeInformationDto);
 
-        //会員登録結果の判定
-        if (result = true) {
+        // 会員登録結果の判定
+        if (result) {
             System.out.println("insert成功");
         } else {
             System.out.println("insert失敗");
@@ -104,7 +104,6 @@ public class EmployeeInformationController {
         employeeInformationDto.setEmployeeId(employeeForm.getEmployeeId());
         employeeInformationDto.setPassword(employeeForm.getPassword());
         employeeInformationDto.setEmployeeName(employeeForm.getEmployeeName());
-        employeeInformationDto.setRole("ROLE_ADMIN");
 
         boolean result = employeeInformationServiceImpl.updateOne(employeeInformationDto);
 

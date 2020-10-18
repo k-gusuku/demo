@@ -2,7 +2,6 @@ package com.example.demo.base.service.impl;
 
 import com.example.demo.base.dao.memberHistory.MemberHistoryDao;
 import com.example.demo.base.dao.memberHistory.MemberHistoryDto;
-import com.example.demo.base.domain.memberHistory.MemberHistoryForm;
 import com.example.demo.base.service.MemberHistoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -23,9 +22,9 @@ public class MemberHistoryServiceImpl implements MemberHistoryService {
     }
 
     @Override
-    public boolean insertOne(MemberHistoryForm memberHistoryForm) {
+    public boolean insertOne(MemberHistoryDto memberHistoryDto) {
 
-        int rowNumber = dao.insertOne(memberHistoryForm);
+        int rowNumber = dao.insertOne(memberHistoryDto);
 
         boolean result = false;
 

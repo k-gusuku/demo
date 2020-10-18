@@ -16,9 +16,19 @@ public class MemberInformationDto {
     private String memberId;
 
     /**
+     * パスワード
+     */
+    private String password;
+
+    /**
      * 会員名
      */
     private String memberName;
+
+    /**
+     * 権限
+     */
+    private String role;
 
     /**
      * 生年月日

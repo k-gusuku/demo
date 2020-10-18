@@ -12,6 +12,16 @@
     <!-- SELECT -->
     <!--+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
 
+    <select id="selectOne" resultMap="BaseResult">
+        SELECT
+            EMPLOYEE_ID,
+            EMPLOYEE_NAME
+        FROM
+            EMPLOYEE
+        WHERE
+            EMPLOYEE_ID = #{employeeId}
+    </select>
+
     <select id="selectMany" resultMap="BaseResult">
         SELECT
         EMPLOYEE_ID,
@@ -29,16 +39,6 @@
                 </if>
             </where>
         </if>
-    </select>
-
-    <select id="selectOne" resultMap="BaseResult">
-        SELECT
-            EMPLOYEE_ID,
-            EMPLOYEE_NAME
-        FROM
-            EMPLOYEE
-        WHERE
-            EMPLOYEE_ID = #{employeeId}
     </select>
 
     <!--+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->

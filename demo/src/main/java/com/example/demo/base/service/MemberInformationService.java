@@ -1,21 +1,12 @@
 package com.example.demo.base.service;
 
 import com.example.demo.base.dao.memberInformation.MemberInformationDto;
-import com.example.demo.base.domain.memberInformation.MemberForm;
 import org.springframework.dao.DataAccessException;
 
 import java.io.IOException;
 import java.util.List;
 
 public interface MemberInformationService {
-
-    /**
-     * 会員テーブに1件データを作製する.
-     *
-     * @param memberForm 作製データ
-     * @return 作製データ
-     */
-    boolean insertOne(MemberForm memberForm);
 
     /**
      * 会員テーブルから1件データを取得する.
@@ -35,12 +26,20 @@ public interface MemberInformationService {
     List<MemberInformationDto> selectMany(String memberId, String memberName);
 
     /**
+     * 会員テーブに1件データを作製する.
+     *
+     * @param memberInformationDto 作製データ
+     * @return 作製データ
+     */
+    boolean insertOne(MemberInformationDto memberInformationDto);
+
+    /**
      * 会員テーブルを1件更新する.
      *
-     * @param memberForm 更新するデータ
+     * @param memberInformationDto 更新するデータ
      * @return 更新の有無
      */
-    boolean updateOne(MemberForm memberForm);
+    boolean updateOne(MemberInformationDto memberInformationDto);
 
     /**
      * 会員テーブルから1件データを削除する.

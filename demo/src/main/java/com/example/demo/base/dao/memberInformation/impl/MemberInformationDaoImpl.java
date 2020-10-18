@@ -2,11 +2,11 @@ package com.example.demo.base.dao.memberInformation.impl;
 
 import com.example.demo.base.dao.memberInformation.MemberInformationDao;
 import com.example.demo.base.dao.memberInformation.MemberInformationDto;
-import com.example.demo.base.domain.memberInformation.MemberForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -21,10 +21,8 @@ public class MemberInformationDaoImpl implements MemberInformationDao {
     @Autowired
     JdbcTemplate jdbc;
 
-    @Override
-    public int insertOne(MemberForm memberForm) throws DataAccessException {
-        return dao.insertOne(memberForm);
-    }
+    @Autowired
+    PasswordEncoder passwordEncoder;
 
     @Override
     public MemberInformationDto selectOne(String memberId) throws DataAccessException {
@@ -37,8 +35,17 @@ public class MemberInformationDaoImpl implements MemberInformationDao {
     }
 
     @Override
-    public int updateOne(MemberForm memberForm) throws DataAccessException {
-        return dao.updateOne(memberForm);
+    public int insertOne(MemberInformationDto memberInformationDto) throws DataAccessException {
+
+        String password = passwordEncoder.encode(memberInformationDto.getPassword());
+        memberInformationDto.setPassword(password);
+
+        return dao.insertOne(memberInformationDto);
+    }
+
+    @Override
+    public int updateOne(MemberInformationDto memberInformationDto) throws DataAccessException {
+        return dao.updateOne(memberInformationDto);
     }
 
     @Override

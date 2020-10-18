@@ -2,7 +2,6 @@ package com.example.demo.base.service.impl;
 
 import com.example.demo.base.dao.memberInformation.MemberInformationDao;
 import com.example.demo.base.dao.memberInformation.MemberInformationDto;
-import com.example.demo.base.domain.memberInformation.MemberForm;
 import com.example.demo.base.service.MemberInformationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -24,19 +23,6 @@ public class MemberInformationServiceImpl implements MemberInformationService {
     MemberInformationDao dao;
 
     @Override
-    public boolean insertOne(MemberForm memberForm) {
-
-        int rowNumber = dao.insertOne(memberForm);
-
-        boolean result = false;
-
-        if (rowNumber > 0) {
-            result = true;
-        }
-        return result;
-    }
-
-    @Override
     public MemberInformationDto selectOne(String memberId) {
 
         //selectOne実行
@@ -49,9 +35,22 @@ public class MemberInformationServiceImpl implements MemberInformationService {
     }
 
     @Override
-    public boolean updateOne(MemberForm memberForm) {
+    public boolean insertOne(MemberInformationDto memberInformationDto) {
 
-        int rowNumber = dao.updateOne(memberForm);
+        int rowNumber = dao.insertOne(memberInformationDto);
+
+        boolean result = false;
+
+        if (rowNumber > 0) {
+            result = true;
+        }
+        return result;
+    }
+
+    @Override
+    public boolean updateOne(MemberInformationDto memberInformationDto) {
+
+        int rowNumber = dao.updateOne(memberInformationDto);
 
         boolean result = false;
 

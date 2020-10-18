@@ -1,6 +1,5 @@
 package com.example.demo.base.dao.memberInformation;
 
-import com.example.demo.base.domain.memberInformation.MemberForm;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.dao.DataAccessException;
 
@@ -8,15 +7,6 @@ import java.util.List;
 
 @Mapper
 public interface MemberInformationDao {
-
-    /**
-     * 会員テーブルに1件データを作成.
-     *
-     * @param memberForm 作製データ
-     * @return データ作成件数
-     * @throws DataAccessException データ作成時に投げられるエラー
-     */
-    int insertOne(MemberForm memberForm) throws DataAccessException;
 
     /**
      * 会員テーブルから1件データを取得.
@@ -38,13 +28,22 @@ public interface MemberInformationDao {
     List<MemberInformationDto> selectMany(String memberId, String memberName) throws DataAccessException;
 
     /**
+     * 会員テーブルに1件データを作成.
+     *
+     * @param memberInformationDto 作製データ
+     * @return データ作成件数
+     * @throws DataAccessException データ作成時に投げられるエラー
+     */
+    int insertOne(MemberInformationDto memberInformationDto) throws DataAccessException;
+
+    /**
      * 会員テーブルから1件データを更新.
      *
-     * @param memberForm 更新データ
+     * @param memberInformationDto 更新データ
      * @return データ更新件数
      * @throws DataAccessException データ更新時に投げられるエラー
      */
-    int updateOne(MemberForm memberForm) throws DataAccessException;
+    int updateOne(MemberInformationDto memberInformationDto) throws DataAccessException;
 
     /**
      * 会員テーブルから1件データを削除.

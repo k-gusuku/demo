@@ -3,9 +3,6 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
     <meta charset="UTF-8"/>
-
-    <!-- CSSの読み込み -->
-    <link th:href="@{/css/memberHistory.css}" rel="stylesheet"/>
 </head>
 <body>
 <div th:fragment="memberDetail_contents">
@@ -90,9 +87,7 @@
                 <th class="info col-sm-2">商品名</th>
                 <th class="info col-sm-2">商品金額</th>
                 <th class="info col-sm-2">商品の種類</th>
-                <th class="info col-sm-2">販売日</th>
-                <th class="info col-sm-2">従業員ID</th>
-                <th class="info col-sm-2">従業員名</th>
+                <th class="info col-sm-2">販売日時</th>
             </tr>
             <tr th:each="member:${memberHistoryDtoList}">
                 <td th:text="${member.productId}"></td>
@@ -100,8 +95,6 @@
                 <td th:text="${member.productPrice}"></td>
                 <td th:text="${member.productType}"></td>
                 <td th:text="${#dates.format(member.saleDay, 'YYYY/MM/dd')}"></td>
-                <td th:text="${member.employeeId}"></td>
-                <td th:text="${member.employeeName}"></td>
             </tr>
         </table>
 </div>
