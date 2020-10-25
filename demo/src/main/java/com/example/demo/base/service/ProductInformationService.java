@@ -1,13 +1,20 @@
 package com.example.demo.base.service;
 
 import com.example.demo.base.dao.productInformation.ProductInformationDto;
-import com.example.demo.base.domain.productInformation.ProductForm;
 import org.springframework.dao.DataAccessException;
 
 import java.io.IOException;
 import java.util.List;
 
 public interface ProductInformationService {
+
+    /**
+     * 商品テーブルから1件データを取得する.
+     *
+     * @param productId 商品ID
+     * @return 取得データ
+     */
+    ProductInformationDto selectOne(String productId);
 
     /**
      * 商品テーブルからデータを取得する.
@@ -21,26 +28,18 @@ public interface ProductInformationService {
     /**
      * 商品テーブルに1件データを作成する.
      *
-     * @param productForm 作成データ
+     * @param productInformationDto 作成データ
      * @return 作成データ
      */
-    boolean insertOne(ProductForm productForm);
-
-    /**
-     * 商品テーブルから1件データを取得する.
-     *
-     * @param productId 商品ID
-     * @return 取得データ
-     */
-    ProductInformationDto selectOne(String productId);
+    boolean insertOne(ProductInformationDto productInformationDto);
 
     /**
      * 商品テーブルを1件更新する.
      *
-     * @param productForm 更新する商品ID
+     * @param productInformationDto 更新する商品ID
      * @return 更新の有無
      */
-    boolean updateOne(ProductForm productForm);
+    boolean updateOne(ProductInformationDto productInformationDto);
 
     /**
      * 商品テーブルから1件データを削除する.

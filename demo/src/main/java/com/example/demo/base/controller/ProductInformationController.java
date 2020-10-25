@@ -24,6 +24,7 @@ public class ProductInformationController {
     @Autowired
     ProductInformationServiceImpl productInformationServiceImpl;
 
+    // 商品情報のGETメソッド
     @GetMapping("/productInformation_contents")
     public String getProductInformation(@ModelAttribute ProductForm productForm, Model model) {
 
@@ -34,40 +35,6 @@ public class ProductInformationController {
         model.addAttribute("productInformationDtoList", productInformationDtoList);
 
         return "base/homeLayout";
-    }
-
-    // 新規商品登録のGETメソッド
-    @GetMapping("/newProductRegistration_contents")
-    public String getNewProductRegistration(@ModelAttribute ProductForm ProductForm, Model model) {
-        model.addAttribute("contents", "base/product/newProductRegistration::newProductRegistration_contents");
-        return "base/homeLayout";
-    }
-
-    // 新規商品登録のPOSTメソッド
-    @PostMapping("/newProductRegistration_contents")
-    public String postNewProductRegistration(@ModelAttribute ProductForm form, BindingResult bindingResult, Model model) {
-        if (bindingResult.hasErrors()) {
-            return getNewProductRegistration(form, model);
-        }
-        System.out.println(form);
-
-        ProductForm productForm = new ProductForm();
-
-        productForm.setProductId(form.getProductId()); // 商品ID
-        productForm.setProductName(form.getProductName()); // 商品名
-        productForm.setProductPrice(form.getProductPrice()); // 商品金額
-        productForm.setProductType(form.getProductType()); // 商品の種類
-
-        boolean result = productInformationServiceImpl.insertOne(productForm);
-
-        //会員登録結果の判定
-        if (result = true) {
-            System.out.println("insert成功");
-        } else {
-            System.out.println("insert失敗");
-        }
-
-        return "base/login";
     }
 
     // 商品詳細画面のGETメソッド
@@ -92,18 +59,67 @@ public class ProductInformationController {
         return "base/homeLayout";
     }
 
+    // 新規商品登録のGETメソッド
+    @GetMapping("/newProductRegistration_contents")
+    public String getNewProductRegistration(@ModelAttribute ProductForm ProductForm, Model model) {
+        model.addAttribute("contents", "base/product/newProductRegistration::newProductRegistration_contents");
+        return "base/homeLayout";
+    }
+
+    // 新規商品登録のPOSTメソッド
+    @PostMapping("/newProductRegistration_contents")
+    public String postNewProductRegistration(@ModelAttribute ProductForm productForm, BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()) {
+            return getNewProductRegistration(productForm, model);
+        }
+        System.out.println(productForm);
+
+        ProductInformationDto productInformationDto = new ProductInformationDto();
+
+        productInformationDto.setProductId(productForm.getProductId()); // 商品ID
+        productInformationDto.setProductName(productForm.getProductName()); // 商品名
+        productInformationDto.setProductPrice(productForm.getProductPrice()); // 商品金額
+        productInformationDto.setProductType(productForm.getProductType()); // 商品の種類
+
+        boolean result = productInformationServiceImpl.insertOne(productInformationDto);
+
+        //会員登録結果の判定
+        if (result) {
+            System.out.println("insert成功");
+        } else {
+            System.out.println("insert失敗");
+        }
+
+        // 商品情報画面の検索結果用に商品IDと商品名を空にする。
+        productForm.setProductId("");
+        productForm.setProductName("");
+
+        return getProductInformation(productForm, model);
+    }
+
     // 更新用のpostメソッド
     @PostMapping(value = "/productDetail", params = "update")
     public String postProductDetailUpdate(@ModelAttribute ProductForm productForm, Model model) {
         System.out.println("更新ボタンの処理");
 
-        boolean result = productInformationServiceImpl.updateOne(productForm);
+        ProductInformationDto productInformationDto = new ProductInformationDto();
+        productInformationDto.setProductId(productForm.getProductId());
+        productInformationDto.setProductName(productForm.getProductName());
+        productInformationDto.setProductPrice(productForm.getProductPrice());
+        productInformationDto.setProductType(productForm.getProductType());
+
+        boolean result = productInformationServiceImpl.updateOne(productInformationDto);
 
         if (result) {
             model.addAttribute("result", "更新成功");
         } else {
             model.addAttribute("result", "更新失敗");
         }
+
+        // 商品情報画面の検索結果用に商品IDと商品名を空にする。
+        productForm.setProductId("");
+        productForm.setProductName("");
+
         return getProductInformation(productForm, model);
     }
 
@@ -120,6 +136,11 @@ public class ProductInformationController {
         } else {
             model.addAttribute("result", "削除失敗");
         }
+
+        // 商品情報画面の検索結果用に商品IDと商品名を空にする。
+        productForm.setProductId("");
+        productForm.setProductName("");
+
         return getProductInformation(productForm, model);
     }
 

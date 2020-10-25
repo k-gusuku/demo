@@ -1,6 +1,5 @@
 package com.example.demo.base.dao.productInformation;
 
-import com.example.demo.base.domain.productInformation.ProductForm;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.dao.DataAccessException;
 
@@ -8,6 +7,15 @@ import java.util.List;
 
 @Mapper
 public interface ProductInformationDao {
+
+    /**
+     * 商品テーブルから1件データを取得.
+     *
+     * @param productId 商品ID
+     * @return 取得データ
+     * @throws DataAccessException データ取得時に投げられるエラー
+     */
+    ProductInformationDto selectOne(String productId) throws DataAccessException;
 
     /**
      * 商品テーブルから複数件データを取得.
@@ -22,29 +30,20 @@ public interface ProductInformationDao {
     /**
      * 商品テーブルに1件データを作成.
      *
-     * @param productForm 作成データ
+     * @param productInformationDto 作成データ
      * @return データ作成件数
      * @throws DataAccessException データ作成時に投げられるエラー
      */
-    int insertOne(ProductForm productForm) throws DataAccessException;
-
-    /**
-     * 商品テーブルから1件データを取得.
-     *
-     * @param productId 商品ID
-     * @return 取得データ
-     * @throws DataAccessException データ取得時に投げられるエラー
-     */
-    ProductInformationDto selectOne(String productId) throws DataAccessException;
+    int insertOne(ProductInformationDto productInformationDto) throws DataAccessException;
 
     /**
      * 商品テーブルから1件データを更新.
      *
-     * @param productForm 更新データ
+     * @param productInformationDto 更新データ
      * @return データ更新件数
      * @throws DataAccessException データ更新時に投げられるエラー
      */
-    int updateOne(ProductForm productForm) throws DataAccessException;
+    int updateOne(ProductInformationDto productInformationDto) throws DataAccessException;
 
     /**
      * 商品テーブルから1件データを削除.

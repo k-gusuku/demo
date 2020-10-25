@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.demo.base.dao.memberInformation.MemberInformationDao">
-    <resultMap id="member" type="com.example.demo.base.dao.memberInformation.MemberInformationDto">
+    <resultMap id="BaseResultMap" type="com.example.demo.base.dao.memberInformation.MemberInformationDto">
         <id column="MEMBER_ID" property="memberId"/>
         <result column="PASSWORD" property="password"/>
         <result column="MEMBER_NAME" property="memberName"/>
@@ -17,7 +17,7 @@
     <!-- SELECT -->
     <!--+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
 
-    <select id="selectOne" resultMap="member">
+    <select id="selectOne" resultMap="BaseResultMap">
         SELECT
             MEMBER_ID,
             MEMBER_NAME,
@@ -31,7 +31,7 @@
             MEMBER_ID = #{memberId}
     </select>
 
-    <select id="selectMany" resultMap="member">
+    <select id="selectMany" resultMap="BaseResultMap">
         SELECT
         MEMBER_ID,
         MEMBER_NAME,

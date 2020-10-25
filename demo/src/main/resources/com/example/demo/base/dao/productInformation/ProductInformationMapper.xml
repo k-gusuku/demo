@@ -9,6 +9,22 @@
         <result column="PRODUCT_TYPE" property="productType"/>
     </resultMap>
 
+    <!--+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+    <!-- SELECT -->
+    <!--+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+
+    <select id="selectOne" resultMap="product">
+        SELECT
+            PRODUCT_ID,
+            PRODUCT_NAME,
+            PRODUCT_PRICE,
+            PRODUCT_TYPE
+        FROM
+            PRODUCT
+        WHERE
+            PRODUCT_ID = #{productId}
+    </select>
+
     <select id="selectMany" resultMap="product">
         SELECT
         PRODUCT_ID,
@@ -30,41 +46,66 @@
         </if>
     </select>
 
+    <!--+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+    <!-- INSERT -->
+    <!--+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+
     <insert id="insertOne" parameterType="com.example.demo.base.domain.productInformation.ProductForm">
-        INSERT INTO PRODUCT(
-        PRODUCT_ID,
-        PRODUCT_NAME,
-        PRODUCT_PRICE,
-        PRODUCT_TYPE
-        )
-        VALUES(
-        #{productId},
-        #{productName},
-        #{productPrice},
-        #{productType})
+        INSERT INTO PRODUCT
+        <trim suffixOverrides="," suffix=")" prefix="(">
+            <if test="productId != null">
+                PRODUCT_ID,
+            </if>
+            <if test="productName != null">
+                PRODUCT_NAME,
+            </if>
+            <if test="productPrice != null">
+                PRODUCT_PRICE,
+            </if>
+            <if test="productType != null">
+                PRODUCT_TYPE,
+            </if>
+        </trim>
+        <trim suffixOverrides="," suffix=")" prefix="values(">
+            <if test="productId != null">
+                #{productId},
+            </if>
+            <if test="productName != null">
+                #{productName},
+            </if>
+            <if test="productPrice != null">
+                #{productPrice},
+            </if>
+            <if test="productType != null">
+                #{productType},
+            </if>
+        </trim>
     </insert>
 
-    <select id="selectOne" resultMap="product">
-        SELECT
-            PRODUCT_ID,
-            PRODUCT_NAME,
-            PRODUCT_PRICE,
-            PRODUCT_TYPE
-        FROM
-            PRODUCT
-        WHERE
-            PRODUCT_ID = #{productId}
-    </select>
+    <!--+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+    <!-- UPDATE -->
+    <!--+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
 
     <update id="updateOne" parameterType="com.example.demo.base.domain.productInformation.ProductForm">
         UPDATE PRODUCT
-            SET
-              PRODUCT_NAME = #{productName},
-              PRODUCT_PRICE = #{productPrice},
-              PRODUCT_TYPE = #{productType}
-            WHERE
-              PRODUCT_ID = #{productId}
+        <set>
+            <if test="productName != null">
+                PRODUCT_NAME = #{productName},
+            </if>
+            <if test="productPrice != null">
+                PRODUCT_PRICE = #{productPrice},
+            </if>
+            <if test="productType != null">
+                PRODUCT_TYPE = #{productType},
+            </if>
+        </set>
+        WHERE
+        PRODUCT_ID = #{productId}
     </update>
+
+    <!--+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+    <!-- DELETE -->
+    <!--+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
 
     <delete id="deleteOne" parameterType="string">
         DELETE FROM PRODUCT WHERE PRODUCT_ID = #{productId}

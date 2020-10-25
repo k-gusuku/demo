@@ -2,7 +2,6 @@ package com.example.demo.base.dao.productInformation.impl;
 
 import com.example.demo.base.dao.productInformation.ProductInformationDao;
 import com.example.demo.base.dao.productInformation.ProductInformationDto;
-import com.example.demo.base.domain.productInformation.ProductForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.dao.DataAccessException;
@@ -22,23 +21,23 @@ public class ProductInformationDaoImpl implements ProductInformationDao {
     JdbcTemplate jdbc;
 
     @Override
-    public List<ProductInformationDto> selectMany(String productId, String productName) throws DataAccessException {
-        return dao.selectMany(productId, productName);
-    }
-
-    @Override
-    public int insertOne(ProductForm productForm) throws DataAccessException {
-        return dao.insertOne(productForm);
-    }
-
-    @Override
     public ProductInformationDto selectOne(String productId) throws DataAccessException {
         return dao.selectOne(productId);
     }
 
     @Override
-    public int updateOne(ProductForm productForm) throws DataAccessException {
-        return dao.updateOne(productForm);
+    public List<ProductInformationDto> selectMany(String productId, String productName) throws DataAccessException {
+        return dao.selectMany(productId, productName);
+    }
+
+    @Override
+    public int insertOne(ProductInformationDto productInformationDto) throws DataAccessException {
+        return dao.insertOne(productInformationDto);
+    }
+
+    @Override
+    public int updateOne(ProductInformationDto productInformationDto) throws DataAccessException {
+        return dao.updateOne(productInformationDto);
     }
 
     @Override

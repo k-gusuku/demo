@@ -2,7 +2,6 @@ package com.example.demo.base.service.impl;
 
 import com.example.demo.base.dao.productInformation.ProductInformationDao;
 import com.example.demo.base.dao.productInformation.ProductInformationDto;
-import com.example.demo.base.domain.productInformation.ProductForm;
 import com.example.demo.base.service.ProductInformationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -24,14 +23,19 @@ public class ProductInformationServiceImpl implements ProductInformationService 
     ProductInformationDao dao;
 
     @Override
+    public ProductInformationDto selectOne(String productId) {
+        return dao.selectOne(productId);
+    }
+
+    @Override
     public List<ProductInformationDto> selectMany(String productId, String productName) {
         return dao.selectMany(productId, productName);
     }
 
     @Override
-    public boolean insertOne(ProductForm productForm) {
+    public boolean insertOne(ProductInformationDto productInformationDto) {
 
-        int rowNumber = dao.insertOne(productForm);
+        int rowNumber = dao.insertOne(productInformationDto);
 
         boolean result = false;
 
@@ -42,19 +46,14 @@ public class ProductInformationServiceImpl implements ProductInformationService 
     }
 
     @Override
-    public ProductInformationDto selectOne(String productId) {
-        return dao.selectOne(productId);
-    }
+    public boolean updateOne(ProductInformationDto productInformationDto) {
 
-    @Override
-    public boolean updateOne(ProductForm productForm) {
-
-        int rowNumber = dao.updateOne(productForm);
+        int rowNumber = dao.updateOne(productInformationDto);
 
         boolean result = false;
 
         if (rowNumber > 0) {
-            result = false;
+            result = true;
         }
         return result;
     }
