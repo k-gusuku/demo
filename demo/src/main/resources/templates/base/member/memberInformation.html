@@ -18,20 +18,20 @@
             <label>会員名</label>
             <input type="text" th:field="*{memberName}"/>
         </div>
-        <button class="btn btn-primary" type="submit">検索</button>
+        <button class="btn btn-warning" type="submit">検索</button>
     </form>
     <br/>
     <table class="table table-bordered table-hover table-striped">
         <tr>
-            <th class="info col-sm-2">会員ID</th>
-            <th class="info col-sm-2">会員名</th>
-            <th class="info col-sm-2">生年月日</th>
-            <th class="info col-sm-2">年齢</th>
-            <th class="info col-sm-2">電話番号</th>
-            <th class="info col-sm-2">住所</th>
-            <th class="info col-sm-2"></th>
+            <th class="warning col-sm-2">会員ID</th>
+            <th class="warning col-sm-2">会員名</th>
+            <th class="warning col-sm-2">生年月日</th>
+            <th class="warning col-sm-2">年齢</th>
+            <th class="warning col-sm-2">電話番号</th>
+            <th class="warning col-sm-2">住所</th>
+            <th class="warning col-sm-2"></th>
         </tr>
-        <tr th:each="member:${memberInformationDtoList}">
+        <tr th:each="member:${memberFormList}">
             <td th:text="${member.memberId}"></td>
             <td th:text="${member.memberName}"></td>
             <td th:text="${#dates.format(member.birthday,'YYYY/MM/dd')}"></td>
@@ -39,13 +39,13 @@
             <td th:text="${member.phoneNumber}"></td>
             <td th:text="${member.address}"></td>
             <td>
-                <a class="btn btn-primary" th:href="@{'/memberDetail/'+${member.memberId}}">詳細</a>
+                <a class="btn btn-warning" th:href="@{'/memberDetail/'+${member.memberId}}">詳細</a>
             </td>
         </tr>
     </table>
-    <a th:href="@{'/newMemberRegistration_contents'}">新規会員登録はこちら</a><br/>
+    <a class="btn btn-warning" th:href="@{'/newMemberRegistration_contents'}">新規会員登録はこちら</a><br/>
     <label class="text-info" th:text="${result}">結果表示</label><br/>
-    <a class="btn btn-primary" th:href="@{'/memberList/csv'}">CSV出力</a>
+    <a class="btn btn-warning" th:href="@{'/memberList/csv'}">CSV出力</a>
 </div>
 </body>
 </html>

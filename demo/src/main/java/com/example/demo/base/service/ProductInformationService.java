@@ -1,6 +1,6 @@
 package com.example.demo.base.service;
 
-import com.example.demo.base.dao.productInformation.ProductInformationDto;
+import com.example.demo.base.dao.productinformation.ProductInformationDto;
 import org.springframework.dao.DataAccessException;
 
 import java.io.IOException;
@@ -29,7 +29,7 @@ public interface ProductInformationService {
      * 商品テーブルに1件データを作成する.
      *
      * @param productInformationDto 作成データ
-     * @return 作成データ
+     * @return 作成の有無
      */
     boolean insertOne(ProductInformationDto productInformationDto);
 

@@ -14,7 +14,10 @@
             <div class="page-header">
                 <h1>商品詳細</h1>
             </div>
-            <form method="post" th:action="@{/productPurchase}" th:object="${productForm}">
+            <img th:src="*{imageForProductDetails}" style="width:627px;height:560px">
+            <br/>
+            <br/>
+            <form method="post" th:action="@{/productPurchase}" th:object="${memberHistoryForm}">
                 <table class="table table-bordered table-hover">
                     <tr>
                         <!-- 商品ID(入力不可) -->
@@ -25,7 +28,16 @@
                             </div>
                         </td>
                     </tr>
-                    <!-- 商品名 -->
+                    <tr>
+                        <!-- 商品イメージID(入力不可) -->
+                        <th class="active col-sm-2">商品イメージID</th>
+                        <td class="col-sm-3">
+                            <div class="form-group">
+                                <input type="text" class="form-control" th:field="*{productImageId}" readonly="readonly"/>
+                            </div>
+                        </td>
+                    </tr>
+                    <!-- 商品名(入力不可) -->
                     <tr>
                         <th class="active">商品名</th>
                         <td>
@@ -34,7 +46,7 @@
                             </div>
                         </td>
                     </tr>
-                    <!-- 商品金額 -->
+                    <!-- 商品金額(入力不可) -->
                     <tr>
                         <th class="active">商品金額</th>
                         <td>
@@ -43,7 +55,7 @@
                             </div>
                         </td>
                     </tr>
-                    <!-- 商品の種類 -->
+                    <!-- 商品の種類(入力不可) -->
                     <tr>
                         <th class="active">商品の種類</th>
                         <td>
@@ -56,32 +68,15 @@
                     <tr>
                         <th class="active">会員ID</th>
                         <td>
-                            <div class="form-group">
+                            <div class="form-group" th:classappend="${#fields.hasErrors('memberId')}?'has-error'">
                                 <input type="text" class="form-control" th:field="*{memberId}"/>
-                            </div>
-                        </td>
-                    </tr>
-                    <!-- 従業員ID -->
-                    <tr>
-                        <th class="active">従業員ID</th>
-                        <td>
-                            <div class="form-group">
-                                <input type="text" class="form-control" th:field="*{employeeId}"/>
-                            </div>
-                        </td>
-                    </tr>
-                    <!-- 従業員名 -->
-                    <tr>
-                        <th class="active">従業員名</th>
-                        <td>
-                            <div class="form-group">
-                                <input type="text" class="form-control" th:field="*{employeeName}"/>
+                                <span class="text-danger" th:if="${#fields.hasErrors('memberId')}" th:errors="*{memberId}">memberId error</span>
                             </div>
                         </td>
                     </tr>
                 </table>
                 <!-- 購入ボタン -->
-                <button class="btn btn-primary btn-lg pull-right" type="submit" name="purchase">
+                <button class="btn btn-warning btn-lg pull-right" type="submit" name="purchase">
                     購入
                 </button>
             </form>

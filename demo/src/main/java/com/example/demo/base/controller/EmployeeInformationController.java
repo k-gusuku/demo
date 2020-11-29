@@ -1,19 +1,21 @@
 package com.example.demo.base.controller;
 
-import com.example.demo.base.dao.employeeInformation.EmployeeInformationDto;
+import com.example.demo.base.conversion.employeeinformation.impl.EmployeeInformationConversionImpl;
+import com.example.demo.base.dao.employeeinformation.EmployeeInformationDto;
 import com.example.demo.base.domain.employee.EmployeeForm;
+import com.example.demo.base.domain.employee.EmployeeGroupOrder;
 import com.example.demo.base.service.impl.EmployeeInformationServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.util.List;
@@ -21,17 +23,23 @@ import java.util.List;
 @Controller
 public class EmployeeInformationController {
 
+    @InitBinder
+    public void initBinder(WebDataBinder binder) {
+        // 未入力のStringをnullに設定する
+        binder.registerCustomEditor(String.class, new StringTrimmerEditor(true));
+    }
+
     @Autowired
     EmployeeInformationServiceImpl employeeInformationServiceImpl;
+    @Autowired
+    EmployeeInformationConversionImpl employeeInformationConversionImpl;
 
     // 従業員情報のGET用メソッド
     @GetMapping("/employeeInformation_contents")
     public String getEmployeeInformation(@ModelAttribute EmployeeForm form, Model model) {
-
-        model.addAttribute("contents", "base/employee/employeeInformation::employeeInformation_contents");
-
         List<EmployeeInformationDto> employeeInformationDtoList = employeeInformationServiceImpl.selectMany(form.getEmployeeId(), form.getEmployeeName());
 
+        model.addAttribute("contents", "base/employee/employeeInformation::employeeInformation_contents");
         model.addAttribute("employeeInformationDtoList", employeeInformationDtoList);
 
         return "base/homeLayout";
@@ -40,18 +48,12 @@ public class EmployeeInformationController {
     // 従業員詳細画面のGETメソッド
     @GetMapping("/employeeDetail/{id:.+}")
     public String getEmployeeDetail(@ModelAttribute EmployeeForm employeeForm, Model model, @PathVariable("id") String employeeId) {
-
         System.out.println("employeeId =" + employeeId);
 
-        model.addAttribute("contents", "base/employee/employeeDetail::employeeDetail_contents");
-
         if (employeeId != null && employeeId.length() > 0) {
+            employeeForm = employeeInformationConversionImpl.dto2Form(employeeInformationServiceImpl.selectOne(employeeId));
 
-            EmployeeInformationDto employeeInformationDto = employeeInformationServiceImpl.selectOne(employeeId);
-
-            employeeForm.setEmployeeId(employeeInformationDto.getEmployeeId()); //従業員ID
-            employeeForm.setEmployeeName(employeeInformationDto.getEmployeeName()); //従業員名
-
+            model.addAttribute("contents", "base/employee/employeeDetail::employeeDetail_contents");
             model.addAttribute("employeeForm", employeeForm);
         }
         return "base/homeLayout";
@@ -66,20 +68,14 @@ public class EmployeeInformationController {
 
     // 新規従業員登録のPOSTメソッド
     @PostMapping("/newEmployeeRegistration_contents")
-    public String postNewEmployeeRegistration(@ModelAttribute EmployeeForm employeeForm, BindingResult bindingResult, Model model) {
+    public String postNewEmployeeRegistration(@ModelAttribute @Validated(EmployeeGroupOrder.class) EmployeeForm employeeForm, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             return getNewEmployeeRegistration(employeeForm, model);
         }
         System.out.println(employeeForm);
 
-        EmployeeInformationDto employeeInformationDto = new EmployeeInformationDto();
-
-        employeeInformationDto.setEmployeeId(employeeForm.getEmployeeId()); // 従業員ID
-        employeeInformationDto.setEmployeeName(employeeForm.getEmployeeName()); // 従業員名
-        employeeInformationDto.setPassword(employeeForm.getPassword()); // パスワード
-        employeeInformationDto.setRole("ROLE_ADMIN"); // 権限
-
-        boolean result = employeeInformationServiceImpl.insertOne(employeeInformationDto);
+        employeeForm.setRole("ROLE_ADMIN"); // 権限
+        boolean result = employeeInformationServiceImpl.insertOne(employeeInformationConversionImpl.form2Dto(employeeForm));
 
         // 会員登録結果の判定
         if (result) {
@@ -89,23 +85,22 @@ public class EmployeeInformationController {
         }
 
         // 従業員情報画面の検索結果用に従業員IDと従業員名を空にする。
-        employeeForm.setEmployeeId("");
-        employeeForm.setEmployeeName("");
+        employeeForm.setEmployeeId(null);
+        employeeForm.setEmployeeName(null);
 
         return getEmployeeInformation(employeeForm, model);
     }
 
     // 更新用のpostメソッド
     @PostMapping(value = "/employeeDetail", params = "update")
-    public String postEmployeeDetailUpdate(@ModelAttribute EmployeeForm employeeForm, Model model) {
+    public String postEmployeeDetailUpdate(@ModelAttribute @Validated(EmployeeGroupOrder.class) EmployeeForm employeeForm, BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors() && bindingResult.getErrorCount() > 1) {
+            model.addAttribute("contents", "base/employee/employeeDetail::employeeDetail_contents");
+            return "base/homeLayout";
+        }
         System.out.println("更新ボタンの処理");
 
-        EmployeeInformationDto employeeInformationDto = new EmployeeInformationDto();
-        employeeInformationDto.setEmployeeId(employeeForm.getEmployeeId());
-        employeeInformationDto.setPassword(employeeForm.getPassword());
-        employeeInformationDto.setEmployeeName(employeeForm.getEmployeeName());
-
-        boolean result = employeeInformationServiceImpl.updateOne(employeeInformationDto);
+        boolean result = employeeInformationServiceImpl.updateOne(employeeInformationConversionImpl.form2Dto(employeeForm));
 
         if (result) {
             model.addAttribute("result", "更新成功");
@@ -113,17 +108,12 @@ public class EmployeeInformationController {
             model.addAttribute("result", "更新失敗");
         }
 
-        // 従業員情報画面の検索結果用に従業員IDと従業員名を空にする。
-        employeeForm.setEmployeeId("");
-        employeeForm.setEmployeeName("");
-
-        return getEmployeeInformation(employeeForm, model);
+        return getEmployeeDetail(employeeForm, model, employeeForm.getEmployeeId());
     }
 
     // 従業員情報削除画面のPOSTメソッド
     @PostMapping(value = "/employeeDetail", params = "delete")
     public String postEmployeeDelete(@ModelAttribute EmployeeForm employeeForm, Model model) {
-
         System.out.println("削除ボタンの処理");
 
         boolean result = employeeInformationServiceImpl.deleteOne(employeeForm.getEmployeeId());
@@ -144,7 +134,6 @@ public class EmployeeInformationController {
     // 従業員一覧のCSV出力処理
     @GetMapping("/employeeList/csv")
     public ResponseEntity<byte[]> getEmployeeListCsv(Model model) {
-
         // 会員を全件取得して、CSVをサーバーに保存する
         employeeInformationServiceImpl.employeeCsvOut();
 

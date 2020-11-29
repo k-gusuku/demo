@@ -8,12 +8,10 @@
     <script th:src="@{/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js}"></script>
 </head>
 <body>
-
-</body>
 <div th:fragment="newProductRegistration_contents">
     <div class="col-sm-5">
         <div class="page-header">
-            <h1>新規会員登録</h1>
+            <h1>新規商品登録</h1>
         </div>
         <form method="post" th:action="@{/newProductRegistration_contents}" th:object="${productForm}">
             <table class="table table-bordered table-hover">
@@ -21,8 +19,10 @@
                 <tr>
                     <th class="active col-sm-3">商品ID</th>
                     <td>
-                        <div class="form-group">
+                        <div class="form-group" th:classappend="${#fields.hasErrors('productId')}?'has-error'">
                             <input type="text" class="form-control" th:field="*{productId}"/>
+                            <span class="text-danger" th:if="${#fields.hasErrors('productId')}"
+                                  th:errors="*{productId}">productId error</span>
                         </div>
                     </td>
                 </tr>
@@ -30,8 +30,10 @@
                 <tr>
                     <th class="active">商品名</th>
                     <td>
-                        <div class="form-group">
+                        <div class="form-group" th:classappend="${#fields.hasErrors('productName')}?'has-error'">
                             <input type="text" class="form-control" th:field="*{productName}"/>
+                            <span class="text-danger" th:if="${#fields.hasErrors('productName')}"
+                                  th:errors="*{productName}">productName error</span>
                         </div>
                     </td>
                 </tr>
@@ -39,8 +41,10 @@
                 <tr>
                     <th class="active">商品金額</th>
                     <td>
-                        <div class="form-group">
+                        <div class="form-group" th:classappend="${#fields.hasErrors('productPrice')}?'has-error'">
                             <input type="text" class="form-control" th:field="*{productPrice}"/>
+                            <span class="text-danger" th:if="${#fields.hasErrors('productPrice')}"
+                                  th:errors="*{productPrice}">productPrice error</span>
                         </div>
                     </td>
                 </tr>
@@ -48,22 +52,73 @@
                 <tr>
                     <th class="active">商品の種類</th>
                     <td>
-                        <div class="form-group">
-                            <input type="text" class="form-control" th:field="*{productType}"/>
+                        <div class="form-group" th:classappend="${#fields.hasErrors('productType')}?'has-error'">
+                            <div class="checkbox-inline" th:each="item:${radioProductType}">
+                                <input type="radio" name="radioProductType" th:text="${item.key}"
+                                       th:value="${item.value}" th:field="*{productType}"/>
+                            </div>
+                            <br/>
+                            <span class="text-danger" th:if="${#fields.hasErrors('productType')}"
+                                  th:errors="*{productType}">productType error</span>
+                        </div>
+                    </td>
+                </tr>
+                <!-- イメージID -->
+                <tr>
+                    <th class="active">イメージID</th>
+                    <td>
+                        <div class="form-group" th:classappend="${#fields.hasErrors('productImageId')}?'has-error'">
+                            <input type="text" class="form-control" th:field="*{productImageId}"/>
+                            <span class="text-danger" th:if="${#fields.hasErrors('productImageId')}"
+                                  th:errors="*{productImageId}">productImageId error</span>
                         </div>
                     </td>
                 </tr>
             </table>
-            <ui>
-                <li th:each="error:${#fields.detailedErrors()}">
-                    <span th:text="${error.message}">Error message</span>
-                </li>
-            </ui>
-            <!-- 会員登録ボタン -->
-            <button class="btn btn-primary" type="submit">
+            <!-- 商品登録ボタン -->
+            <button class="btn btn-warning" type="submit">
                 商品登録
             </button>
+            <br/>
+            <br/>
+            <div class="form-group">
+                <label>商品イメージID</label>
+                <input type="text" th:field="*{searchForProductImageId}"/>
+            </div>
+            <div class="form-group">
+                <label>商品イメージ名</label>
+                <input type="text" th:field="*{searchForProductImageName}"/>
+            </div>
+            <div class="form-group">
+                <div class="checkbox-inline" th:each="item:${radioProductImageType}">
+                    <input type="radio" name="radioProductImageType" th:text="${item.key}"
+                           th:value="${item.value}" th:field="*{searchForProductImageType}"/>
+                </div>
+            </div>
+            <!-- 画像在庫検索ボタン -->
+            <button class="btn btn-warning pull-right" type="submit" name="search">
+                画像在庫検索
+            </button>
+            <br/>
+            <br/>
+            <table class="table table-bordered table-hover table-striped">
+                <tr>
+                    <th class="warning col-sm-2">商品イメージID</th>
+                    <th class="warning col-sm-2">商品イメージ名</th>
+                    <th class="warning col-sm-2">商品イメージの種類</th>
+                    <th class="warning col-sm-2"></th>
+                </tr>
+                <tr th:each="productImageStock:${productImageStockFormList}">
+                    <td th:text="${productImageStock.productImageId}"></td>
+                    <td th:text="${productImageStock.productImageName}"></td>
+                    <td th:text="${productImageStock.productImageType}"></td>
+                    <td>
+                        <img th:src="${productImageStock.productImage}" style="width:90px;height:60px">
+                    </td>
+                </tr>
+            </table>
         </form>
     </div>
 </div>
+</body>
 </html>

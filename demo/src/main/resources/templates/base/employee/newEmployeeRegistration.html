@@ -19,8 +19,10 @@
                 <tr>
                     <th class="active col-sm-3">従業員ID</th>
                     <td>
-                        <div class="form-group">
+                        <div class="form-group" th:classappend="${#fields.hasErrors('employeeId')}?'has-error'">
                             <input type="text" class="form-control" th:field="*{employeeId}"/>
+                            <span class="text-danger" th:if="${#fields.hasErrors('employeeId')}"
+                                  th:errors="*{employeeId}">employeeId error</span>
                         </div>
                     </td>
                 </tr>
@@ -28,8 +30,9 @@
                 <tr>
                     <th class="active">パスワード</th>
                     <td>
-                        <div class="form-group">
+                        <div class="form-group" th:classappend="${#fields.hasErrors('password')}?'has-error'">
                             <input type="text" class="form-control" th:field="*{password}"/>
+                            <span class="text-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">password error</span>
                         </div>
                     </td>
                 </tr>
@@ -37,19 +40,16 @@
                 <tr>
                     <th class="active">従業員名</th>
                     <td>
-                        <div class="form-group">
+                        <div class="form-group" th:classappend="${#fields.hasErrors('employeeName')}?'has-error'">
                             <input type="text" class="form-control" th:field="*{employeeName}"/>
+                            <span class="text-danger" th:if="${#fields.hasErrors('employeeName')}"
+                                  th:errors="*{employeeName}">employeeName error</span>
                         </div>
                     </td>
                 </tr>
             </table>
-            <ui>
-                <li th:each="error:${#fields.detailedErrors()}">
-                    <span th:text="${error.message}">Error message</span>
-                </li>
-            </ui>
             <!-- 会員登録ボタン -->
-            <button class="btn btn-primary" type="submit">
+            <button class="btn btn-warning" type="submit">
                 会員登録
             </button>
         </form>

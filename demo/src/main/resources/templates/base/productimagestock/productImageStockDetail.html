@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+<div th:fragment="productImageStockDetail_contents">
+    <div class="col-sm-5">
+        <div class="page-header">
+            <h1>画像詳細</h1>
+        </div>
+        <img th:src="*{productImage}" style="width:627px;height:560px">
+        <br/>
+        <br/>
+        <form method="post" th:action="@{/productImageStockDetail}" th:object="${productImageStockForm}">
+            <table class="table table-bordered table-hover">
+                <!-- 商品イメージID(入力不可) -->
+                <tr>
+                    <th class="active col-sm-2">商品イメージID</th>
+                    <td class="col-sm-3">
+                        <div class="form-group">
+                            <input type="text" class="form-control" th:field="*{productImageId}" readonly="readonly"/>
+                        </div>
+                    </td>
+                </tr>
+                <!-- 商品イメージ名 -->
+                <tr>
+                    <th class="active">商品イメージ名</th>
+                    <td>
+                        <div class="form-group"
+                             th:classappend="${#fields.hasErrors('productImageName')}?'productImageName'">
+                            <input type="text" class="form-control" th:field="*{productImageName}"/>
+                            <span class="text-danger" th:if="${#fields.hasErrors('productImageName')}"
+                                  th:errors="*{productImageName}">error productImageName</span>
+                        </div>
+                    </td>
+                </tr>
+                <!-- 商品イメージの種類 -->
+                <tr>
+                    <th class="active">商品イメージの種類</th>
+                    <td>
+                        <div class="form-group">
+                            <div class="checkbox-inline" th:each="item:${radioProductImageType}">
+                                <input type="radio" name="radioProductImageType" th:text="${item.key}"
+                                       th:value="${item.value}" th:field="*{productImageType}"/>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+            <!-- 更新ボタン -->
+            <button class="btn btn-warning btn-lg pull-right" type="submit" name="update">
+                更新
+            </button>
+            <!-- 削除ボタン -->
+            <button class="btn btn-danger btn-lg" type="submit" name="delete">
+                削除
+            </button>
+            <br/>
+            <label class="text-info" th:text="${result}">結果表示</label>
+        </form>
+    </div>
+</div>
+</body>
+</html>

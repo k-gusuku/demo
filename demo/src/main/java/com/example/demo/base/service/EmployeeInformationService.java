@@ -1,6 +1,6 @@
 package com.example.demo.base.service;
 
-import com.example.demo.base.dao.employeeInformation.EmployeeInformationDto;
+import com.example.demo.base.dao.employeeinformation.EmployeeInformationDto;
 import org.springframework.dao.DataAccessException;
 
 import java.io.IOException;

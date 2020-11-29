@@ -1,86 +1,89 @@
 package com.example.demo.base.controller;
 
-import com.example.demo.base.dao.memberHistory.MemberHistoryDto;
-import com.example.demo.base.dao.productInformation.ProductInformationDto;
-import com.example.demo.base.domain.productInformation.ProductForm;
+import com.example.demo.base.conversion.memberhistory.impl.MemberHistoryConversionImpl;
+import com.example.demo.base.conversion.productinformation.impl.ProductInformationConversionImpl;
+import com.example.demo.base.dao.memberhistory.MemberHistoryDto;
+import com.example.demo.base.domain.memberhistory.MemberHistoryForm;
+import com.example.demo.base.domain.memberhistory.MemberHistoryGroupOrder;
 import com.example.demo.base.service.impl.MemberHistoryServiceImpl;
 import com.example.demo.base.service.impl.ProductInformationServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 public class CashRegisterController {
 
+    @InitBinder
+    public void initBinder(WebDataBinder binder) {
+        // 未入力のStringをnullに設定する
+        binder.registerCustomEditor(String.class, new StringTrimmerEditor(true));
+    }
+
     @Autowired
     MemberHistoryServiceImpl memberHistoryService;
-
     @Autowired
     ProductInformationServiceImpl productInformationServiceImpl;
+    @Autowired
+    ProductInformationConversionImpl productInformationConversionImpl;
+    @Autowired
+    MemberHistoryConversionImpl memberHistoryConversionImpl;
 
     @GetMapping("/cashRegister_contents")
-    public String getProductInformation(@ModelAttribute ProductForm productForm, Model model) {
+    public String getProductInformation(@ModelAttribute MemberHistoryForm memberHistoryForm, Model model) {
+        List<MemberHistoryForm> memberHistoryFormList = productInformationServiceImpl.selectMany(memberHistoryForm.getProductId(), memberHistoryForm.getProductName()).stream().map(p -> {
+            p.setProductImageId("img/" + p.getProductImageId());
+            return memberHistoryConversionImpl.productInformationDto2Form(p);
+        }).collect(Collectors.toList());
 
         model.addAttribute("contents", "base/register/cashRegister::cashRegister_contents");
-
-        List<ProductInformationDto> productInformationDtoList = productInformationServiceImpl.selectMany(productForm.getProductId(), productForm.getProductName());
-
-        model.addAttribute("productInformationDtoList", productInformationDtoList);
+        model.addAttribute("memberHistoryFormList", memberHistoryFormList);
 
         return "base/homeLayout";
     }
 
     // 商品購入画面のGETメソッド
     @GetMapping("/productPurchase/{id:.+}")
-    public String getProductDetail(@ModelAttribute ProductForm productForm, Model model, @PathVariable("id") String productId) {
-
+    public String getProductDetail(@ModelAttribute MemberHistoryForm memberHistoryForm, Model model, @PathVariable("id") String productId) {
         System.out.println("productId =" + productId);
 
-        model.addAttribute("contents", "base/register/productPurchase::productPurchase_contents");
-
         if (productId != null && productId.length() > 0) {
+            memberHistoryForm = memberHistoryConversionImpl.productInformationDto2Form(productInformationServiceImpl.selectOne(productId));
+            String imageForProductDetails = "../img/" + memberHistoryForm.getProductImageId();
 
-            ProductInformationDto productInformationDto = productInformationServiceImpl.selectOne(productId);
-
-            productForm.setProductId(productInformationDto.getProductId()); //商品ID
-            productForm.setProductName(productInformationDto.getProductName()); //商品名
-            productForm.setProductPrice(productInformationDto.getProductPrice()); //商品金額
-            productForm.setProductType(productInformationDto.getProductType()); //商品の種類
-
-            model.addAttribute("productForm", productForm);
+            model.addAttribute("contents", "base/register/productPurchase::productPurchase_contents");
+            model.addAttribute("imageForProductDetails", imageForProductDetails);
+            model.addAttribute("memberHistoryForm", memberHistoryForm);
         }
-        return "base/homeLayout";
-    }
-
-    // 新規商品履歴登録のGETメソッド
-    @GetMapping("/productPurchase_contents")
-    public String getProductPurchase(@ModelAttribute ProductForm ProductForm, Model model) {
-        model.addAttribute("contents", "base/product/productPurchase::productPurchase_contents");
         return "base/homeLayout";
     }
 
     // 新規商品履歴登録のPOSTメソッド
     @PostMapping(value = "/productPurchase", params = "purchase")
-    public String postProductPurchase(@ModelAttribute ProductForm form, BindingResult bindingResult, Model model) {
+    public String postProductPurchase(@ModelAttribute @Validated(MemberHistoryGroupOrder.class) MemberHistoryForm memberHistoryForm, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
-            return getProductPurchase(form, model);
+            String imageForProductDetails = "../img/" + memberHistoryForm.getProductImageId();
+            model.addAttribute("contents", "base/register/productPurchase::productPurchase_contents");
+            model.addAttribute("imageForProductDetails", imageForProductDetails);
+            return "base/homeLayout";
         }
-        System.out.println(form);
+        System.out.println(memberHistoryForm);
 
         MemberHistoryDto memberHistoryDto = new MemberHistoryDto();
-
-        memberHistoryDto.setProductId(form.getProductId()); // 商品ID
-        memberHistoryDto.setProductName(form.getProductName()); // 商品名
-        memberHistoryDto.setProductPrice(form.getProductPrice()); // 商品金額
-        memberHistoryDto.setProductType(form.getProductType()); // 商品の種類
-        memberHistoryDto.setMemberId(form.getMemberId()); //会員ID
+        memberHistoryDto.setProductId(memberHistoryForm.getProductId()); // 商品ID
+        memberHistoryDto.setProductName(memberHistoryForm.getProductName()); // 商品名
+        memberHistoryDto.setProductPrice(memberHistoryForm.getProductPrice()); // 商品金額
+        memberHistoryDto.setProductType(memberHistoryForm.getProductType()); // 商品の種類
+        memberHistoryDto.setMemberId(memberHistoryForm.getMemberId()); // 会員ID
+        memberHistoryDto.setProductImageId(memberHistoryForm.getProductImageId()); // 商品イメージID
 
         boolean memberHistoryResult = memberHistoryService.insertOne(memberHistoryDto);
 
@@ -93,14 +96,15 @@ public class CashRegisterController {
 
         System.out.println("購入商品の削除処理");
 
-        boolean productResult = productInformationServiceImpl.deleteOne(form.getProductId());
+        boolean productResult = productInformationServiceImpl.deleteOne(memberHistoryForm.getProductId());
 
         if (productResult) {
-            model.addAttribute("result", "削除成功");
+            System.out.println("削除成功");
         } else {
-            model.addAttribute("result", "削除失敗");
+            System.out.println("削除失敗");
         }
 
-        return "base/login";
+        MemberHistoryForm memberHistoryFormReturn = new MemberHistoryForm();
+        return getProductInformation(memberHistoryFormReturn, model);
     }
 }

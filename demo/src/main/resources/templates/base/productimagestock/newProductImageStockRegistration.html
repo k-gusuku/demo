@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8">
+    <link th:href="@{/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css}" rel="stylesheet"/>
+    <script th:src="@{/webjars/jquery/1.11.1/jquery.min.js}"></script>
+    <script th:src="@{/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js}"></script>
+</head>
+<body>
+<div th:fragment="newProductImageStockRegistration_contents">
+    <div class="col-sm-5">
+        <div class="page-header">
+            <h1>新規商品画像登録</h1>
+        </div>
+        <form method="post" th:action="@{/newProductImageStockRegistration_contents}"
+              th:object="${productImageStockForm}">
+            <table class="table table-bordered table-hover">
+                <!-- 商品イメージIDの入力エリア -->
+                <tr>
+                    <th class="active col-sm-3">商品イメージID</th>
+                    <td>
+                        <div class="form-group" th:classappend="${#fields.hasErrors('productImageId')}?'has-error'">
+                            <input type="text" class="form-control" th:field="*{productImageId}"/>
+                            <span class="text-danger" th:if="${#fields.hasErrors('productImageId')}"
+                                  th:errors="*{productImageId}">productImageId error</span>
+                        </div>
+                    </td>
+                </tr>
+                <!-- 商品イメージ名の入力エリア -->
+                <tr>
+                    <th class="active">商品イメージ名</th>
+                    <td>
+                        <div class="form-group" th:classappend="${#fields.hasErrors('productImageName')}?'has-error'">
+                            <input type="text" class="form-control" th:field="*{productImageName}"/>
+                            <span class="text-danger" th:if="${#fields.hasErrors('productImageName')}"
+                                  th:errors="*{productImageName}">productImageName error</span>
+                        </div>
+                    </td>
+                </tr>
+                <!-- 商品イメージの種類の入力エリア -->
+                <tr>
+                    <th class="active">商品イメージの種類</th>
+                    <td>
+                        <div class="form-group"
+                             th:classappend="${#fields.hasErrors('productImageType')}?'has-error'">
+                            <div class="checkbox-inline" th:each="item:${radioProductImageType}">
+                                <input type="radio" name="radioProductImageType" th:text="${item.key}"
+                                       th:value="${item.value}" th:field="*{productImageType}"/>
+                            </div>
+                            <br/>
+                            <span class="text-danger" th:if="${#fields.hasErrors('productImageType')}"
+                                  th:errors="*{productImageType}">productImageType error</span>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+            <!-- 商品イメージ登録ボタン -->
+            <button class="btn btn-warning" type="submit">
+                商品イメージ登録
+            </button>
+        </form>
+    </div>
+</div>
+</body>
+</html>

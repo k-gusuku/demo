@@ -19,8 +19,9 @@
                 <tr>
                     <th class="active col-sm-3">会員ID</th>
                     <td>
-                        <div class="form-group">
+                        <div class="form-group" th:classappend="${#fields.hasErrors('memberId')}?'has-error'">
                             <input type="text" class="form-control" th:field="*{memberId}"/>
+                            <span class="text-danger" th:if="${#fields.hasErrors('memberId')}" th:errors="*{memberId}">memberId error</span>
                         </div>
                     </td>
                 </tr>
@@ -28,8 +29,9 @@
                 <tr>
                     <th class="active">パスワード</th>
                     <td>
-                        <div class="form-group">
+                        <div class="form-group" th:classappend="${#fields.hasErrors('password')}?'has-error'">
                             <input type="text" class="form-control" th:field="*{password}"/>
+                            <span class="text-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">password error</span>
                         </div>
                     </td>
                 </tr>
@@ -37,8 +39,10 @@
                 <tr>
                     <th class="active">会員名</th>
                     <td>
-                        <div class="form-group">
+                        <div class="form-group" th:classappend="${#fields.hasErrors('memberName')}?'has-error'">
                             <input type="text" class="form-control" th:field="*{memberName}"/>
+                            <span class="text-danger" th:if="${#fields.hasErrors('memberName')}"
+                                  th:errors="*{memberName}">memberName error</span>
                         </div>
                     </td>
                 </tr>
@@ -46,8 +50,10 @@
                 <tr>
                     <th class="active">生年月日</th>
                     <td>
-                        <div class="form-group">
+                        <div class="form-group" th:classappend="${#fields.hasErrors('birthday')}?'has-error'">
                             <input type="text" class="form-control" placeholder="yyyy/MM/dd" th:field="*{birthday}"/>
+                            <span class="text-danger" th:if="${#fields.hasErrors('birthday')}"
+                                  th:errors="*{birthday}"></span>
                         </div>
                     </td>
                 </tr>
@@ -55,8 +61,10 @@
                 <tr>
                     <th class="active">年齢</th>
                     <td>
-                        <div class="form-group">
+                        <div class="form-group" th:classappend="${#fields.hasErrors('age')}?'has-error'">
                             <input type="text" class="form-control" th:field="*{age}"/>
+                            <span class="text-danger" th:if="${#fields.hasErrors('age')}"
+                                  th:errors="'*{age}'">age error</span>
                         </div>
                     </td>
                 </tr>
@@ -64,8 +72,10 @@
                 <tr>
                     <th class="active">電話番号</th>
                     <td>
-                        <div class="form-group">
+                        <div class="form-group" th:classappend="${#fields.hasErrors('phoneNumber')}?'has-error'">
                             <input type="text" class="form-control" th:field="*{phoneNumber}"/>
+                            <span class="text-danger" th:if="${#fields.hasErrors('phoneNumber')}"
+                                  th:errors="'*{phoneNumber}'">phoneNumber error</span>
                         </div>
                     </td>
                 </tr>
@@ -73,19 +83,16 @@
                 <tr>
                     <th class="active">住所</th>
                     <td>
-                        <div class="form-group">
+                        <div class="form-group" th:classappend="${#fields.hasErrors('address')}?'has-error'">
                             <input type="text" class="form-control" th:field="*{address}"/>
+                            <span class="text-danger" th:if="${#fields.hasErrors('address')}"
+                                  th:errors="*{address}">address error</span>
                         </div>
                     </td>
                 </tr>
             </table>
-            <ui>
-                <li th:each="error:${#fields.detailedErrors()}">
-                    <span th:text="${error.message}">Error message</span>
-                </li>
-            </ui>
             <!-- 会員登録ボタン -->
-            <button class="btn btn-primary" type="submit">
+            <button class="btn btn-warning" type="submit">
                 会員登録
             </button>
         </form>

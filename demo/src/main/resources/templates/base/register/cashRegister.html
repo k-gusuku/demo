@@ -9,7 +9,7 @@
     <div class="page-header">
         <h1>レジシステム</h1>
     </div>
-    <form method="get" action="/productInformation_contents" th:object="${productForm}">
+    <form method="get" action="/cashRegister_contents" th:object="${memberHistoryForm}">
         <div class="form-group">
             <label>商品ID</label>
             <input type="text" th:field="*{productId}"/>
@@ -18,26 +18,31 @@
             <label>商品名</label>
             <input type="text" th:field="*{productName}"/>
         </div>
-        <button class="btn btn-primary" type="submit">検索</button>
+        <button class="btn btn-warning" type="submit">検索</button>
     </form>
     <br/>
     <table class="table table-bordered table-hover table-striped">
         <tr>
-            <th class="info col-sm-2">商品ID</th>
-            <th class="info col-sm-2">商品名</th>
-            <th class="info col-sm-2">商品金額</th>
-            <th class="info col-sm-2">商品の種類</th>
-            <th class="info col-sm-2"></th>
+            <th class="warning col-sm-2">商品ID</th>
+            <th class="warning col-sm-2">商品名</th>
+            <th class="warning col-sm-2">商品金額</th>
+            <th class="warning col-sm-2">商品の種類</th>
+            <th class="warning col-sm-2">イメージ</th>
+            <th class="warning col-sm-2"></th>
         </tr>
-        <tr th:each="product:${productInformationDtoList}">
+        <tr th:each="product:${memberHistoryFormList}">
             <td th:text="${product.productId}"></td>
             <td th:text="${product.productName}"></td>
             <td th:text="${product.productPrice}"></td>
             <td th:text="${product.productType}"></td>
             <td>
-                <a class="btn btn-primary" th:href="@{'/productPurchase/'+${product.productId}}">購入</a>
+                <img th:src="${product.productImageId}" style="width:90px;height:60px">
+            </td>
+            <td>
+                <a class="btn btn-warning" th:href="@{'/productPurchase/'+${product.productId}}">詳細</a>
             </td>
         </tr>
+    </table>
 </div>
 </body>
 </html>

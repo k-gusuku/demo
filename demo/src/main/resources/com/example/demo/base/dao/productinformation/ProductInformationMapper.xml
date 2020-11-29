@@ -1,0 +1,123 @@
+<?xml version="1.0"  encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.base.dao.productinformation.ProductInformationDao">
+    <resultMap id="product" type="com.example.demo.base.dao.productinformation.ProductInformationDto">
+        <id column="PRODUCT_ID" property="productId"/>
+        <result column="PRODUCT_NAME" property="productName"/>
+        <result column="PRODUCT_PRICE" property="productPrice"/>
+        <result column="PRODUCT_TYPE" property="productType"/>
+        <result column="PRODUCT_IMAGE_ID" property="productImageId"/>
+    </resultMap>
+
+    <!--+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+    <!-- SELECT -->
+    <!--+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+
+    <select id="selectOne" resultMap="product">
+        SELECT
+            PRODUCT_ID,
+            PRODUCT_NAME,
+            PRODUCT_PRICE,
+            PRODUCT_TYPE,
+            PRODUCT_IMAGE_ID
+        FROM
+            PRODUCT
+        WHERE
+            PRODUCT_ID = #{productId}
+    </select>
+
+    <select id="selectMany" resultMap="product">
+        SELECT
+        PRODUCT_ID,
+        PRODUCT_NAME,
+        PRODUCT_PRICE,
+        PRODUCT_TYPE,
+        PRODUCT_IMAGE_ID
+        FROM
+        PRODUCT
+        <where>
+            <if test="productId != null">
+                PRODUCT_ID = #{productId}
+            </if>
+            <if test="productName != null">
+                OR
+                PRODUCT_NAME LIKE CONCAT('%', #{productName}, '%')
+            </if>
+        </where>
+    </select>
+
+    <!--+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+    <!-- INSERT -->
+    <!--+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+
+    <insert id="insertOne" parameterType="com.example.demo.base.domain.productinformation.ProductForm">
+        INSERT INTO PRODUCT
+        <trim suffixOverrides="," suffix=")" prefix="(">
+            <if test="productId != null">
+                PRODUCT_ID,
+            </if>
+            <if test="productName != null">
+                PRODUCT_NAME,
+            </if>
+            <if test="productPrice != null">
+                PRODUCT_PRICE,
+            </if>
+            <if test="productType != null">
+                PRODUCT_TYPE,
+            </if>
+            <if test="productImageId != null">
+                PRODUCT_IMAGE_ID,
+            </if>
+        </trim>
+        <trim suffixOverrides="," suffix=")" prefix="values(">
+            <if test="productId != null">
+                #{productId},
+            </if>
+            <if test="productName != null">
+                #{productName},
+            </if>
+            <if test="productPrice != null">
+                #{productPrice},
+            </if>
+            <if test="productType != null">
+                #{productType},
+            </if>
+            <if test="productImageId != null">
+                #{productImageId},
+            </if>
+        </trim>
+    </insert>
+
+    <!--+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+    <!-- UPDATE -->
+    <!--+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+
+    <update id="updateOne" parameterType="com.example.demo.base.domain.productinformation.ProductForm">
+        UPDATE PRODUCT
+        <set>
+            <if test="productName != null">
+                PRODUCT_NAME = #{productName},
+            </if>
+            <if test="productPrice != null">
+                PRODUCT_PRICE = #{productPrice},
+            </if>
+            <if test="productType != null">
+                PRODUCT_TYPE = #{productType},
+            </if>
+            <if test="productImageId != null">
+                PRODUCT_IMAGE_ID = #{productImageId},
+            </if>
+        </set>
+        WHERE
+        PRODUCT_ID = #{productId}
+    </update>
+
+    <!--+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+    <!-- DELETE -->
+    <!--+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+
+    <delete id="deleteOne" parameterType="string">
+        DELETE FROM PRODUCT WHERE PRODUCT_ID = #{productId}
+    </delete>
+</mapper>

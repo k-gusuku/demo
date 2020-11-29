@@ -17,6 +17,10 @@ body {
     display: block;
     top: 0px;
     bottom: 0;
+    /* スクロールバー */
+    overflow-y: scroll;
+    margin-bottom: 70px;
+    height: 100%;
 }
 
 .page-header {

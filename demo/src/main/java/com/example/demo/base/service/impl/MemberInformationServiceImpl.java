@@ -1,7 +1,7 @@
 package com.example.demo.base.service.impl;
 
-import com.example.demo.base.dao.memberInformation.MemberInformationDao;
-import com.example.demo.base.dao.memberInformation.MemberInformationDto;
+import com.example.demo.base.dao.memberinformation.MemberInformationDao;
+import com.example.demo.base.dao.memberinformation.MemberInformationDto;
 import com.example.demo.base.service.MemberInformationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -29,6 +29,10 @@ public class MemberInformationServiceImpl implements MemberInformationService {
         return dao.selectOne(memberId);
     }
 
+    public MemberInformationDto selectMember(String memberId, String memberName) {
+        return dao.selectMember(memberId, memberName);
+    }
+
     @Override
     public List<MemberInformationDto> selectMany(String memberId, String memberName) {
         return dao.selectMany(memberId, memberName);
@@ -36,7 +40,6 @@ public class MemberInformationServiceImpl implements MemberInformationService {
 
     @Override
     public boolean insertOne(MemberInformationDto memberInformationDto) {
-
         int rowNumber = dao.insertOne(memberInformationDto);
 
         boolean result = false;
@@ -49,7 +52,6 @@ public class MemberInformationServiceImpl implements MemberInformationService {
 
     @Override
     public boolean updateOne(MemberInformationDto memberInformationDto) {
-
         int rowNumber = dao.updateOne(memberInformationDto);
 
         boolean result = false;
@@ -62,7 +64,6 @@ public class MemberInformationServiceImpl implements MemberInformationService {
 
     @Override
     public boolean deleteOne(String memberId) {
-
         int rowNumber = dao.deleteOne(memberId);
 
         boolean result = false;
@@ -81,7 +82,6 @@ public class MemberInformationServiceImpl implements MemberInformationService {
 
     @Override
     public byte[] getFile(String fileName) throws IOException {
-
         // ファイルシステム(デフォルト)の取得
         FileSystem fs = FileSystems.getDefault();
 

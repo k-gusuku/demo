@@ -1,0 +1,106 @@
+<?xml version="1.0"  encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.base.dao.productimagestock.ProductImageStockDao">
+    <resultMap id="BaseResultMap" type="com.example.demo.base.dao.productimagestock.ProductImageStockDto">
+        <id column="PRODUCT_IMAGE_ID" property="productImageId"/>
+        <result column="PRODUCT_IMAGE_NAME" property="productImageName"/>
+        <result column="PRODUCT_IMAGE_TYPE" property="productImageType"/>
+    </resultMap>
+
+    <!--+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+    <!-- SELECT -->
+    <!--+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+
+    <select id="selectOne" resultMap="BaseResultMap">
+        SELECT
+        PRODUCT_IMAGE_ID,
+        PRODUCT_IMAGE_NAME,
+        PRODUCT_IMAGE_TYPE
+        FROM
+        PRODUCT_IMAGE_STOCK
+        WHERE
+        PRODUCT_IMAGE_ID = #{productImageId}
+    </select>
+
+    <select id="selectMany" resultMap="BaseResultMap">
+        SELECT
+        PRODUCT_IMAGE_ID,
+        PRODUCT_IMAGE_NAME,
+        PRODUCT_IMAGE_TYPE
+        FROM
+        PRODUCT_IMAGE_STOCK
+        <where>
+            <if test="productImageId != null">
+                PRODUCT_IMAGE_ID = #{productImageId}
+            </if>
+            <if test="productImageName != null">
+                OR
+                PRODUCT_IMAGE_NAME LIKE CONCAT('%', #{productImageName}, '%')
+            </if>
+            <if test="productImageType != null">
+                OR
+                PRODUCT_IMAGE_TYPE = #{productImageType}
+            </if>
+        </where>
+    </select>
+
+    <!--+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+    <!-- INSERT -->
+    <!--+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+
+    <insert id="insertOne" parameterType="com.example.demo.base.dao.productimagestock.ProductImageStockDto">
+        INSERT INTO PRODUCT_IMAGE_STOCK
+        <trim suffixOverrides="," suffix=")" prefix="(">
+            <if test="productImageId != null">
+                PRODUCT_IMAGE_ID,
+            </if>
+            <if test="productImageName != null">
+                PRODUCT_IMAGE_NAME,
+            </if>
+            <if test="productImageType != null">
+                PRODUCT_IMAGE_TYPE,
+            </if>
+        </trim>
+        <trim suffixOverrides="," suffix=")" prefix="values(">
+            <if test="productImageId != null">
+                #{productImageId},
+            </if>
+            <if test="productImageName != null">
+                #{productImageName},
+            </if>
+            <if test="productImageType != null">
+                #{productImageType},
+            </if>
+        </trim>
+    </insert>
+
+    <!--+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+    <!-- UPDATE -->
+    <!--+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+
+    <update id="updateOne" parameterType="com.example.demo.base.dao.productimagestock.ProductImageStockDto">
+        UPDATE PRODUCT_IMAGE_STOCK
+        <set>
+            <if test="productImageId != null">
+                PRODUCT_IMAGE_ID = #{productImageId},
+            </if>
+            <if test="productImageName != null">
+                PRODUCT_IMAGE_NAME = #{productImageName},
+            </if>
+            <if test="productImageType != null">
+                PRODUCT_IMAGE_TYPE = #{productImageType},
+            </if>
+        </set>
+        WHERE
+        PRODUCT_IMAGE_ID = #{productImageId}
+    </update>
+
+    <!--+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+    <!-- DELETE -->
+    <!--+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+
+    <delete id="deleteOne" parameterType="string">
+        DELETE FROM PRODUCT_IMAGE_STOCK WHERE PRODUCT_IMAGE_ID = #{productImageId}
+    </delete>
+</mapper>

@@ -66,7 +66,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         // 静的リソースを除外
         // 静的リソースへのアクセスには、セキュリティを適用しない
-        web.ignoring().antMatchers("/webjars/**", "/css/**");
+        web.ignoring().antMatchers("/webjars/**", "/css/**", "/img/**");
     }
 
     protected void configure(HttpSecurity http) throws Exception {
@@ -76,6 +76,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/css/**").permitAll() // cssへアクセス許可
                 .antMatchers("/img/**").permitAll() // imgへアクセス許可
                 .antMatchers("/login").permitAll() // ログインページは直リンクOK
+                .antMatchers("/newMemberRegistrationForMember").permitAll() // 会員用新規会員登録画面は直リンクOK
                 .antMatchers("/employeeInformation_contents").hasAuthority("ROLE_ADMIN")
                 .anyRequest().authenticated(); // それ以外は直リンク禁止
 

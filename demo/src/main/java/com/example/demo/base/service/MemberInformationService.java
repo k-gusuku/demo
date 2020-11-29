@@ -1,6 +1,6 @@
 package com.example.demo.base.service;
 
-import com.example.demo.base.dao.memberInformation.MemberInformationDto;
+import com.example.demo.base.dao.memberinformation.MemberInformationDto;
 import org.springframework.dao.DataAccessException;
 
 import java.io.IOException;
@@ -15,6 +15,15 @@ public interface MemberInformationService {
      * @return 取得データ
      */
     MemberInformationDto selectOne(String userId);
+
+    /**
+     * 会員テーブルから会員が情報を取得.
+     *
+     * @param memberId 会員ID
+     * @param memberName 会員名
+     * @return 取得データ
+     */
+    MemberInformationDto selectMember(String memberId, String memberName);
 
     /**
      * 会員テーブルから全データを取得する.

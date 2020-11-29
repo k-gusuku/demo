@@ -1,17 +1,17 @@
 package com.example.demo.base.service.impl;
 
-import com.example.demo.base.dao.memberHistory.MemberHistoryDao;
-import com.example.demo.base.dao.memberHistory.MemberHistoryDto;
+import com.example.demo.base.dao.memberhistory.MemberHistoryDao;
+import com.example.demo.base.dao.memberhistory.MemberHistoryDto;
 import com.example.demo.base.service.MemberHistoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
 public class MemberHistoryServiceImpl implements MemberHistoryService {
-
     @Autowired
     @Qualifier("MemberHistoryDaoImpl")
     MemberHistoryDao dao;
@@ -23,7 +23,7 @@ public class MemberHistoryServiceImpl implements MemberHistoryService {
 
     @Override
     public boolean insertOne(MemberHistoryDto memberHistoryDto) {
-
+        memberHistoryDto.setSaleDay(new Date());
         int rowNumber = dao.insertOne(memberHistoryDto);
 
         boolean result = false;

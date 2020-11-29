@@ -1,7 +1,7 @@
 package com.example.demo.base.service.impl;
 
-import com.example.demo.base.dao.productInformation.ProductInformationDao;
-import com.example.demo.base.dao.productInformation.ProductInformationDto;
+import com.example.demo.base.dao.productinformation.ProductInformationDao;
+import com.example.demo.base.dao.productinformation.ProductInformationDto;
 import com.example.demo.base.service.ProductInformationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;

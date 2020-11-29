@@ -11,14 +11,19 @@
             <div class="page-header">
                 <h1>商品詳細</h1>
             </div>
+            <img th:src="*{imageForProductDetails}" style="width:627px;height:560px">
+            <br/>
+            <br/>
             <form method="post" th:action="@{/productDetail}" th:object="${productForm}">
                 <table class="table table-bordered table-hover">
+                    <!-- 商品ID(入力不可) -->
                     <tr>
-                        <!-- 商品ID(入力不可) -->
                         <th class="active col-sm-2">商品ID</th>
                         <td class="col-sm-3">
-                            <div class="form-group">
+                            <div class="form-group" th:classapppend="${#fields.hasErrors('productId')}?'has-errors'">
                                 <input type="text" class="form-control" th:field="*{productId}" readonly="readonly"/>
+                                <span class="text-danger" th:if="${#fields.hasErrors('productId')}"
+                                      th:errors="*{productId}">error productId</span>
                             </div>
                         </td>
                     </tr>
@@ -26,8 +31,10 @@
                     <tr>
                         <th class="active">商品名</th>
                         <td>
-                            <div class="form-group">
+                            <div class="form-group" th:classapppend="${#fields.hasErrors('productName')}?'has-errors'">
                                 <input type="text" class="form-control" th:field="*{productName}"/>
+                                <span class="text-danger" th:if="${#fields.hasErrors('productName')}"
+                                      th:errors="*{productName}">error productName</span>
                             </div>
                         </td>
                     </tr>
@@ -35,8 +42,10 @@
                     <tr>
                         <th class="active">商品金額</th>
                         <td>
-                            <div class="form-group">
+                            <div class="form-group" th:classapppend="${#fields.hasErrors('productPrice')}?'has-errors'">
                                 <input type="text" class="form-control" th:field="*{productPrice}"/>
+                                <span class="text-danger" th:if="${#fields.hasErrors('productPrice')}"
+                                      th:errors="*{productPrice}">error productPrice</span>
                             </div>
                         </td>
                     </tr>
@@ -44,20 +53,78 @@
                     <tr>
                         <th class="active">商品の種類</th>
                         <td>
-                            <div class="form-group">
-                                <input type="text" class="form-control" th:field="*{productType}"/>
+                            <div class="form-group" th:classappend="${#fields.hasErrors('productType')}?'has-error'">
+                                <div class="checkbox-inline" th:each="item:${radioProductType}">
+                                    <input type="radio" name="radioProductType" th:text="${item.key}"
+                                           th:value="${item.value}" th:field="*{productType}"/>
+                                </div>
+                                <br/>
+                                <span class="text-danger" th:if="${#fields.hasErrors('productType')}"
+                                      th:errors="*{productType}">productType error</span>
+                            </div>
+                        </td>
+                    </tr>
+                    <!-- イメージID -->
+                    <tr>
+                        <th class="active">イメージID</th>
+                        <td>
+                            <div class="form-group"
+                                 th:classapppend="${#fields.hasErrors('productImageId')}?'has-errors'">
+                                <input type="text" class="form-control" th:field="*{productImageId}"/>
+                                <span class="text-danger" th:if="${#fields.hasErrors('productImageId')}"
+                                      th:errors="*{productImageId}">error productImageId</span>
                             </div>
                         </td>
                     </tr>
                 </table>
                 <!-- 更新ボタン -->
-                <button class="btn btn-primary btn-lg pull-right" type="submit" name="update">
+                <button class="btn btn-warning btn-lg pull-right" type="submit" name="update">
                     更新
                 </button>
                 <!-- 削除ボタン -->
                 <button class="btn btn-danger btn-lg" type="submit" name="delete">
                     削除
                 </button>
+                <br/>
+                <label class="text-info" th:text="${result}">結果表示</label>
+                <br/>
+                <br/>
+                <div class="form-group">
+                    <label>商品イメージID</label>
+                    <input type="text" th:field="*{searchForProductImageId}"/>
+                </div>
+                <div class="form-group">
+                    <label>商品イメージ名</label>
+                    <input type="text" th:field="*{searchForProductImageName}"/>
+                </div>
+                <div class="form-group">
+                    <div class="checkbox-inline" th:each="item:${radioProductImageType}">
+                        <input type="radio" name="radioProductImageType" th:text="${item.key}"
+                               th:value="${item.value}" th:field="*{searchForProductImageType}"/>
+                    </div>
+                </div>
+                <!-- 画像在庫検索ボタン -->
+                <button class="btn btn-warning pull-right" type="submit" name="search">
+                    画像在庫検索
+                </button>
+                <br/>
+                <br/>
+                <table class="table table-bordered table-hover table-striped">
+                    <tr>
+                        <th class="warning col-sm-2">商品イメージID</th>
+                        <th class="warning col-sm-2">商品イメージ名</th>
+                        <th class="warning col-sm-2">商品イメージの種類</th>
+                        <th class="warning col-sm-2"></th>
+                    </tr>
+                    <tr th:each="productImageStock:${productImageStockFormList}">
+                        <td th:text="${productImageStock.productImageId}"></td>
+                        <td th:text="${productImageStock.productImageName}"></td>
+                        <td th:text="${productImageStock.productImageType}"></td>
+                        <td>
+                            <img th:src="${productImageStock.productImage}" style="width:90px;height:60px">
+                        </td>
+                    </tr>
+                </table>
             </form>
         </div>
     </div>

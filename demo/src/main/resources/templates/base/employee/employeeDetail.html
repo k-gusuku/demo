@@ -17,8 +17,10 @@
                         <!-- 従業員ID(入力不可) -->
                         <th class="active col-sm-2">従業員ID</th>
                         <td class="col-sm-3">
-                            <div class="form-group">
+                            <div class="form-group" th:classappend="${#fields.hasErrors('employeeId')}?'has-error'">
                                 <input type="text" class="form-control" th:field="*{employeeId}" readonly="readonly"/>
+                                <span class="text-danger" th:if="${#fields.hasErrors('employeeId')}"
+                                      th:errors="*{employeeId}">error employeeId</span>
                             </div>
                         </td>
                     </tr>
@@ -26,20 +28,24 @@
                     <tr>
                         <th class="active">従業員名</th>
                         <td>
-                            <div class="form-group">
+                            <div class="form-group" th:classappend="${#fields.hasErrors('employeeName')}?'has-error'">
                                 <input type="text" class="form-control" th:field="*{employeeName}"/>
+                                <span class="text-danger" th:if="${#fields.hasErrors('employeeName')}"
+                                      th:errors="*{employeeName}">employeeName error</span>
                             </div>
                         </td>
                     </tr>
                 </table>
                 <!-- 更新ボタン -->
-                <button class="btn btn-primary btn-lg pull-right" type="submit" name="update">
+                <button class="btn btn-warning btn-lg pull-right" type="submit" name="update">
                     更新
                 </button>
                 <!-- 削除ボタン -->
                 <button class="btn btn-danger btn-lg" type="submit" name="delete">
                     削除
                 </button>
+                <br/>
+                <label class="text-info" th:text="${result}">結果表示</label>
             </form>
         </div>
     </div>

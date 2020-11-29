@@ -28,7 +28,10 @@
     <label>パスワード</label>
     <input type="password" name="password"/><br/>
     <br/>
-    <button class="btn btn-primary" type="submit">ログイン</button>
+    <button class="btn btn-warning" type="submit">ログイン</button>
 </form>
+<label class="text-info" th:text="${result}">結果表示</label>
+<br/>
+<a th:href="@{'/newMemberRegistrationForMember'}">新規会員登録はこちら</a>
 </body>
 </html>

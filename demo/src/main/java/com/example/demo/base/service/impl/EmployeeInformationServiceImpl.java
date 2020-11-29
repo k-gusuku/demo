@@ -1,7 +1,7 @@
 package com.example.demo.base.service.impl;
 
-import com.example.demo.base.dao.employeeInformation.EmployeeInformationDao;
-import com.example.demo.base.dao.employeeInformation.EmployeeInformationDto;
+import com.example.demo.base.dao.employeeinformation.EmployeeInformationDao;
+import com.example.demo.base.dao.employeeinformation.EmployeeInformationDto;
 import com.example.demo.base.service.EmployeeInformationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;

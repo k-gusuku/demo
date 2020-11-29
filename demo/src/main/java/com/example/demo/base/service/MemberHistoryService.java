@@ -1,6 +1,6 @@
 package com.example.demo.base.service;
 
-import com.example.demo.base.dao.memberHistory.MemberHistoryDto;
+import com.example.demo.base.dao.memberhistory.MemberHistoryDto;
 
 import java.util.List;
 
