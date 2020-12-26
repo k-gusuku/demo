@@ -13,10 +13,8 @@ import java.util.List;
 
 @Repository("MemberInformationDaoImpl")
 public class MemberInformationDaoImpl implements MemberInformationDao {
-
-    @Autowired
     @Lazy
-    MemberInformationDao dao;
+    private final MemberInformationDao memberInformationDao;
 
     @Autowired
     JdbcTemplate jdbc;
@@ -24,19 +22,24 @@ public class MemberInformationDaoImpl implements MemberInformationDao {
     @Autowired
     PasswordEncoder passwordEncoder;
 
+    @Autowired
+    public MemberInformationDaoImpl(MemberInformationDao memberInformationDao) {
+        this.memberInformationDao = memberInformationDao;
+    }
+
     @Override
     public MemberInformationDto selectOne(String memberId) throws DataAccessException {
-        return dao.selectOne(memberId);
+        return memberInformationDao.selectOne(memberId);
     }
 
     @Override
     public MemberInformationDto selectMember(String memberId, String memberName) throws DataAccessException {
-        return dao.selectMember(memberId, memberName);
+        return memberInformationDao.selectMember(memberId, memberName);
     }
 
     @Override
     public List<MemberInformationDto> selectMany(String memberId, String memberName) throws DataAccessException {
-        return dao.selectMany(memberId, memberName);
+        return memberInformationDao.selectMany(memberId, memberName);
     }
 
     @Override
@@ -45,17 +48,17 @@ public class MemberInformationDaoImpl implements MemberInformationDao {
         String password = passwordEncoder.encode(memberInformationDto.getPassword());
         memberInformationDto.setPassword(password);
 
-        return dao.insertOne(memberInformationDto);
+        return memberInformationDao.insertOne(memberInformationDto);
     }
 
     @Override
     public int updateOne(MemberInformationDto memberInformationDto) throws DataAccessException {
-        return dao.updateOne(memberInformationDto);
+        return memberInformationDao.updateOne(memberInformationDto);
     }
 
     @Override
     public int deleteOne(String memberId) throws DataAccessException {
-        return dao.deleteOne(memberId);
+        return memberInformationDao.deleteOne(memberId);
     }
 
     @Override

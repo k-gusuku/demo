@@ -1,12 +1,11 @@
 package com.example.demo.base.controller;
 
-import com.example.demo.base.conversion.memberhistory.impl.MemberHistoryConversionImpl;
-import com.example.demo.base.conversion.productinformation.impl.ProductInformationConversionImpl;
+import com.example.demo.base.conversion.memberhistory.MemberHistoryConversion;
 import com.example.demo.base.dao.memberhistory.MemberHistoryDto;
 import com.example.demo.base.domain.memberhistory.MemberHistoryForm;
 import com.example.demo.base.domain.memberhistory.MemberHistoryGroupOrder;
-import com.example.demo.base.service.impl.MemberHistoryServiceImpl;
-import com.example.demo.base.service.impl.ProductInformationServiceImpl;
+import com.example.demo.base.service.MemberHistoryService;
+import com.example.demo.base.service.ProductInformationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.stereotype.Controller;
@@ -21,27 +20,28 @@ import java.util.stream.Collectors;
 
 @Controller
 public class CashRegisterController {
-
     @InitBinder
     public void initBinder(WebDataBinder binder) {
         // 未入力のStringをnullに設定する
         binder.registerCustomEditor(String.class, new StringTrimmerEditor(true));
     }
 
+    private final MemberHistoryService memberHistoryService;
+    private final ProductInformationService productInformationService;
+    private final MemberHistoryConversion memberHistoryConversion;
+
     @Autowired
-    MemberHistoryServiceImpl memberHistoryService;
-    @Autowired
-    ProductInformationServiceImpl productInformationServiceImpl;
-    @Autowired
-    ProductInformationConversionImpl productInformationConversionImpl;
-    @Autowired
-    MemberHistoryConversionImpl memberHistoryConversionImpl;
+    public CashRegisterController(MemberHistoryService memberHistoryService, ProductInformationService productInformationService, MemberHistoryConversion memberHistoryConversion) {
+        this.memberHistoryService = memberHistoryService;
+        this.productInformationService = productInformationService;
+        this.memberHistoryConversion = memberHistoryConversion;
+    }
 
     @GetMapping("/cashRegister_contents")
     public String getProductInformation(@ModelAttribute MemberHistoryForm memberHistoryForm, Model model) {
-        List<MemberHistoryForm> memberHistoryFormList = productInformationServiceImpl.selectMany(memberHistoryForm.getProductId(), memberHistoryForm.getProductName()).stream().map(p -> {
+        List<MemberHistoryForm> memberHistoryFormList = productInformationService.selectMany(memberHistoryForm.getProductId(), memberHistoryForm.getProductName()).stream().map(p -> {
             p.setProductImageId("img/" + p.getProductImageId());
-            return memberHistoryConversionImpl.productInformationDto2Form(p);
+            return memberHistoryConversion.productInformationDto2Form(p);
         }).collect(Collectors.toList());
 
         model.addAttribute("contents", "base/register/cashRegister::cashRegister_contents");
@@ -56,7 +56,7 @@ public class CashRegisterController {
         System.out.println("productId =" + productId);
 
         if (productId != null && productId.length() > 0) {
-            memberHistoryForm = memberHistoryConversionImpl.productInformationDto2Form(productInformationServiceImpl.selectOne(productId));
+            memberHistoryForm = memberHistoryConversion.productInformationDto2Form(productInformationService.selectOne(productId));
             String imageForProductDetails = "../img/" + memberHistoryForm.getProductImageId();
 
             model.addAttribute("contents", "base/register/productPurchase::productPurchase_contents");
@@ -96,7 +96,7 @@ public class CashRegisterController {
 
         System.out.println("購入商品の削除処理");
 
-        boolean productResult = productInformationServiceImpl.deleteOne(memberHistoryForm.getProductId());
+        boolean productResult = productInformationService.deleteOne(memberHistoryForm.getProductId());
 
         if (productResult) {
             System.out.println("削除成功");

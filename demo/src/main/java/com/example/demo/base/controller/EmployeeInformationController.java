@@ -1,10 +1,10 @@
 package com.example.demo.base.controller;
 
-import com.example.demo.base.conversion.employeeinformation.impl.EmployeeInformationConversionImpl;
+import com.example.demo.base.conversion.employeeinformation.EmployeeInformationConversion;
 import com.example.demo.base.dao.employeeinformation.EmployeeInformationDto;
 import com.example.demo.base.domain.employee.EmployeeForm;
 import com.example.demo.base.domain.employee.EmployeeGroupOrder;
-import com.example.demo.base.service.impl.EmployeeInformationServiceImpl;
+import com.example.demo.base.service.EmployeeInformationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.http.HttpHeaders;
@@ -22,22 +22,25 @@ import java.util.List;
 
 @Controller
 public class EmployeeInformationController {
-
     @InitBinder
     public void initBinder(WebDataBinder binder) {
         // 未入力のStringをnullに設定する
         binder.registerCustomEditor(String.class, new StringTrimmerEditor(true));
     }
 
+    private final EmployeeInformationService employeeInformationService;
+    private final EmployeeInformationConversion employeeInformationConversion;
+
     @Autowired
-    EmployeeInformationServiceImpl employeeInformationServiceImpl;
-    @Autowired
-    EmployeeInformationConversionImpl employeeInformationConversionImpl;
+    public EmployeeInformationController(EmployeeInformationService employeeInformationService, EmployeeInformationConversion employeeInformationConversion) {
+        this.employeeInformationService = employeeInformationService;
+        this.employeeInformationConversion = employeeInformationConversion;
+    }
 
     // 従業員情報のGET用メソッド
     @GetMapping("/employeeInformation_contents")
     public String getEmployeeInformation(@ModelAttribute EmployeeForm form, Model model) {
-        List<EmployeeInformationDto> employeeInformationDtoList = employeeInformationServiceImpl.selectMany(form.getEmployeeId(), form.getEmployeeName());
+        List<EmployeeInformationDto> employeeInformationDtoList = employeeInformationService.selectMany(form.getEmployeeId(), form.getEmployeeName());
 
         model.addAttribute("contents", "base/employee/employeeInformation::employeeInformation_contents");
         model.addAttribute("employeeInformationDtoList", employeeInformationDtoList);
@@ -51,7 +54,7 @@ public class EmployeeInformationController {
         System.out.println("employeeId =" + employeeId);
 
         if (employeeId != null && employeeId.length() > 0) {
-            employeeForm = employeeInformationConversionImpl.dto2Form(employeeInformationServiceImpl.selectOne(employeeId));
+            employeeForm = employeeInformationConversion.dto2Form(employeeInformationService.selectOne(employeeId));
 
             model.addAttribute("contents", "base/employee/employeeDetail::employeeDetail_contents");
             model.addAttribute("employeeForm", employeeForm);
@@ -75,7 +78,7 @@ public class EmployeeInformationController {
         System.out.println(employeeForm);
 
         employeeForm.setRole("ROLE_ADMIN"); // 権限
-        boolean result = employeeInformationServiceImpl.insertOne(employeeInformationConversionImpl.form2Dto(employeeForm));
+        boolean result = employeeInformationService.insertOne(employeeInformationConversion.form2Dto(employeeForm));
 
         // 会員登録結果の判定
         if (result) {
@@ -100,7 +103,7 @@ public class EmployeeInformationController {
         }
         System.out.println("更新ボタンの処理");
 
-        boolean result = employeeInformationServiceImpl.updateOne(employeeInformationConversionImpl.form2Dto(employeeForm));
+        boolean result = employeeInformationService.updateOne(employeeInformationConversion.form2Dto(employeeForm));
 
         if (result) {
             model.addAttribute("result", "更新成功");
@@ -116,7 +119,7 @@ public class EmployeeInformationController {
     public String postEmployeeDelete(@ModelAttribute EmployeeForm employeeForm, Model model) {
         System.out.println("削除ボタンの処理");
 
-        boolean result = employeeInformationServiceImpl.deleteOne(employeeForm.getEmployeeId());
+        boolean result = employeeInformationService.deleteOne(employeeForm.getEmployeeId());
 
         if (result) {
             model.addAttribute("result", "削除成功");
@@ -135,13 +138,13 @@ public class EmployeeInformationController {
     @GetMapping("/employeeList/csv")
     public ResponseEntity<byte[]> getEmployeeListCsv(Model model) {
         // 会員を全件取得して、CSVをサーバーに保存する
-        employeeInformationServiceImpl.employeeCsvOut();
+        employeeInformationService.employeeCsvOut();
 
         byte[] bytes = null;
 
         try {
 
-            bytes = employeeInformationServiceImpl.getFile("employeeInformation.csv");
+            bytes = employeeInformationService.getFile("employeeInformation.csv");
 
         } catch (IOException e) {
             e.printStackTrace();

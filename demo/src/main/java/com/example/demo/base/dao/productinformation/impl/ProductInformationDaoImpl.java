@@ -12,37 +12,40 @@ import java.util.List;
 
 @Repository("ProductInformationDaoImpl")
 public class ProductInformationDaoImpl implements ProductInformationDao {
-
-    @Autowired
     @Lazy
-    ProductInformationDao dao;
+    private final ProductInformationDao productInformationDao;
 
     @Autowired
     JdbcTemplate jdbc;
 
+    @Autowired
+    public ProductInformationDaoImpl(ProductInformationDao productInformationDao) {
+        this.productInformationDao = productInformationDao;
+    }
+
     @Override
     public ProductInformationDto selectOne(String productId) throws DataAccessException {
-        return dao.selectOne(productId);
+        return productInformationDao.selectOne(productId);
     }
 
     @Override
     public List<ProductInformationDto> selectMany(String productId, String productName) throws DataAccessException {
-        return dao.selectMany(productId, productName);
+        return productInformationDao.selectMany(productId, productName);
     }
 
     @Override
     public int insertOne(ProductInformationDto productInformationDto) throws DataAccessException {
-        return dao.insertOne(productInformationDto);
+        return productInformationDao.insertOne(productInformationDto);
     }
 
     @Override
     public int updateOne(ProductInformationDto productInformationDto) throws DataAccessException {
-        return dao.updateOne(productInformationDto);
+        return productInformationDao.updateOne(productInformationDto);
     }
 
     @Override
     public int deleteOne(String productId) throws DataAccessException {
-        return dao.deleteOne(productId);
+        return productInformationDao.deleteOne(productId);
     }
 
     @Override

@@ -17,27 +17,29 @@ import java.util.List;
 
 @Service
 public class EmployeeInformationServiceImpl implements EmployeeInformationService {
+    @Qualifier("EmployeeInformationDaoImpl")
+    private final EmployeeInformationDao employeeInformationDao;
 
     @Autowired
-    @Qualifier("EmployeeInformationDaoImpl")
-    EmployeeInformationDao dao;
+    public EmployeeInformationServiceImpl(EmployeeInformationDao employeeInformationDao) {
+        this.employeeInformationDao = employeeInformationDao;
+    }
 
     @Override
     public EmployeeInformationDto selectOne(String employeeId) {
 
         //selectOne実行
-        return dao.selectOne(employeeId);
+        return employeeInformationDao.selectOne(employeeId);
     }
 
     @Override
     public List<EmployeeInformationDto> selectMany(String employeeId, String employeeName) {
-        return dao.selectMany(employeeId, employeeName);
+        return employeeInformationDao.selectMany(employeeId, employeeName);
     }
 
     @Override
     public boolean insertOne(EmployeeInformationDto employeeInformationDto) {
-
-        int rowNumber = dao.insertOne(employeeInformationDto);
+        int rowNumber = employeeInformationDao.insertOne(employeeInformationDto);
 
         boolean result = false;
 
@@ -49,8 +51,7 @@ public class EmployeeInformationServiceImpl implements EmployeeInformationServic
 
     @Override
     public boolean updateOne(EmployeeInformationDto employeeInformationDto) {
-
-        int rowNumber = dao.updateOne(employeeInformationDto);
+        int rowNumber = employeeInformationDao.updateOne(employeeInformationDto);
 
         boolean result = false;
 
@@ -62,8 +63,7 @@ public class EmployeeInformationServiceImpl implements EmployeeInformationServic
 
     @Override
     public boolean deleteOne(String employeeId) {
-
-        int rowNumber = dao.deleteOne(employeeId);
+        int rowNumber = employeeInformationDao.deleteOne(employeeId);
 
         boolean result = false;
 
@@ -76,12 +76,11 @@ public class EmployeeInformationServiceImpl implements EmployeeInformationServic
     @Override
     public void employeeCsvOut() throws DataAccessException {
         //CSV出力
-        dao.employeeCsvOut();
+        employeeInformationDao.employeeCsvOut();
     }
 
     @Override
     public byte[] getFile(String fileName) throws IOException {
-
         // ファイルシステム(デフォルト)の取得
         FileSystem fs = FileSystems.getDefault();
 

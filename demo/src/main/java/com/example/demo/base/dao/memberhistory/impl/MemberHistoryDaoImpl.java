@@ -11,18 +11,21 @@ import java.util.List;
 
 @Repository("MemberHistoryDaoImpl")
 public class MemberHistoryDaoImpl implements MemberHistoryDao {
+    @Lazy
+    private final MemberHistoryDao memberHistoryDao;
 
     @Autowired
-    @Lazy
-    MemberHistoryDao dao;
+    public MemberHistoryDaoImpl(MemberHistoryDao memberHistoryDao) {
+        this.memberHistoryDao = memberHistoryDao;
+    }
 
     @Override
     public List<MemberHistoryDto> selectMemberHistory(String memberId) throws DataAccessException {
-        return dao.selectMemberHistory(memberId);
+        return memberHistoryDao.selectMemberHistory(memberId);
     }
 
     @Override
     public int insertOne(MemberHistoryDto memberHistoryDto) throws DataAccessException {
-        return dao.insertOne(memberHistoryDto);
+        return memberHistoryDao.insertOne(memberHistoryDto);
     }
 }

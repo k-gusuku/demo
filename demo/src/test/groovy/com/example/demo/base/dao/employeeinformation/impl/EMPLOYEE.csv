@@ -1,0 +1,3 @@
+"EMPLOYEE_ID", "PASSWORD",  "EMPLOYEE_NAME", "ROLE"
+"100000000"  , "testPass1", "従業員NAME",     "ROLE_ADMIN"
+"100000001"  , "testPass2", "従業員NAME",     "ROLE_ADMIN"

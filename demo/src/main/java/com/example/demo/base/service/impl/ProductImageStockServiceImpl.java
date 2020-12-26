@@ -17,25 +17,28 @@ import java.util.List;
 
 @Service
 public class ProductImageStockServiceImpl implements ProductImageStockService {
+    @Qualifier("ProductImageStockDaoImpl")
+    private final ProductImageStockDao productImageStockDao;
 
     @Autowired
-    @Qualifier("ProductImageStockDaoImpl")
-    ProductImageStockDao dao;
+    public ProductImageStockServiceImpl(ProductImageStockDao productImageStockDao) {
+        this.productImageStockDao = productImageStockDao;
+    }
 
     @Override
     public ProductImageStockDto selectOne(String productImageId) {
-        return dao.selectOne(productImageId);
+        return productImageStockDao.selectOne(productImageId);
     }
 
     @Override
     public List<ProductImageStockDto> selectMany(String productImageId, String productImageName, String productImageType) {
-        return dao.selectMany(productImageId, productImageName, productImageType);
+        return productImageStockDao.selectMany(productImageId, productImageName, productImageType);
     }
 
     @Override
     public boolean insertOne(ProductImageStockDto productImageStockDto) {
 
-        int rowNumber = dao.insertOne(productImageStockDto);
+        int rowNumber = productImageStockDao.insertOne(productImageStockDto);
 
         boolean result = false;
 
@@ -48,7 +51,7 @@ public class ProductImageStockServiceImpl implements ProductImageStockService {
     @Override
     public boolean updateOne(ProductImageStockDto productImageStockDto) {
 
-        int rowNumber = dao.updateOne(productImageStockDto);
+        int rowNumber = productImageStockDao.updateOne(productImageStockDto);
 
         boolean result = false;
 
@@ -61,7 +64,7 @@ public class ProductImageStockServiceImpl implements ProductImageStockService {
     @Override
     public boolean deleteOne(String productImageId) {
 
-        int rowNumber = dao.deleteOne(productImageId);
+        int rowNumber = productImageStockDao.deleteOne(productImageId);
 
         boolean result = false;
 
@@ -74,7 +77,7 @@ public class ProductImageStockServiceImpl implements ProductImageStockService {
     @Override
     public void productCsvOut() throws DataAccessException {
         //CSV出力
-        dao.productImageStockCsvOut();
+        productImageStockDao.productImageStockCsvOut();
     }
 
     @Override

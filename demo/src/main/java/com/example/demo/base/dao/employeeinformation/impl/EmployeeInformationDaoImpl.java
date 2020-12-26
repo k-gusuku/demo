@@ -14,10 +14,8 @@ import java.util.List;
 
 @Repository("EmployeeInformationDaoImpl")
 public class EmployeeInformationDaoImpl implements EmployeeInformationDao {
-
-    @Autowired
     @Lazy
-    EmployeeInformationDao dao;
+    private final EmployeeInformationDao employeeInformationDao;
 
     @Autowired
     JdbcTemplate jdbc;
@@ -25,14 +23,19 @@ public class EmployeeInformationDaoImpl implements EmployeeInformationDao {
     @Autowired
     PasswordEncoder passwordEncoder;
 
+    @Autowired
+    public EmployeeInformationDaoImpl(EmployeeInformationDao employeeInformationDao) {
+        this.employeeInformationDao = employeeInformationDao;
+    }
+
     @Override
     public List<EmployeeInformationDto> selectMany(String employeeId, String employeeName) throws DataAccessException {
-        return dao.selectMany(employeeId, employeeName);
+        return employeeInformationDao.selectMany(employeeId, employeeName);
     }
 
     @Override
     public EmployeeInformationDto selectOne(String employeeId) throws DataAccessException {
-        return dao.selectOne(employeeId);
+        return employeeInformationDao.selectOne(employeeId);
     }
 
     @Override
@@ -41,17 +44,17 @@ public class EmployeeInformationDaoImpl implements EmployeeInformationDao {
         String password = passwordEncoder.encode(employeeInformationDto.getPassword());
         employeeInformationDto.setPassword(password);
 
-        return dao.insertOne(employeeInformationDto);
+        return employeeInformationDao.insertOne(employeeInformationDto);
     }
 
     @Override
     public int updateOne(EmployeeInformationDto employeeInformationDto) throws DataAccessException {
-        return dao.updateOne(employeeInformationDto);
+        return employeeInformationDao.updateOne(employeeInformationDto);
     }
 
     @Override
     public int deleteOne(String employeeId) throws DataAccessException {
-        return dao.deleteOne(employeeId);
+        return employeeInformationDao.deleteOne(employeeId);
     }
 
     @Override

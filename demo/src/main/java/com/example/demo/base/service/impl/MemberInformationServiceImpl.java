@@ -17,30 +17,33 @@ import java.util.List;
 
 @Service
 public class MemberInformationServiceImpl implements MemberInformationService {
+    @Qualifier("MemberInformationDaoImpl")
+    private final MemberInformationDao memberInformationDao;
 
     @Autowired
-    @Qualifier("MemberInformationDaoImpl")
-    MemberInformationDao dao;
+    public MemberInformationServiceImpl(MemberInformationDao memberInformationDao) {
+        this.memberInformationDao = memberInformationDao;
+    }
 
     @Override
     public MemberInformationDto selectOne(String memberId) {
 
         //selectOne実行
-        return dao.selectOne(memberId);
+        return memberInformationDao.selectOne(memberId);
     }
 
     public MemberInformationDto selectMember(String memberId, String memberName) {
-        return dao.selectMember(memberId, memberName);
+        return memberInformationDao.selectMember(memberId, memberName);
     }
 
     @Override
     public List<MemberInformationDto> selectMany(String memberId, String memberName) {
-        return dao.selectMany(memberId, memberName);
+        return memberInformationDao.selectMany(memberId, memberName);
     }
 
     @Override
     public boolean insertOne(MemberInformationDto memberInformationDto) {
-        int rowNumber = dao.insertOne(memberInformationDto);
+        int rowNumber = memberInformationDao.insertOne(memberInformationDto);
 
         boolean result = false;
 
@@ -52,7 +55,7 @@ public class MemberInformationServiceImpl implements MemberInformationService {
 
     @Override
     public boolean updateOne(MemberInformationDto memberInformationDto) {
-        int rowNumber = dao.updateOne(memberInformationDto);
+        int rowNumber = memberInformationDao.updateOne(memberInformationDto);
 
         boolean result = false;
 
@@ -64,7 +67,7 @@ public class MemberInformationServiceImpl implements MemberInformationService {
 
     @Override
     public boolean deleteOne(String memberId) {
-        int rowNumber = dao.deleteOne(memberId);
+        int rowNumber = memberInformationDao.deleteOne(memberId);
 
         boolean result = false;
 
@@ -77,7 +80,7 @@ public class MemberInformationServiceImpl implements MemberInformationService {
     @Override
     public void memberCsvOut() throws DataAccessException {
         //CSV出力
-        dao.memberCsvOut();
+        memberInformationDao.memberCsvOut();
     }
 
     @Override

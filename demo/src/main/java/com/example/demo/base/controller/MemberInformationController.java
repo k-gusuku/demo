@@ -1,13 +1,13 @@
 package com.example.demo.base.controller;
 
-import com.example.demo.base.conversion.memberhistory.impl.MemberHistoryConversionImpl;
-import com.example.demo.base.conversion.memberinformation.impl.MemberInformationConversionImpl;
+import com.example.demo.base.conversion.memberhistory.MemberHistoryConversion;
+import com.example.demo.base.conversion.memberinformation.MemberInformationConversion;
 import com.example.demo.base.dao.memberinformation.MemberInformationDto;
 import com.example.demo.base.domain.memberhistory.MemberHistoryForm;
-import com.example.demo.base.domain.memberinformation.MemberGroupOrder;
 import com.example.demo.base.domain.memberinformation.MemberForm;
-import com.example.demo.base.service.impl.MemberHistoryServiceImpl;
-import com.example.demo.base.service.impl.MemberInformationServiceImpl;
+import com.example.demo.base.domain.memberinformation.MemberGroupOrder;
+import com.example.demo.base.service.MemberHistoryService;
+import com.example.demo.base.service.MemberInformationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.http.HttpHeaders;
@@ -26,27 +26,30 @@ import java.util.stream.Collectors;
 
 @Controller
 public class MemberInformationController {
-
     @InitBinder
     public void initBinder(WebDataBinder binder) {
         // 未入力のStringをnullに設定する
         binder.registerCustomEditor(String.class, new StringTrimmerEditor(true));
     }
 
+    private final MemberInformationService memberInformationService;
+    private final MemberHistoryService memberHistoryService;
+    private final MemberInformationConversion memberInformationConversion;
+    private final MemberHistoryConversion memberHistoryConversion;
+
     @Autowired
-    MemberInformationServiceImpl memberInformationServiceImpl;
-    @Autowired
-    MemberHistoryServiceImpl memberHistoryService;
-    @Autowired
-    MemberInformationConversionImpl memberInformationConversionImpl;
-    @Autowired
-    MemberHistoryConversionImpl memberHistoryConversionImpl;
+    public MemberInformationController(MemberInformationService memberInformationService, MemberHistoryService memberHistoryService, MemberInformationConversion memberInformationConversion, MemberHistoryConversion memberHistoryConversion) {
+        this.memberInformationService = memberInformationService;
+        this.memberHistoryService = memberHistoryService;
+        this.memberInformationConversion = memberInformationConversion;
+        this.memberHistoryConversion = memberHistoryConversion;
+    }
 
     // 会員情報取得のGET用メソッド
     @GetMapping("/memberInformation_contents")
     public String getMemberInformation(@ModelAttribute MemberForm form, Model model) {
         model.addAttribute("contents", "base/member/memberInformation::memberInformation_contents");
-        List<MemberForm> memberFormList = memberInformationServiceImpl.selectMany(form.getMemberId(), form.getMemberName()).stream().map(memberInformationConversionImpl::dto2Form).collect(Collectors.toList());
+        List<MemberForm> memberFormList = memberInformationService.selectMany(form.getMemberId(), form.getMemberName()).stream().map(memberInformationConversion::dto2Form).collect(Collectors.toList());
 
         model.addAttribute("memberFormList", memberFormList);
         return "base/homeLayout";
@@ -55,14 +58,14 @@ public class MemberInformationController {
     // 会員テーブルから会員が情報を取得するメソッド
     @GetMapping("/memberInformationForMember_contents")
     public String getMemberInformationForMember(@ModelAttribute MemberForm memberForm, Model model) {
-        MemberInformationDto memberInformationDto = memberInformationServiceImpl.selectMember(memberForm.getMemberId(), memberForm.getMemberName());
+        MemberInformationDto memberInformationDto = memberInformationService.selectMember(memberForm.getMemberId(), memberForm.getMemberName());
 
         if (memberInformationDto != null) {
             List<MemberHistoryForm> memberHistoryFormList = memberHistoryService.selectMemberHistory(memberForm.getMemberId()).stream().map(m -> {
                 m.setProductImageId("img/" + m.getProductImageId());
-                return memberHistoryConversionImpl.dto2Form(m);
+                return memberHistoryConversion.dto2Form(m);
             }).collect(Collectors.toList());
-            memberForm = memberInformationConversionImpl.dto2Form(memberInformationDto);
+            memberForm = memberInformationConversion.dto2Form(memberInformationDto);
             model.addAttribute("memberHistoryFormList", memberHistoryFormList);
         } else {
             memberForm.setMemberId(null);
@@ -80,12 +83,12 @@ public class MemberInformationController {
         System.out.println("memberId =" + memberId);
 
         if (memberId != null && memberId.length() > 0) {
-            MemberInformationDto memberInformationDto = memberInformationServiceImpl.selectOne(memberId);
+            MemberInformationDto memberInformationDto = memberInformationService.selectOne(memberId);
             List<MemberHistoryForm> memberHistoryFormList = memberHistoryService.selectMemberHistory(memberId).stream().map(h -> {
                 h.setProductImageId("../img/" + h.getProductImageId());
-                return memberHistoryConversionImpl.dto2Form(h);
+                return memberHistoryConversion.dto2Form(h);
             }).collect(Collectors.toList());
-            memberForm = memberInformationConversionImpl.dto2Form(memberInformationDto);
+            memberForm = memberInformationConversion.dto2Form(memberInformationDto);
 
             model.addAttribute("contents", "base/member/memberDetail::memberDetail_contents");
             model.addAttribute("memberForm", memberForm);
@@ -109,10 +112,10 @@ public class MemberInformationController {
         }
         System.out.println(memberForm);
 
-        MemberInformationDto memberInformationDto = memberInformationConversionImpl.form2Dto(memberForm);
+        MemberInformationDto memberInformationDto = memberInformationConversion.form2Dto(memberForm);
         memberInformationDto.setRole("ROLE_GENERAL"); // 権限
 
-        boolean result = memberInformationServiceImpl.insertOne(memberInformationDto);
+        boolean result = memberInformationService.insertOne(memberInformationDto);
 
         // 会員登録結果の判定
         if (result) {
@@ -143,10 +146,10 @@ public class MemberInformationController {
         }
         System.out.println(memberForm);
 
-        MemberInformationDto memberInformationDto = memberInformationConversionImpl.form2Dto(memberForm);
+        MemberInformationDto memberInformationDto = memberInformationConversion.form2Dto(memberForm);
         memberInformationDto.setRole("ROLE_GENERAL"); // 権限
 
-        boolean result = memberInformationServiceImpl.insertOne(memberInformationDto);
+        boolean result = memberInformationService.insertOne(memberInformationDto);
 
         // 会員登録結果の判定
         if (result) {
@@ -174,7 +177,7 @@ public class MemberInformationController {
         if (bindingResult.hasErrors() && bindingResult.getErrorCount() > 1) {
             List<MemberHistoryForm> memberHistoryFormList = memberHistoryService.selectMemberHistory(memberForm.getMemberId()).stream().map(h -> {
                 h.setProductImageId("../img/" + h.getProductImageId());
-                return memberHistoryConversionImpl.dto2Form(h);
+                return memberHistoryConversion.dto2Form(h);
             }).collect(Collectors.toList());
 
             model.addAttribute("contents", "base/member/memberDetail::memberDetail_contents");
@@ -183,9 +186,9 @@ public class MemberInformationController {
         }
         System.out.println("更新ボタンの処理");
 
-        MemberInformationDto memberInformationDto = memberInformationConversionImpl.form2Dto(memberForm);
+        MemberInformationDto memberInformationDto = memberInformationConversion.form2Dto(memberForm);
 
-        boolean result = memberInformationServiceImpl.updateOne(memberInformationDto);
+        boolean result = memberInformationService.updateOne(memberInformationDto);
 
         if (result) {
             model.addAttribute("result", "更新成功");
@@ -206,7 +209,7 @@ public class MemberInformationController {
         if (bindingResult.hasErrors() && bindingResult.getErrorCount() > 1) {
             List<MemberHistoryForm> memberHistoryFormList = memberHistoryService.selectMemberHistory(memberForm.getMemberId()).stream().map(h -> {
                 h.setProductImageId("../img/" + h.getProductImageId());
-                return memberHistoryConversionImpl.dto2Form(h);
+                return memberHistoryConversion.dto2Form(h);
             }).collect(Collectors.toList());
 
             model.addAttribute("contents", "base/member/memberInformationForMember::memberInformationForMember_contents");
@@ -216,9 +219,9 @@ public class MemberInformationController {
 
         System.out.println("更新ボタンの処理");
 
-        MemberInformationDto memberInformationDto = memberInformationConversionImpl.form2Dto(memberForm);
+        MemberInformationDto memberInformationDto = memberInformationConversion.form2Dto(memberForm);
 
-        boolean result = memberInformationServiceImpl.updateOne(memberInformationDto);
+        boolean result = memberInformationService.updateOne(memberInformationDto);
 
         if (result) {
             model.addAttribute("result", "更新成功");
@@ -233,7 +236,7 @@ public class MemberInformationController {
     @PostMapping(value = "/memberDetailForMember", params = "deleteForMember")
     public String postMemberDelete(@ModelAttribute MemberForm memberForm, Model model) {
         System.out.println("削除ボタンの処理");
-        boolean result = memberInformationServiceImpl.deleteOne(memberForm.getMemberId());
+        boolean result = memberInformationService.deleteOne(memberForm.getMemberId());
 
         if (result) {
             model.addAttribute("result", "削除成功");
@@ -249,7 +252,7 @@ public class MemberInformationController {
     public String postMemberForMemberDelete(@ModelAttribute MemberForm memberForm, Model model) {
         System.out.println("削除ボタンの処理");
 
-        boolean result = memberInformationServiceImpl.deleteOne(memberForm.getMemberId());
+        boolean result = memberInformationService.deleteOne(memberForm.getMemberId());
 
         if (result) {
             model.addAttribute("result", "削除成功");
@@ -272,13 +275,13 @@ public class MemberInformationController {
     @GetMapping("/memberList/csv")
     public ResponseEntity<byte[]> getMemberListCsv(Model model) {
         // 会員を全件取得して、CSVをサーバーに保存する
-        memberInformationServiceImpl.memberCsvOut();
+        memberInformationService.memberCsvOut();
 
         byte[] bytes = null;
 
         try {
 
-            bytes = memberInformationServiceImpl.getFile("memberInformation.csv");
+            bytes = memberInformationService.getFile("memberInformation.csv");
 
         } catch (IOException e) {
             e.printStackTrace();

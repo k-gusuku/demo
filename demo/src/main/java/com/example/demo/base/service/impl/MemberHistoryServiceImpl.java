@@ -12,19 +12,23 @@ import java.util.List;
 
 @Service
 public class MemberHistoryServiceImpl implements MemberHistoryService {
-    @Autowired
     @Qualifier("MemberHistoryDaoImpl")
-    MemberHistoryDao dao;
+    private final MemberHistoryDao memberHistoryDao;
+
+    @Autowired
+    public MemberHistoryServiceImpl(MemberHistoryDao memberHistoryDao) {
+        this.memberHistoryDao = memberHistoryDao;
+    }
 
     @Override
     public List<MemberHistoryDto> selectMemberHistory(String memberId) {
-        return dao.selectMemberHistory(memberId);
+        return memberHistoryDao.selectMemberHistory(memberId);
     }
 
     @Override
     public boolean insertOne(MemberHistoryDto memberHistoryDto) {
         memberHistoryDto.setSaleDay(new Date());
-        int rowNumber = dao.insertOne(memberHistoryDto);
+        int rowNumber = memberHistoryDao.insertOne(memberHistoryDto);
 
         boolean result = false;
 

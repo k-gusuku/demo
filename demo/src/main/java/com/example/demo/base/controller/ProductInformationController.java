@@ -1,12 +1,12 @@
 package com.example.demo.base.controller;
 
-import com.example.demo.base.conversion.productimagestock.impl.ProductImageStockConversionImpl;
-import com.example.demo.base.conversion.productinformation.impl.ProductInformationConversionImpl;
+import com.example.demo.base.conversion.productimagestock.ProductImageStockConversion;
+import com.example.demo.base.conversion.productinformation.ProductInformationConversion;
 import com.example.demo.base.domain.productimagestock.ProductImageStockForm;
 import com.example.demo.base.domain.productinformation.ProductForm;
 import com.example.demo.base.domain.productinformation.ProductGroupOrder;
-import com.example.demo.base.service.impl.ProductImageStockServiceImpl;
-import com.example.demo.base.service.impl.ProductInformationServiceImpl;
+import com.example.demo.base.service.ProductImageStockService;
+import com.example.demo.base.service.ProductInformationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.http.HttpHeaders;
@@ -34,14 +34,19 @@ public class ProductInformationController {
         binder.registerCustomEditor(String.class, new StringTrimmerEditor(true));
     }
 
+    private final ProductInformationService productInformationService;
+    private final ProductImageStockService productImageStockService;
+    private final ProductInformationConversion productInformationConversion;
     @Autowired
-    ProductInformationServiceImpl productInformationServiceImpl;
+    private final ProductImageStockConversion productImageStockConversion;
+
     @Autowired
-    ProductImageStockServiceImpl productImageStockServiceImpl;
-    @Autowired
-    ProductInformationConversionImpl productInformationConversionImpl;
-    @Autowired
-    ProductImageStockConversionImpl productImageStockConversionImpl;
+    public ProductInformationController(ProductInformationService productInformationService, ProductImageStockService productImageStockService, ProductInformationConversion productInformationConversion, ProductImageStockConversion productImageStockConversion) {
+        this.productInformationService = productInformationService;
+        this.productImageStockService =  productImageStockService;
+        this.productInformationConversion = productInformationConversion;
+        this.productImageStockConversion = productImageStockConversion;
+    }
 
     // 商品の種類用MAP
     private Map<String, String> radioProductType;
@@ -90,9 +95,9 @@ public class ProductInformationController {
     // 商品情報のGETメソッド
     @GetMapping("/productInformation_contents")
     public String getProductInformation(@ModelAttribute ProductForm productForm, Model model) {
-        List<ProductForm> productFormList = productInformationServiceImpl.selectMany(productForm.getProductId(), productForm.getProductName()).stream().map(p -> {
+        List<ProductForm> productFormList = productInformationService.selectMany(productForm.getProductId(), productForm.getProductName()).stream().map(p -> {
             p.setProductImageId(productImageForDisplayPattern1(p.getProductImageId()));
-            return productInformationConversionImpl.dto2Form(p);
+            return productInformationConversion.dto2Form(p);
         }).collect(Collectors.toList());
 
         model.addAttribute("contents", "base/product/productInformation::productInformation_contents");
@@ -116,9 +121,9 @@ public class ProductInformationController {
         String searchForProductImageName = productForm.getSearchForProductImageName();
         String searchForProductImageType = productForm.getSearchForProductImageType();
 
-        List<ProductImageStockForm> productImageStockFormList = productImageStockServiceImpl.selectMany(productForm.getSearchForProductImageId(), productForm.getSearchForProductImageName(), productForm.getSearchForProductImageType()).stream().map(p -> {
+        List<ProductImageStockForm> productImageStockFormList = productImageStockService.selectMany(productForm.getSearchForProductImageId(), productForm.getSearchForProductImageName(), productForm.getSearchForProductImageType()).stream().map(p -> {
             p.setProductImage(productImageForDisplayPattern2(p.getProductImageId()));
-            return productImageStockConversionImpl.dto2Form(p);
+            return productImageStockConversion.dto2Form(p);
         }).collect(Collectors.toList());
 
         model.addAttribute("productImageStockFormList", productImageStockFormList);
@@ -126,7 +131,7 @@ public class ProductInformationController {
 
         if (productId != null && productId.length() > 0) {
             radioProductType = initRadioProductType();
-            productForm = productInformationConversionImpl.dto2Form(productInformationServiceImpl.selectOne(productId));
+            productForm = productInformationConversion.dto2Form(productInformationService.selectOne(productId));
             String imageForProductDetails = productImageForDisplayPattern2(productForm.getProductImageId());
 
             // 商品イメージ検索用データを格納
@@ -154,9 +159,9 @@ public class ProductInformationController {
     @PostMapping(value = "/productDetail", params = "update")
     public String postProductDetailUpdate(@ModelAttribute @Validated(ProductGroupOrder.class) ProductForm productForm, BindingResult bindingResult, Model model, String searchForProductImageId, String searchForProductImageName, String searchForProductImageType) {
         if (bindingResult.hasErrors()) {
-            List<ProductImageStockForm> productImageStockFormList = productImageStockServiceImpl.selectMany(searchForProductImageId, searchForProductImageName, searchForProductImageType).stream().map(p -> {
+            List<ProductImageStockForm> productImageStockFormList = productImageStockService.selectMany(searchForProductImageId, searchForProductImageName, searchForProductImageType).stream().map(p -> {
                 p.setProductImage(productImageForDisplayPattern2(p.getProductImageId()));
-                return productImageStockConversionImpl.dto2Form(p);
+                return productImageStockConversion.dto2Form(p);
             }).collect(Collectors.toList());
             radioProductImageType = initRadioProductImageType();
 
@@ -164,7 +169,7 @@ public class ProductInformationController {
             model.addAttribute("radioProductImageType", radioProductImageType);
 
             radioProductType = initRadioProductType();
-            productForm = productInformationConversionImpl.dto2Form(productInformationServiceImpl.selectOne(productForm.getProductId()));
+            productForm = productInformationConversion.dto2Form(productInformationService.selectOne(productForm.getProductId()));
             String imageForProductDetails = productImageForDisplayPattern2(productForm.getProductImageId());
 
             model.addAttribute("contents", "base/product/productDetail::productDetail_contents");
@@ -175,7 +180,7 @@ public class ProductInformationController {
         }
         System.out.println("更新ボタンの処理");
 
-        boolean result = productInformationServiceImpl.updateOne(productInformationConversionImpl.form2Dto(productForm));
+        boolean result = productInformationService.updateOne(productInformationConversion.form2Dto(productForm));
         if (result) {
             model.addAttribute("result", "更新成功");
         } else {
@@ -190,7 +195,7 @@ public class ProductInformationController {
     public String postProductDelete(@ModelAttribute ProductForm productForm, Model model) {
         System.out.println("削除ボタンの処理");
 
-        boolean result = productInformationServiceImpl.deleteOne(productForm.getProductId());
+        boolean result = productInformationService.deleteOne(productForm.getProductId());
 
         if (result) {
             model.addAttribute("result", "削除成功");
@@ -211,9 +216,9 @@ public class ProductInformationController {
         radioProductType = initRadioProductType();
         radioProductImageType = initRadioProductImageType();
 
-        List<ProductImageStockForm> productImageStockFormList = productImageStockServiceImpl.selectMany(productForm.getSearchForProductImageId(), productForm.getSearchForProductImageName(), productForm.getSearchForProductImageType()).stream().map(p -> {
+        List<ProductImageStockForm> productImageStockFormList = productImageStockService.selectMany(productForm.getSearchForProductImageId(), productForm.getSearchForProductImageName(), productForm.getSearchForProductImageType()).stream().map(p -> {
             p.setProductImage(productImageForDisplayPattern1(p.getProductImageId()));
-            return productImageStockConversionImpl.dto2Form(p);
+            return productImageStockConversion.dto2Form(p);
         }).collect(Collectors.toList());
 
         model.addAttribute("radioProductType", radioProductType);
@@ -231,7 +236,7 @@ public class ProductInformationController {
         }
         System.out.println(productForm);
 
-        boolean result = productInformationServiceImpl.insertOne(productInformationConversionImpl.form2Dto(productForm));
+        boolean result = productInformationService.insertOne(productInformationConversion.form2Dto(productForm));
 
         //会員登録結果の判定
         if (result) {
@@ -260,13 +265,13 @@ public class ProductInformationController {
     public ResponseEntity<byte[]> getProductListCsv(Model model) {
 
         // 商品を全件取得して、CSVをサーバーに保存する
-        productInformationServiceImpl.productCsvOut();
+        productInformationService.productCsvOut();
 
         byte[] bytes = null;
 
         try {
 
-            bytes = productInformationServiceImpl.getFile("productInformation.csv");
+            bytes = productInformationService.getFile("productInformation.csv");
 
         } catch (IOException e) {
             e.printStackTrace();
