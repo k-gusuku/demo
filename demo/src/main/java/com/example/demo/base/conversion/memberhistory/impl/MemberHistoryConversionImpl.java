@@ -2,7 +2,7 @@ package com.example.demo.base.conversion.memberhistory.impl;
 
 import com.example.demo.base.conversion.memberhistory.MemberHistoryConversion;
 import com.example.demo.base.dao.memberhistory.MemberHistoryDto;
-import com.example.demo.base.dao.productinformation.ProductInformationDto;
+import com.example.demo.base.dao.product.ProductDto;
 import com.example.demo.base.domain.memberhistory.MemberHistoryForm;
 import org.springframework.stereotype.Component;
 
@@ -35,13 +35,13 @@ public class MemberHistoryConversionImpl implements MemberHistoryConversion {
         return memberHistoryForm;
     }
 
-    public MemberHistoryForm productInformationDto2Form(ProductInformationDto productInformationDto) {
+    public MemberHistoryForm productInformationDto2Form(ProductDto productDto) {
         MemberHistoryForm memberHistoryForm = new MemberHistoryForm();
-        memberHistoryForm.setProductId(productInformationDto.getProductId());
-        memberHistoryForm.setProductName(productInformationDto.getProductName());
-        memberHistoryForm.setProductPrice(productInformationDto.getProductPrice());
-        memberHistoryForm.setProductType(productInformationDto.getProductType());
-        memberHistoryForm.setProductImageId(productInformationDto.getProductImageId());
+        memberHistoryForm.setProductId(productDto.getProductId());
+        memberHistoryForm.setProductName(productDto.getProductName());
+        memberHistoryForm.setProductPrice(productDto.getProductPrice());
+        memberHistoryForm.setProductType(productDto.getProductType());
+        memberHistoryForm.setProductImageId(productDto.getProductImageId());
         return memberHistoryForm;
     }
 }

@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8"/>
+</head>
+<body>
+<div th:fragment="memberForMember_contents">
+    <div class="row">
+        <div class="col-sm-5">
+            <div class="page-header">
+                <h1>会員情報</h1>
+            </div>
+            <form method="get" action="/memberForMember_contents" th:object="${memberForm}">
+                <div class="form-group">
+                    <label>会員ID</label>
+                    <input type="text" th:field="*{memberId}"/>
+                </div>
+                <div class="form-group">
+                    <label>会員名</label>
+                    <input type="text" th:field="*{memberName}"/>
+                </div>
+                <button class="btn btn-warning" type="submit">検索</button>
+            </form>
+            <br/>
+            <form method="post" th:action="@{/memberDetailForMember}" th:object="${memberForm}">
+                <table class="table table-bordered table-hover">
+                    <tr>
+                        <!-- 会員ID(入力不可) -->
+                        <th class="active col-sm-2">会員ID</th>
+                        <td class="col-sm-3">
+                            <div class="form-group" th:classappend="${#fields.hasErrors('memberId')}?'has-error'">
+                                <input type="text" class="form-control" th:field="*{memberId}" readonly="readonly"/>
+                                <span class="text-danger" th:if="${#fields.hasErrors('memberId')}"
+                                      th:errors="*{memberId}">memberId error</span>
+                            </div>
+                        </td>
+                    </tr>
+                    <!-- 会員名 -->
+                    <tr>
+                        <th class="active">会員名</th>
+                        <td>
+                            <div class="form-group" th:classappend="${#fields.hasErrors('memberName')}?'has-error'">
+                                <input type="text" class="form-control" th:field="*{memberName}"/>
+                                <span class="text-danger" th:if="${#fields.hasErrors('memberName')}"
+                                      th:errors="*{memberName}">memberName error</span>
+                            </div>
+                        </td>
+                    </tr>
+                    <!-- 生年月日 -->
+                    <tr>
+                        <th class="active">生年月日</th>
+                        <td>
+                            <div class="form-group" th:classappend="${#fields.hasErrors('birthday')}?'has-error'">
+                                <input type="text" class="form-control" placeholder="yyyy/MM/dd"
+                                       th:field="*{birthday}"/>
+                                <span class="text-danger" th:if="${#fields.hasErrors('birthday')}"
+                                      th:errors="*{birthday}">birthday error</span>
+                            </div>
+                        </td>
+                    </tr>
+                    <!-- 年齢 -->
+                    <tr>
+                        <th class="active">年齢</th>
+                        <td>
+                            <div class="form-group" th:classappend="${#fields.hasErrors('age')}?'has-error'">
+                                <input type="text" class="form-control" th:field="*{age}"/>
+                                <span class="text-danger" th:if="${#fields.hasErrors('age')}" th:errors="*{age}">age error</span>
+                            </div>
+                        </td>
+                    </tr>
+                    <!-- 電話番号 -->
+                    <tr>
+                        <th class="active">電話番号</th>
+                        <td>
+                            <div class="form-group" th:classappend="${#fields.hasErrors('phoneNumber')}?'has-error'">
+                                <input type="text" class="form-control" th:field="*{phoneNumber}"/>
+                                <span class="text-danger" th:if="${#fields.hasErrors('phoneNumber')}"
+                                      th:errors="*{phoneNumber}">phoneNumber error</span>
+                            </div>
+                        </td>
+                    </tr>
+                    <!-- 住所 -->
+                    <tr>
+                        <th class="active">住所</th>
+                        <td>
+                            <div class="form-group" th:classappend="${#fields.hasErrors('address')}?'has-error'">
+                                <input type="text" class="form-control" th:field="*{address}"/>
+                                <span class="text-danger" th:if="${#fields.hasErrors('address')}"
+                                      th:errors="*{address}">address error</span>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+                <!-- 更新ボタン -->
+                <button class="btn btn-warning btn-lg pull-right" type="submit" name="updateForMember">
+                    更新
+                </button>
+                <!-- 削除ボタン -->
+                <button class="btn btn-danger btn-lg" type="submit" name="deleteForMember">
+                    削除
+                </button>
+                <br/>
+                <label class="text-info" th:text="${result}">結果表示</label>
+            </form>
+        </div>
+    </div>
+    <br/>
+    <table class="table table-bordered table-hover table-striped">
+        <tr>
+            <th class="warning col-sm-2">商品ID</th>
+            <th class="warning col-sm-2">商品名</th>
+            <th class="warning col-sm-2">商品金額</th>
+            <th class="warning col-sm-2">商品の種類</th>
+            <th class="warning col-sm-2">イメージ</th>
+            <th class="warning col-sm-2">販売日時</th>
+        </tr>
+        <tr th:each="member:${memberHistoryFormList}">
+            <td th:text="${member.productId}"></td>
+            <td th:text="${member.productName}"></td>
+            <td th:text="${member.productPrice}"></td>
+            <td th:text="${member.productType}"></td>
+            <td>
+                <img th:src="${member.productImageId}" style="width:90px;height:60px">
+            </td>
+            <td th:text="${#dates.format(member.saleDay, 'YYYY/MM/dd hh:mm:ss')}"></td>
+        </tr>
+    </table>
+</div>
+</body>
+</html>

@@ -1,17 +1,9 @@
-package com.example.demo.base.domain.memberhistory;
+package com.example.demo.base.dao.product;
 
 import lombok.Data;
 
-import javax.validation.constraints.NotBlank;
-import java.util.Date;
-
 @Data
-public class MemberHistoryForm {
-    /**
-     * 会員ID
-     */
-    @NotBlank(groups = MemberHistoryValidGroup1.class)
-    private String memberId;
+public class ProductDto {
 
     /**
      * 商品ID
@@ -37,9 +29,4 @@ public class MemberHistoryForm {
      * 商品イメージID
      */
     private String productImageId;
-
-    /**
-     * 販売日
-     */
-    private Date saleDay;
 }

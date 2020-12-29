@@ -5,7 +5,7 @@ import com.example.demo.base.dao.memberhistory.MemberHistoryDto;
 import com.example.demo.base.domain.memberhistory.MemberHistoryForm;
 import com.example.demo.base.domain.memberhistory.MemberHistoryGroupOrder;
 import com.example.demo.base.service.MemberHistoryService;
-import com.example.demo.base.service.ProductInformationService;
+import com.example.demo.base.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.stereotype.Controller;
@@ -27,19 +27,19 @@ public class CashRegisterController {
     }
 
     private final MemberHistoryService memberHistoryService;
-    private final ProductInformationService productInformationService;
+    private final ProductService productService;
     private final MemberHistoryConversion memberHistoryConversion;
 
     @Autowired
-    public CashRegisterController(MemberHistoryService memberHistoryService, ProductInformationService productInformationService, MemberHistoryConversion memberHistoryConversion) {
+    public CashRegisterController(MemberHistoryService memberHistoryService, ProductService productService, MemberHistoryConversion memberHistoryConversion) {
         this.memberHistoryService = memberHistoryService;
-        this.productInformationService = productInformationService;
+        this.productService = productService;
         this.memberHistoryConversion = memberHistoryConversion;
     }
 
     @GetMapping("/cashRegister_contents")
     public String getProductInformation(@ModelAttribute MemberHistoryForm memberHistoryForm, Model model) {
-        List<MemberHistoryForm> memberHistoryFormList = productInformationService.selectMany(memberHistoryForm.getProductId(), memberHistoryForm.getProductName()).stream().map(p -> {
+        List<MemberHistoryForm> memberHistoryFormList = productService.selectMany(memberHistoryForm.getProductId(), memberHistoryForm.getProductName()).stream().map(p -> {
             p.setProductImageId("img/" + p.getProductImageId());
             return memberHistoryConversion.productInformationDto2Form(p);
         }).collect(Collectors.toList());
@@ -56,7 +56,7 @@ public class CashRegisterController {
         System.out.println("productId =" + productId);
 
         if (productId != null && productId.length() > 0) {
-            memberHistoryForm = memberHistoryConversion.productInformationDto2Form(productInformationService.selectOne(productId));
+            memberHistoryForm = memberHistoryConversion.productInformationDto2Form(productService.selectOne(productId));
             String imageForProductDetails = "../img/" + memberHistoryForm.getProductImageId();
 
             model.addAttribute("contents", "base/register/productPurchase::productPurchase_contents");
@@ -96,7 +96,7 @@ public class CashRegisterController {
 
         System.out.println("購入商品の削除処理");
 
-        boolean productResult = productInformationService.deleteOne(memberHistoryForm.getProductId());
+        boolean productResult = productService.deleteOne(memberHistoryForm.getProductId());
 
         if (productResult) {
             System.out.println("削除成功");

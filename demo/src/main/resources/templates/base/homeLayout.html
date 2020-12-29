@@ -34,7 +34,7 @@
         <div class="col-sm-2 sidebar">
             <ui class="nav nav-pills nav-stacked">
                 <li role="presentation">
-                    <a class="btn btn-success" th:href="@{'/memberInformationForMember_contents'}">会員情報画面はこちら</a>
+                    <a class="btn btn-success" th:href="@{'/memberForMember_contents'}">会員情報画面はこちら</a>
                 </li>
                 <br/>
                 <li role="presentation">
@@ -42,7 +42,7 @@
                 </li>
                 <br/>
                 <li role="presentation" sec:authorize="hasRole('ADMIN')">
-                    <a class="btn btn-primary" th:href="@{'/productInformation_contents'}">商品情報画面はこちら</a>
+                    <a class="btn btn-primary" th:href="@{'/product_contents'}">商品情報画面はこちら</a>
                 </li>
                 <br/>
                 <li role="presentation" sec:authorize="hasRole('ADMIN')">
@@ -50,11 +50,11 @@
                 </li>
                 <br/>
                 <li role="presentation" sec:authorize="hasRole('ADMIN')">
-                    <a class="btn btn-primary" th:href="@{'/memberInformation_contents'}">会員情報画面はこちら</a>
+                    <a class="btn btn-primary" th:href="@{'/member_contents'}">会員情報画面はこちら</a>
                 </li>
                 <br/>
                 <li role="presentation" sec:authorize="hasRole('ADMIN')">
-                    <a class="btn btn-primary" th:href="@{'/employeeInformation_contents'}">従業員情報画面はこちら</a>
+                    <a class="btn btn-primary" th:href="@{'/employee_contents'}">従業員情報画面はこちら</a>
                 </li>
             </ui>
         </div>

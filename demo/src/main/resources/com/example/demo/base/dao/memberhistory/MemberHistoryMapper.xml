@@ -39,9 +39,6 @@
             <if test="memberId != null">
                 MEMBER_ID,
             </if>
-            <if test="memberName != null">
-                MEMBER_NAME,
-            </if>
             <if test="productId != null">
                 PRODUCT_ID,
             </if>
@@ -64,9 +61,6 @@
         <trim suffixOverrides="," suffix=")" prefix="values(">
             <if test="memberId != null">
                 #{memberId},
-            </if>
-            <if test="memberName != null">
-                #{memberName},
             </if>
             <if test="productId != null">
                 #{productId},
