@@ -24,7 +24,7 @@ public class MemberServiceImpl implements MemberService {
     @Autowired
     PasswordEncoder passwordEncoder;
 
-    @Qualifier("MemberInformationDaoImpl")
+    @Qualifier("MemberDaoImpl")
     private final MemberDao memberDao;
 
     @Autowired

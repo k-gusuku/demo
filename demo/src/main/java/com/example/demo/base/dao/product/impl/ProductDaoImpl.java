@@ -13,7 +13,7 @@ import java.util.List;
 /**
  * ProductDaoの実装クラス.
  */
-@Repository("ProductInformationDaoImpl")
+@Repository("ProductDaoImpl")
 public class ProductDaoImpl implements ProductDao {
     @Lazy
     private final ProductDao productDao;

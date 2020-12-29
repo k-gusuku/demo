@@ -13,7 +13,7 @@ import java.util.List;
 /**
  * MemberDaoの実装クラス.
  */
-@Repository("MemberInformationDaoImpl")
+@Repository("MemberDaoImpl")
 public class MemberDaoImpl implements MemberDao {
     @Lazy
     private final MemberDao memberDao;

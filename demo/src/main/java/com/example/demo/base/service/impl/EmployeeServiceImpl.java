@@ -24,7 +24,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Autowired
     PasswordEncoder passwordEncoder;
 
-    @Qualifier("EmployeeInformationDaoImpl")
+    @Qualifier("EmployeeDaoImpl")
     private final EmployeeDao employeeDao;
 
     @Autowired

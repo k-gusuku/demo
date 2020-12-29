@@ -14,7 +14,7 @@ import java.util.List;
 /**
  * EmployeeInformationDaoの実装クラス.
  */
-@Repository("EmployeeInformationDaoImpl")
+@Repository("EmployeeDaoImpl")
 public class EmployeeDaoImpl implements EmployeeDao {
     @Lazy
     private final EmployeeDao employeeDao;
