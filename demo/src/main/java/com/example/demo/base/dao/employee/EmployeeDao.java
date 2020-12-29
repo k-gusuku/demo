@@ -56,11 +56,4 @@ public interface EmployeeDao {
      * @throws DataAccessException データ削除時に投げられるエラー
      */
     int deleteOne(String employeeId) throws DataAccessException;
-
-    /**
-     * SQL取得結果をサーバーにCSVで保存.
-     *
-     * @throws DataAccessException CSV保存時に投げられるエラー
-     */
-    void employeeCsvOut() throws DataAccessException;
 }

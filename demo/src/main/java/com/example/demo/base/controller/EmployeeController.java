@@ -143,7 +143,6 @@ public class EmployeeController {
         byte[] bytes = null;
 
         try {
-
             bytes = employeeService.getFile("employee.csv");
 
         } catch (IOException e) {

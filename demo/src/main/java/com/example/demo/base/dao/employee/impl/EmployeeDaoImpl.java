@@ -1,12 +1,11 @@
 package com.example.demo.base.dao.employee.impl;
 
 
-import com.example.demo.base.dao.employee.EmployeeDto;
 import com.example.demo.base.dao.employee.EmployeeDao;
+import com.example.demo.base.dao.employee.EmployeeDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.dao.DataAccessException;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -18,9 +17,6 @@ import java.util.List;
 public class EmployeeDaoImpl implements EmployeeDao {
     @Lazy
     private final EmployeeDao employeeDao;
-
-    @Autowired
-    JdbcTemplate jdbc;
 
     @Autowired
     public EmployeeDaoImpl(EmployeeDao employeeDao) {
@@ -50,15 +46,5 @@ public class EmployeeDaoImpl implements EmployeeDao {
     @Override
     public int deleteOne(String employeeId) throws DataAccessException {
         return employeeDao.deleteOne(employeeId);
-    }
-
-    @Override
-    public void employeeCsvOut() throws DataAccessException {
-
-        String sql = "SELECT * FROM EMPLOYEE";
-
-        EmployeeRowCallbackHandler handler = new EmployeeRowCallbackHandler();
-
-        jdbc.query(sql, handler);
     }
 }

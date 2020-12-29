@@ -1,7 +1,8 @@
 package com.example.demo.base.service.impl;
 
-import com.example.demo.base.dao.employee.EmployeeDto;
 import com.example.demo.base.dao.employee.EmployeeDao;
+import com.example.demo.base.dao.employee.EmployeeDto;
+import com.example.demo.base.jdbc.employee.EmployeeJdbc;
 import com.example.demo.base.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -24,12 +25,14 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Autowired
     PasswordEncoder passwordEncoder;
 
+    private final EmployeeJdbc employeeJdbc;
     @Qualifier("EmployeeDaoImpl")
     private final EmployeeDao employeeDao;
 
     @Autowired
-    public EmployeeServiceImpl(EmployeeDao employeeDao) {
+    public EmployeeServiceImpl(EmployeeDao employeeDao, EmployeeJdbc employeeJdbc) {
         this.employeeDao = employeeDao;
+        this.employeeJdbc = employeeJdbc;
     }
 
     @Override
@@ -86,7 +89,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public void employeeCsvOut() throws DataAccessException {
         //CSV出力
-        employeeDao.employeeCsvOut();
+        employeeJdbc.employeeCsvOut();
     }
 
     @Override

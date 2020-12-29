@@ -2,6 +2,7 @@ package com.example.demo.base.service.impl
 
 import com.example.demo.base.dao.employee.EmployeeDao
 import com.example.demo.base.dao.employee.EmployeeDto
+import com.example.demo.base.jdbc.employee.EmployeeJdbc
 import org.junit.experimental.runners.Enclosed
 import org.junit.runner.RunWith
 import org.springframework.boot.test.context.SpringBootTest
@@ -15,7 +16,7 @@ class EmployeeServiceImplSTest {
         def service = null as EmployeeServiceImpl
 
         def setup() {
-            service = new EmployeeServiceImpl(Mock(EmployeeDao))
+            service = new EmployeeServiceImpl(Mock(EmployeeDao), Mock(EmployeeJdbc))
         }
 
         def "selectOne動作確認"() {
@@ -67,7 +68,7 @@ class EmployeeServiceImplSTest {
         def service = null as EmployeeServiceImpl
 
         def setup() {
-            service = new EmployeeServiceImpl(Mock(EmployeeDao))
+            service = new EmployeeServiceImpl(Mock(EmployeeDao), Mock(EmployeeJdbc))
             service.passwordEncoder = Mock(PasswordEncoder)
         }
 
@@ -123,7 +124,7 @@ class EmployeeServiceImplSTest {
         def service = null as EmployeeServiceImpl
 
         def setup() {
-            service = new EmployeeServiceImpl(Mock(EmployeeDao))
+            service = new EmployeeServiceImpl(Mock(EmployeeDao), Mock(EmployeeJdbc))
         }
 
         def "updateOne動作確認: 更新成功"() {
@@ -170,7 +171,7 @@ class EmployeeServiceImplSTest {
         def service = null as EmployeeServiceImpl
 
         def setup() {
-            service = new EmployeeServiceImpl(Mock(EmployeeDao))
+            service = new EmployeeServiceImpl(Mock(EmployeeDao), Mock(EmployeeJdbc))
         }
 
         def "deleteOne動作確認: 削除成功"() {
