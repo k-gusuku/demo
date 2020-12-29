@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -20,9 +19,6 @@ public class MemberInformationDaoImpl implements MemberInformationDao {
     JdbcTemplate jdbc;
 
     @Autowired
-    PasswordEncoder passwordEncoder;
-
-    @Autowired
     public MemberInformationDaoImpl(MemberInformationDao memberInformationDao) {
         this.memberInformationDao = memberInformationDao;
     }
@@ -33,8 +29,8 @@ public class MemberInformationDaoImpl implements MemberInformationDao {
     }
 
     @Override
-    public MemberInformationDto selectMember(String memberId, String memberName) throws DataAccessException {
-        return memberInformationDao.selectMember(memberId, memberName);
+    public MemberInformationDto selectOneForMember(String memberId, String memberName) throws DataAccessException {
+        return memberInformationDao.selectOneForMember(memberId, memberName);
     }
 
     @Override
@@ -44,10 +40,6 @@ public class MemberInformationDaoImpl implements MemberInformationDao {
 
     @Override
     public int insertOne(MemberInformationDto memberInformationDto) throws DataAccessException {
-
-        String password = passwordEncoder.encode(memberInformationDto.getPassword());
-        memberInformationDto.setPassword(password);
-
         return memberInformationDao.insertOne(memberInformationDto);
     }
 

@@ -19,7 +19,6 @@ public class MemberInformationConversionImpl implements MemberInformationConvers
         memberInformationDto.setAge(memberForm.getAge());
         memberInformationDto.setPhoneNumber(memberForm.getPhoneNumber());
         memberInformationDto.setAddress(memberForm.getAddress());
-        memberInformationDto.setProductImageId(memberForm.getProductImageId());
         return memberInformationDto;
     }
 
@@ -34,7 +33,6 @@ public class MemberInformationConversionImpl implements MemberInformationConvers
         memberForm.setAge(memberInformationDto.getAge());
         memberForm.setPhoneNumber(memberInformationDto.getPhoneNumber());
         memberForm.setAddress(memberInformationDto.getAddress());
-        memberForm.setProductImageId(memberInformationDto.getProductImageId());
         return memberForm;
     }
 }

@@ -11,13 +11,11 @@
         <result column="AGE" property="age"/>
         <result column="PHONE_NUMBER" property="phoneNumber"/>
         <result column="ADDRESS" property="address"/>
-        <result column="PRODUCT_IMAGE_ID" property="productImageId"/>
     </resultMap>
 
     <!--+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
     <!-- SELECT -->
     <!--+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
-
     <select id="selectOne" resultMap="BaseResultMap">
         SELECT
             MEMBER_ID,
@@ -25,23 +23,21 @@
             BIRTHDAY,
             AGE,
             PHONE_NUMBER,
-            ADDRESS,
-            PRODUCT_IMAGE_ID
+            ADDRESS
         FROM
             MEMBER
         WHERE
             MEMBER_ID = #{memberId}
     </select>
 
-    <select id="selectMember" resultMap="BaseResultMap">
+    <select id="selectOneForMember" resultMap="BaseResultMap">
         SELECT
             MEMBER_ID,
             MEMBER_NAME,
             BIRTHDAY,
             AGE,
             PHONE_NUMBER,
-            ADDRESS,
-            PRODUCT_IMAGE_ID
+            ADDRESS
         FROM
             MEMBER
         WHERE
@@ -57,8 +53,7 @@
         BIRTHDAY,
         AGE,
         PHONE_NUMBER,
-        ADDRESS,
-        PRODUCT_IMAGE_ID
+        ADDRESS
         FROM
         MEMBER
         <where>
@@ -75,7 +70,6 @@
     <!--+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
     <!-- INSERT -->
     <!--+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
-
     <insert id="insertOne" parameterType="com.example.demo.base.dao.memberinformation.MemberInformationDto">
         INSERT INTO MEMBER
         <trim suffixOverrides="," suffix=")" prefix="(">
@@ -103,9 +97,6 @@
             <if test="address != null">
                 ADDRESS,
             </if>
-            <if test="productImageId != null">
-                PRODUCT_IMAGE_ID,
-            </if>
         </trim>
         <trim suffixOverrides="," suffix=")" prefix="values(">
             <if test="memberId != null">
@@ -132,16 +123,12 @@
             <if test="address != null">
                 #{address},
             </if>
-            <if test="productImageId != null">
-                #{productImageId},
-            </if>
         </trim>
     </insert>
 
     <!--+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
     <!-- UPDATE -->
     <!--+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
-
     <update id="updateOne" parameterType="com.example.demo.base.dao.memberinformation.MemberInformationDto">
         UPDATE MEMBER
         <set>
@@ -163,9 +150,6 @@
             <if test="address != null">
                 ADDRESS = #{address},
             </if>
-            <if test="productImageId != null">
-                PRODUCT_IMAGE_ID = #{productImageId},
-            </if>
         </set>
         <where>
             MEMBER_ID = #{memberId}
@@ -175,7 +159,6 @@
     <!--+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
     <!-- DELETE -->
     <!--+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
-
     <delete id="deleteOne" parameterType="string">
         DELETE FROM MEMBER WHERE MEMBER_ID = #{memberId}
     </delete>

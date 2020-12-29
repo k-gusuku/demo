@@ -58,7 +58,7 @@ public class MemberInformationController {
     // 会員テーブルから会員が情報を取得するメソッド
     @GetMapping("/memberInformationForMember_contents")
     public String getMemberInformationForMember(@ModelAttribute MemberForm memberForm, Model model) {
-        MemberInformationDto memberInformationDto = memberInformationService.selectMember(memberForm.getMemberId(), memberForm.getMemberName());
+        MemberInformationDto memberInformationDto = memberInformationService.selectOneForMember(memberForm.getMemberId(), memberForm.getMemberName());
 
         if (memberInformationDto != null) {
             List<MemberHistoryForm> memberHistoryFormList = memberHistoryService.selectMemberHistory(memberForm.getMemberId()).stream().map(m -> {
@@ -233,7 +233,7 @@ public class MemberInformationController {
     }
 
     // 会員情報削除画面のPOSTメソッド
-    @PostMapping(value = "/memberDetailForMember", params = "deleteForMember")
+    @PostMapping(value = "/memberDetailForMember", params = "delete")
     public String postMemberDelete(@ModelAttribute MemberForm memberForm, Model model) {
         System.out.println("削除ボタンの処理");
         boolean result = memberInformationService.deleteOne(memberForm.getMemberId());
@@ -248,7 +248,7 @@ public class MemberInformationController {
     }
 
     // 会員情報削除画面のPOSTメソッド
-    @PostMapping(value = "/memberDetail", params = "memberDelete")
+    @PostMapping(value = "/memberDetail", params = "delete")
     public String postMemberForMemberDelete(@ModelAttribute MemberForm memberForm, Model model) {
         System.out.println("削除ボタンの処理");
 
@@ -268,7 +268,7 @@ public class MemberInformationController {
         memberForm.setPhoneNumber(null);
         memberForm.setAddress(null);
 
-        return getMemberInformationForMember(memberForm, model);
+        return getMemberInformation(memberForm, model);
     }
 
     // 会員一覧のCSV出力処理

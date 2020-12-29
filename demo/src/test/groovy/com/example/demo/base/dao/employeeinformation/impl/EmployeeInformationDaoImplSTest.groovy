@@ -21,10 +21,10 @@ class EmployeeInformationDaoImplSTest {
     @SpringBootTest
     static class TestSelect extends Specification {
         @Autowired
-        EmployeeInformationDao employeeInformationDao
+        DataSource dataSource
 
         @Autowired
-        DataSource dataSource
+        EmployeeInformationDao employeeInformationDao
 
         def setup() {
             def databaseTester = new DataSourceDatabaseTester(dataSource)
@@ -37,10 +37,10 @@ class EmployeeInformationDaoImplSTest {
 
         def "selectOne動作確認: 取得データ有"() {
             given:
-            def dto = new EmployeeInformationDto()
+            def employeeId = "100000000"
 
             when:
-            dto = employeeInformationDao.selectOne("100000000")
+            def dto = employeeInformationDao.selectOne(employeeId)
 
             then:
             dto.each {
@@ -51,10 +51,10 @@ class EmployeeInformationDaoImplSTest {
 
         def "selectOne動作確認: 取得データ無"() {
             given:
-            def dto = new EmployeeInformationDto()
+            def employeeId = "999999999"
 
             when:
-            dto = employeeInformationDao.selectOne("999999999")
+            def dto = employeeInformationDao.selectOne(employeeId)
 
             then:
             assert dto == null
@@ -62,14 +62,14 @@ class EmployeeInformationDaoImplSTest {
 
         def "selectMany動作確認: 従業員ID検索：取得データ有"() {
             given:
-            List<EmployeeInformationDto> employeeInformationDto = new ArrayList<>()
-            def dtoList = employeeInformationDto
+            def employeeId = "100000000"
+            def employeeName = null
 
             when:
-            dtoList = employeeInformationDao.selectMany("100000000", null)
-
+            def dtoList = employeeInformationDao.selectMany(employeeId, employeeName)
 
             then:
+            dtoList.size() == 1
             dtoList*.each {
                 assert it.employeeId == "100000000"
                 assert it.employeeName == "従業員NAME"
@@ -77,16 +77,17 @@ class EmployeeInformationDaoImplSTest {
         }
 
         @Unroll
-        def "selectMany動作確認: 従業員名検索：取得データ有：#testCase"() {
+        def "selectMany動作確認: 従業員名検索：#testCase：取得データ有"() {
             given:
-            List<EmployeeInformationDto> employeeInformationDto = new ArrayList<>()
-            def dtoList = employeeInformationDto
+            def employeeId = null
+            def employeeName = _employeeName
 
             when:
-            dtoList = employeeInformationDao.selectMany(null, _employeeName)
+            def dtoList = employeeInformationDao.selectMany(employeeId, employeeName)
 
 
             then:
+            dtoList.size() == 2
             dtoList[0].each {
                 assert it.employeeId == "100000000"
                 assert it.employeeName == "従業員NAME"
@@ -104,14 +105,15 @@ class EmployeeInformationDaoImplSTest {
 
         def "selectMany動作確認: 従業員(ID+名)検索：取得データ有"() {
             given:
-            List<EmployeeInformationDto> employeeInformationDto = new ArrayList<>()
-            def dtoList = employeeInformationDto
+            def employeeId = "100000000"
+            def employeeName = "従業員NAME"
 
             when:
-            dtoList = employeeInformationDao.selectMany("100000000", "従業員NAME")
+            def dtoList = employeeInformationDao.selectMany(employeeId, employeeName)
 
 
             then:
+            dtoList.size() == 2
             dtoList[0].each {
                 assert it.employeeId == "100000000"
                 assert it.employeeName == "従業員NAME"
@@ -124,14 +126,15 @@ class EmployeeInformationDaoImplSTest {
 
         def "selectMany動作確認: 全件取得"() {
             given:
-            List<EmployeeInformationDto> employeeInformationDto = new ArrayList<>()
-            def dtoList = employeeInformationDto
+            def employeeId = null
+            def employeeName = null
 
             when:
-            dtoList = employeeInformationDao.selectMany(null, null)
+            def dtoList = employeeInformationDao.selectMany(employeeId, employeeName)
 
 
             then:
+            dtoList.size() == 3
             dtoList[0].each {
                 assert it.employeeId == "100000000"
                 assert it.employeeName == "従業員NAME"
@@ -140,15 +143,20 @@ class EmployeeInformationDaoImplSTest {
                 assert it.employeeId == "100000001"
                 assert it.employeeName == "従業員NAME"
             }
+            dtoList[2].each {
+                assert it.employeeId == "100000002"
+                assert it.employeeName == "具志堅次郎"
+            }
+
         }
 
         def "selectMany動作確認: 取得データ無"() {
             given:
-            List<EmployeeInformationDto> employeeInformationDto = new ArrayList<>()
-            def dtoList = employeeInformationDto
+            def employeeId = "999999999"
+            def employeeName = "NoData"
 
             when:
-            dtoList = employeeInformationDao.selectMany("999999999", "NoData")
+            def dtoList = employeeInformationDao.selectMany(employeeId, employeeName)
 
             then:
             assert dtoList == []
@@ -226,7 +234,7 @@ class EmployeeInformationDaoImplSTest {
 
         def getRows() {
             def sql = Sql.newInstance("jdbc:mysql://localhost:3306/testdb2?serverTimezone=JST", "testuser2", "testpass2", "com.mysql.cj.jdbc.Driver")
-            sql.rows("select * from employee where employee_id = 100000000")
+            sql.rows("select * from employee where employee_id = '100000000'")
         }
 
         def execute() {
@@ -259,7 +267,7 @@ class EmployeeInformationDaoImplSTest {
         @Autowired
         EmployeeInformationDao employeeInformationDao
 
-        def employeeId = ""
+        def employeeId = null as String
 
         def setup() {
             def databaseTester = new DataSourceDatabaseTester(dataSource)
@@ -288,8 +296,8 @@ class EmployeeInformationDaoImplSTest {
             def rows = getRows()
 
             then:
-            assert rows.size() == 1
-            assert rows.EMPLOYEE_ID == ["100000001"]
+            assert rows.size() == 2
+            assert rows.EMPLOYEE_ID == ["100000001", "100000002"]
         }
     }
 }

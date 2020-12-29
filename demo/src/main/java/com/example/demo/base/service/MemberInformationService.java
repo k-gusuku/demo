@@ -23,7 +23,7 @@ public interface MemberInformationService {
      * @param memberName 会員名
      * @return 取得データ
      */
-    MemberInformationDto selectMember(String memberId, String memberName);
+    MemberInformationDto selectOneForMember(String memberId, String memberName);
 
     /**
      * 会員テーブルから全データを取得する.

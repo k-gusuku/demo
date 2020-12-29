@@ -48,16 +48,11 @@ public class MemberForm {
     /**
      * 電話番号
      */
-    private Long phoneNumber;
+    private String phoneNumber;
 
     /**
      * 住所
      */
     @NotBlank(groups = MemberValidGroup1.class)
     private String address;
-
-    /**
-     * 商品イメージID
-     */
-    private String productImageId;
 }

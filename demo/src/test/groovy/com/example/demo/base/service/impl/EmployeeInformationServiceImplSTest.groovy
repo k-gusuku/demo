@@ -5,6 +5,7 @@ import com.example.demo.base.dao.employeeinformation.EmployeeInformationDto
 import org.junit.experimental.runners.Enclosed
 import org.junit.runner.RunWith
 import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.security.crypto.password.PasswordEncoder
 import spock.lang.Specification
 
 @RunWith(Enclosed)
@@ -17,7 +18,7 @@ class EmployeeInformationServiceImplSTest {
             service = new EmployeeInformationServiceImpl(Mock(EmployeeInformationDao))
         }
 
-        def "selectOne: 動作確認"() {
+        def "selectOne動作確認"() {
             given:
             def employeeId = "100000000"
 
@@ -35,7 +36,7 @@ class EmployeeInformationServiceImplSTest {
             }
         }
 
-        def "selectMany: 動作確認"() {
+        def "selectMany動作確認"() {
             given:
             def employeeId = "100000000"
             def employeeName = "従業員NAME"
@@ -44,12 +45,12 @@ class EmployeeInformationServiceImplSTest {
             def dtoList = service.selectMany(employeeId, employeeName)
 
             then:
-            1 * service.employeeInformationDao.selectMany({
-                employeeId == "100000000"
-            } as String, {
-                employeeName == "従業員NAME"
-            } as String) >> [new EmployeeInformationDto(employeeId: "100000000", employeeName: "従業員NAME1"), new EmployeeInformationDto(employeeId: "100000002", employeeName: "従業員NAME2")]
+            1 * service.employeeInformationDao.selectMany(
+                    { employeeId == "100000000" } as String,
+                    { employeeName == "従業員NAME" } as String
+            ) >> [new EmployeeInformationDto(employeeId: "100000000", employeeName: "従業員NAME1"), new EmployeeInformationDto(employeeId: "100000002", employeeName: "従業員NAME2")]
             and:
+            dtoList.size() == 2
             dtoList[0].each {
                 assert it.employeeId == "100000000"
                 assert it.employeeName == "従業員NAME1"
@@ -67,9 +68,10 @@ class EmployeeInformationServiceImplSTest {
 
         def setup() {
             service = new EmployeeInformationServiceImpl(Mock(EmployeeInformationDao))
+            service.passwordEncoder = Mock(PasswordEncoder)
         }
 
-        def "insertOne: 動作確認：取得有り"() {
+        def "insertOne動作確認: 登録成功"() {
             given:
             def dto = new EmployeeInformationDto(employeeId: "100000000", employeeName: "従業員NAME", password: "testPass", role: "ROLE_ADMIN")
 
@@ -77,10 +79,14 @@ class EmployeeInformationServiceImplSTest {
             def result = service.insertOne(dto)
 
             then:
+            1 * service.passwordEncoder.encode({
+                it == "testPass"
+            } as String) >> "testPassEncode"
+            and:
             1 * service.employeeInformationDao.insertOne({
                 it.employeeId == "100000000" &&
                         it.employeeName == "従業員NAME" &&
-                        it.password == "testPass" &&
+                        it.password == "testPassEncode" &&
                         it.role == "ROLE_ADMIN"
             } as EmployeeInformationDto) >> 1
             and:
@@ -88,7 +94,7 @@ class EmployeeInformationServiceImplSTest {
             assert result
         }
 
-        def "insertOne: 動作確認：取得無し"() {
+        def "insertOne動作確認: 登録失敗"() {
             given:
             def dto = new EmployeeInformationDto(employeeId: "100000000", employeeName: "従業員NAME", password: "testPass", role: "ROLE_ADMIN")
 
@@ -96,10 +102,14 @@ class EmployeeInformationServiceImplSTest {
             def result = service.insertOne(dto)
 
             then:
+            1 * service.passwordEncoder.encode({
+                it == "testPass"
+            } as String) >> "testPassEncode"
+            and:
             1 * service.employeeInformationDao.insertOne({
                 it.employeeId == "100000000" &&
                         it.employeeName == "従業員NAME" &&
-                        it.password == "testPass" &&
+                        it.password == "testPassEncode" &&
                         it.role == "ROLE_ADMIN"
             } as EmployeeInformationDto) >> 0
             and:
@@ -109,14 +119,14 @@ class EmployeeInformationServiceImplSTest {
     }
 
     @SpringBootTest
-    static class testUpdate extends Specification {
+    static class testUpdateOne extends Specification {
         def service = null as EmployeeInformationServiceImpl
 
         def setup() {
             service = new EmployeeInformationServiceImpl(Mock(EmployeeInformationDao))
         }
 
-        def "updateOne: 動作確認：更新成功"() {
+        def "updateOne動作確認: 更新成功"() {
             given:
             def dto = new EmployeeInformationDto(employeeId: "100000000", employeeName: "従業員NAME", password: "testPass", role: "ROLE_ADMIN")
 
@@ -135,7 +145,7 @@ class EmployeeInformationServiceImplSTest {
             assert result
         }
 
-        def "updateOne: 動作確認：更新失敗"() {
+        def "updateOne動作確認: 更新失敗"() {
             given:
             def dto = new EmployeeInformationDto(employeeId: "100000000", employeeName: "従業員NAME", password: "testPass", role: "ROLE_ADMIN")
 
@@ -163,7 +173,7 @@ class EmployeeInformationServiceImplSTest {
             service = new EmployeeInformationServiceImpl(Mock(EmployeeInformationDao))
         }
 
-        def "deleteOne: 動作確認：削除成功"() {
+        def "deleteOne動作確認: 削除成功"() {
             given:
             def employeeId = "100000000"
 
@@ -179,7 +189,7 @@ class EmployeeInformationServiceImplSTest {
             assert result
         }
 
-        def "deleteOne: 動作確認：削除失敗"() {
+        def "deleteOne動作確認: 削除失敗"() {
             given:
             def employeeId = "100000000"
 

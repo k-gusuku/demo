@@ -1,0 +1,5 @@
+"PRODUCT_ID"       , "PRODUCT_NAME" , "PRODUCT_PRICE", "PRODUCT_TYPE", "PRODUCT_IMAGE_ID"
+"tetris"           , "テトリス"       , "2900"         , "ゲームソフト"  , "image_tetris"
+"switch"           , "スイッチ"       , "29000"        , "その他"       , "image_switch"
+"one-piece-1"      , "ワンピース1巻"   , "490"          ,"本"           , "image_one-piece-1"
+"one-piece-2"      , "ワンピース2巻"   , "490"          ,"本"           , "image_one-piece-2"

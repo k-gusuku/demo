@@ -1,3 +1,4 @@
-"EMPLOYEE_ID", "PASSWORD",  "EMPLOYEE_NAME", "ROLE"
-"100000000"  , "testPass1", "従業員NAME",     "ROLE_ADMIN"
-"100000001"  , "testPass2", "従業員NAME",     "ROLE_ADMIN"
+"EMPLOYEE_ID", "PASSWORD" , "EMPLOYEE_NAME", "ROLE"
+"100000000"  , "testPass1", "従業員NAME"    , "ROLE_ADMIN"
+"100000001"  , "testPass2", "従業員NAME"    , "ROLE_ADMIN"
+"100000002"  , "testPass3", "具志堅次郎"     , "ROLE_ADMIN"

@@ -6,6 +6,7 @@ import com.example.demo.base.service.EmployeeInformationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.dao.DataAccessException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -17,6 +18,9 @@ import java.util.List;
 
 @Service
 public class EmployeeInformationServiceImpl implements EmployeeInformationService {
+    @Autowired
+    PasswordEncoder passwordEncoder;
+
     @Qualifier("EmployeeInformationDaoImpl")
     private final EmployeeInformationDao employeeInformationDao;
 
@@ -39,6 +43,9 @@ public class EmployeeInformationServiceImpl implements EmployeeInformationServic
 
     @Override
     public boolean insertOne(EmployeeInformationDto employeeInformationDto) {
+        String password = passwordEncoder.encode(employeeInformationDto.getPassword());
+        employeeInformationDto.setPassword(password);
+
         int rowNumber = employeeInformationDao.insertOne(employeeInformationDto);
 
         boolean result = false;

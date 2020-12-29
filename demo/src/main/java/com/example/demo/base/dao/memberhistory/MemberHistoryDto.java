@@ -12,11 +12,6 @@ public class MemberHistoryDto {
     private String memberId;
 
     /**
-     * 会員名
-     */
-    private String memberName;
-
-    /**
      * 商品ID
      */
     private String productId;

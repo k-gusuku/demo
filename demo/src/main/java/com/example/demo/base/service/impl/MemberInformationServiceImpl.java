@@ -6,6 +6,7 @@ import com.example.demo.base.service.MemberInformationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.dao.DataAccessException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -17,6 +18,9 @@ import java.util.List;
 
 @Service
 public class MemberInformationServiceImpl implements MemberInformationService {
+    @Autowired
+    PasswordEncoder passwordEncoder;
+
     @Qualifier("MemberInformationDaoImpl")
     private final MemberInformationDao memberInformationDao;
 
@@ -32,8 +36,8 @@ public class MemberInformationServiceImpl implements MemberInformationService {
         return memberInformationDao.selectOne(memberId);
     }
 
-    public MemberInformationDto selectMember(String memberId, String memberName) {
-        return memberInformationDao.selectMember(memberId, memberName);
+    public MemberInformationDto selectOneForMember(String memberId, String memberName) {
+        return memberInformationDao.selectOneForMember(memberId, memberName);
     }
 
     @Override
@@ -43,6 +47,9 @@ public class MemberInformationServiceImpl implements MemberInformationService {
 
     @Override
     public boolean insertOne(MemberInformationDto memberInformationDto) {
+        String password = passwordEncoder.encode(memberInformationDto.getPassword());
+        memberInformationDto.setPassword(password);
+
         int rowNumber = memberInformationDao.insertOne(memberInformationDto);
 
         boolean result = false;

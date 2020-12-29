@@ -25,7 +25,7 @@ public interface MemberInformationDao {
      * @return 取得データ
      * @throws DataAccessException データ取得時に投げられるエラー
      */
-    MemberInformationDto selectMember(String memberId, String memberName) throws DataAccessException;
+    MemberInformationDto selectOneForMember(String memberId, String memberName) throws DataAccessException;
 
     /**
      * 商品テーブルから複数件データを取得.

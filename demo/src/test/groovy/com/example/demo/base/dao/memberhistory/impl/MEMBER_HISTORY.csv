@@ -1,0 +1,4 @@
+"MEMBER_ID", "PRODUCT_ID"       , "PRODUCT_NAME", "PRODUCT_PRICE", "PRODUCT_TYPE", "PRODUCT_IMAGE_ID", "SALE_DAY"
+"100000000", "productId_tetris" , "テトリス"      , "3900"         , "ゲームソフト"  , "image_tetris"    , "2020-12-24 01:01:01"
+"100000000", "productId_switch" , "スイッチ"      , "39000"        , "その他"       , "image_switch"    , "2020-12-25 01:01:01"
+"100000001", "productId_pac-man", "パックマン"    , "2900"         , "ゲームソフト"  , "image_pac-man"   , "2020-12-26 01:01:01"

@@ -13,7 +13,6 @@ public class MemberHistoryConversionImpl implements MemberHistoryConversion {
     public MemberHistoryDto form2Dto(MemberHistoryForm memberHistoryForm) {
         MemberHistoryDto memberHistoryDto = new MemberHistoryDto();
         memberHistoryDto.setMemberId(memberHistoryForm.getMemberId());
-        memberHistoryDto.setMemberName(memberHistoryForm.getMemberName());
         memberHistoryDto.setProductId(memberHistoryForm.getProductId());
         memberHistoryDto.setProductName(memberHistoryForm.getProductName());
         memberHistoryDto.setProductPrice(memberHistoryForm.getProductPrice());
@@ -27,7 +26,6 @@ public class MemberHistoryConversionImpl implements MemberHistoryConversion {
     public MemberHistoryForm dto2Form(MemberHistoryDto memberHistoryDto) {
         MemberHistoryForm memberHistoryForm = new MemberHistoryForm();
         memberHistoryForm.setMemberId(memberHistoryDto.getMemberId());
-        memberHistoryForm.setMemberName(memberHistoryDto.getMemberName());
         memberHistoryForm.setProductId(memberHistoryDto.getProductId());
         memberHistoryForm.setProductName(memberHistoryDto.getProductName());
         memberHistoryForm.setProductPrice(memberHistoryDto.getProductPrice());
