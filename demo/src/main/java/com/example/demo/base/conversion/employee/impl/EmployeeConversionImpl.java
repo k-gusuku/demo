@@ -5,6 +5,9 @@ import com.example.demo.base.dao.employee.EmployeeDto;
 import com.example.demo.base.domain.employee.EmployeeForm;
 import org.springframework.stereotype.Component;
 
+/**
+ * EmployeeConversionの実装クラス
+ */
 @Component
 public class EmployeeConversionImpl implements EmployeeConversion {
 

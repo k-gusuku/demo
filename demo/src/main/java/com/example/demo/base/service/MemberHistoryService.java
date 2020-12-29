@@ -4,6 +4,9 @@ import com.example.demo.base.dao.memberhistory.MemberHistoryDto;
 
 import java.util.List;
 
+/**
+ * MemberHistoryのビジネスロジックを提供するモジュールを表すインターフェース.
+ */
 public interface MemberHistoryService {
 
     /**

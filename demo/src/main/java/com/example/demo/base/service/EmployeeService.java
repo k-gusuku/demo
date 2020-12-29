@@ -6,6 +6,9 @@ import org.springframework.dao.DataAccessException;
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * Employeeのビジネスロジックを提供するモジュールを表すインターフェース.
+ */
 public interface EmployeeService {
 
     /**

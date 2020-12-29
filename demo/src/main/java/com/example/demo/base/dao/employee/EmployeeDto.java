@@ -3,7 +3,7 @@ package com.example.demo.base.dao.employee;
 import lombok.Data;
 
 /**
- * employeeテーブルのDataTransferObject
+ * employeeテーブルのDataTransferObject.
  */
 @Data
 public class EmployeeDto {

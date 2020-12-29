@@ -10,6 +10,9 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+/**
+ * ProductDaoの実装クラス.
+ */
 @Repository("ProductInformationDaoImpl")
 public class ProductDaoImpl implements ProductDao {
     @Lazy

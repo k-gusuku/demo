@@ -10,6 +10,9 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+/**
+ * ProductImageStockDaoの実装クラス.
+ */
 @Repository("ProductImageStockDaoImpl")
 public class ProductImageStockDaoImpl implements ProductImageStockDao {
     @Lazy

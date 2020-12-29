@@ -4,6 +4,9 @@ import lombok.Data;
 
 import java.util.Date;
 
+/**
+ * memberHistoryテーブルのDataTransferObject.
+ */
 @Data
 public class MemberHistoryDto {
     /**

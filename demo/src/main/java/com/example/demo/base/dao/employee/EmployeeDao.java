@@ -6,7 +6,7 @@ import org.springframework.dao.DataAccessException;
 import java.util.List;
 
 /**
- * employeeテーブルにアクセスするためのDataAccessObjectを表すインターフェース
+ * employeeテーブルにアクセスするためのDataAccessObjectを表すインターフェース.
  */
 @Mapper
 public interface EmployeeDao {

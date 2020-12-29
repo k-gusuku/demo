@@ -5,6 +5,9 @@ import org.springframework.dao.DataAccessException;
 
 import java.util.List;
 
+/**
+ * productImageStockテーブルにアクセスするためのDataAccessObjectを表すインターフェース.
+ */
 @Mapper
 public interface ProductImageStockDao {
 

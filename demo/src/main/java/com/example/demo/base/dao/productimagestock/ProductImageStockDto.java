@@ -2,6 +2,9 @@ package com.example.demo.base.dao.productimagestock;
 
 import lombok.Data;
 
+/**
+ * productImageStockテーブルのDataTransferObject.
+ */
 @Data
 public class ProductImageStockDto {
 

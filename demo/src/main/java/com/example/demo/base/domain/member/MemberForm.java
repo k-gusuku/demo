@@ -7,6 +7,9 @@ import org.springframework.format.annotation.DateTimeFormat;
 import javax.validation.constraints.NotBlank;
 import java.util.Date;
 
+/**
+ * memberテーブルに関するformクラス.
+ */
 @Data
 public class MemberForm {
 

@@ -16,6 +16,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 
+/**
+ * EmployeeServiceの実装クラス.
+ */
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
     @Autowired

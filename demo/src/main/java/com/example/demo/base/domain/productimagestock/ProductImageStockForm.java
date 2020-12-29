@@ -4,6 +4,9 @@ import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
 
+/**
+ * productImageStockテーブルに関するformクラス.
+ */
 @Data
 public class ProductImageStockForm {
 

@@ -5,6 +5,9 @@ import lombok.Data;
 import javax.validation.constraints.NotBlank;
 import java.util.Date;
 
+/**
+ * memberHistoryテーブルに関するformクラス.
+ */
 @Data
 public class MemberHistoryForm {
     /**

@@ -12,7 +12,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 /**
- * EmployeeInformationDaoの実装クラス
+ * EmployeeInformationDaoの実装クラス.
  */
 @Repository("EmployeeInformationDaoImpl")
 public class EmployeeDaoImpl implements EmployeeDao {

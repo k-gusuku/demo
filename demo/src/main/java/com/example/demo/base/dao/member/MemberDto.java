@@ -5,6 +5,9 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 
+/**
+ * memberテーブルのDataTransferObject.
+ */
 @Data
 public class MemberDto {
 

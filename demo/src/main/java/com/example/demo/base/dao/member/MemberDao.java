@@ -5,6 +5,9 @@ import org.springframework.dao.DataAccessException;
 
 import java.util.List;
 
+/**
+ * memberテーブルにアクセスするためのDataAccessObjectを表すインターフェース.
+ */
 @Mapper
 public interface MemberDao {
 

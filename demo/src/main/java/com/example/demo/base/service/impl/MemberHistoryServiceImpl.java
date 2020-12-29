@@ -10,6 +10,9 @@ import org.springframework.stereotype.Service;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * MemberHistoryServiceの実装クラス.
+ */
 @Service
 public class MemberHistoryServiceImpl implements MemberHistoryService {
     @Qualifier("MemberHistoryDaoImpl")

@@ -4,6 +4,9 @@ import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
 
+/**
+ * employeeテーブルに関するformクラス.
+ */
 @Data
 public class EmployeeForm {
 

@@ -10,6 +10,9 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+/**
+ * MemberDaoの実装クラス.
+ */
 @Repository("MemberInformationDaoImpl")
 public class MemberDaoImpl implements MemberDao {
     @Lazy

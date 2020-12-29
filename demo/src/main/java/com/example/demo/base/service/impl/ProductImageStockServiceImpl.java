@@ -15,6 +15,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 
+/**
+ * ProductImageStockの実装クラス.
+ */
 @Service
 public class ProductImageStockServiceImpl implements ProductImageStockService {
     @Qualifier("ProductImageStockDaoImpl")
