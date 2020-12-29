@@ -1,4 +1,4 @@
-package com.example.demo.base.dao.member.impl;
+package com.example.demo.base.jdbc.member.impl;
 
 import org.springframework.jdbc.core.RowCallbackHandler;
 
@@ -15,7 +15,7 @@ public class MemberRowCallbackHandler implements RowCallbackHandler {
     public void processRow(ResultSet rs) throws SQLException {
         try {
 
-            File file = new File("memberInformation.csv");
+            File file = new File("member.csv");
             FileWriter fw = new FileWriter(file.getAbsoluteFile());
             BufferedWriter bw = new BufferedWriter(fw);
 

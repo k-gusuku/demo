@@ -2,6 +2,7 @@ package com.example.demo.base.service.impl
 
 import com.example.demo.base.dao.member.MemberDao
 import com.example.demo.base.dao.member.MemberDto
+import com.example.demo.base.jdbc.member.MemberJdbc
 import org.junit.experimental.runners.Enclosed
 import org.junit.runner.RunWith
 import org.springframework.boot.test.context.SpringBootTest
@@ -15,7 +16,7 @@ class MemberServiceImplSTest {
         def service = null as MemberServiceImpl
 
         def setup() {
-            service = new MemberServiceImpl(Mock(MemberDao))
+            service = new MemberServiceImpl(Mock(MemberDao), Mock(MemberJdbc))
         }
 
         def "selectOne: 動作確認"() {
@@ -102,7 +103,7 @@ class MemberServiceImplSTest {
         def service = null as MemberServiceImpl
 
         def setup() {
-            service = new MemberServiceImpl(Mock(MemberDao))
+            service = new MemberServiceImpl(Mock(MemberDao), Mock(MemberJdbc))
             service.passwordEncoder = Mock(PasswordEncoder)
         }
 
@@ -184,7 +185,7 @@ class MemberServiceImplSTest {
         def service = null as MemberServiceImpl
 
         def setup() {
-            service = new MemberServiceImpl(Mock(MemberDao))
+            service = new MemberServiceImpl(Mock(MemberDao), Mock(MemberJdbc))
         }
 
         def dto = new MemberDto()
@@ -251,7 +252,7 @@ class MemberServiceImplSTest {
         def service = null as MemberServiceImpl
 
         def setup() {
-            service = new MemberServiceImpl(Mock(MemberDao))
+            service = new MemberServiceImpl(Mock(MemberDao), Mock(MemberJdbc))
         }
 
         def "deleteOne: 動作確認：削除成功"() {

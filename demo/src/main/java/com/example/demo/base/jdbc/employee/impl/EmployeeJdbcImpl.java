@@ -8,12 +8,16 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class EmployeeJdbcImpl implements EmployeeJdbc {
+
+    private final JdbcTemplate jdbc;
+
     @Autowired
-    JdbcTemplate jdbc;
+    public EmployeeJdbcImpl(JdbcTemplate jdbc) {
+        this.jdbc = jdbc;
+    }
 
     @Override
     public void employeeCsvOut() throws DataAccessException {
-
         String sql = "SELECT * FROM EMPLOYEE";
 
         EmployeeRowCallbackHandler handler = new EmployeeRowCallbackHandler();

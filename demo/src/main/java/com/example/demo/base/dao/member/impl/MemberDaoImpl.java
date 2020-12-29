@@ -55,14 +55,4 @@ public class MemberDaoImpl implements MemberDao {
     public int deleteOne(String memberId) throws DataAccessException {
         return memberDao.deleteOne(memberId);
     }
-
-    @Override
-    public void memberCsvOut() throws DataAccessException {
-
-        String sql = "SELECT * FROM MEMBER";
-
-        MemberRowCallbackHandler handler = new MemberRowCallbackHandler();
-
-        jdbc.query(sql, handler);
-    }
 }

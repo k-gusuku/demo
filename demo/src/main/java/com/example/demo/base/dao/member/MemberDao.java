@@ -23,7 +23,7 @@ public interface MemberDao {
     /**
      * 会員テーブルから会員が情報を取得.
      *
-     * @param memberId 会員ID
+     * @param memberId   会員ID
      * @param memberName 会員名
      * @return 取得データ
      * @throws DataAccessException データ取得時に投げられるエラー
@@ -33,7 +33,7 @@ public interface MemberDao {
     /**
      * 商品テーブルから複数件データを取得.
      *
-     * @param memberId 会員ID
+     * @param memberId   会員ID
      * @param memberName 会員名
      * @return 取得データ
      * @throws DataAccessException データ取得時に投げられるエラー
@@ -66,11 +66,4 @@ public interface MemberDao {
      * @throws DataAccessException データ削除時に投げられるエラー
      */
     int deleteOne(String userId) throws DataAccessException;
-
-    /**
-     * SQL取得結果をサーバーにCSVで保存.
-     *
-     * @throws DataAccessException CSV保存時に投げられるエラー
-     */
-    void memberCsvOut() throws DataAccessException;
 }

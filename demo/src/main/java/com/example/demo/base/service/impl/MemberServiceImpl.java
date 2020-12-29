@@ -2,6 +2,7 @@ package com.example.demo.base.service.impl;
 
 import com.example.demo.base.dao.member.MemberDao;
 import com.example.demo.base.dao.member.MemberDto;
+import com.example.demo.base.jdbc.member.MemberJdbc;
 import com.example.demo.base.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -26,10 +27,12 @@ public class MemberServiceImpl implements MemberService {
 
     @Qualifier("MemberDaoImpl")
     private final MemberDao memberDao;
+    private final MemberJdbc memberJdbc;
 
     @Autowired
-    public MemberServiceImpl(MemberDao memberDao) {
+    public MemberServiceImpl(MemberDao memberDao, MemberJdbc memberJdbc) {
         this.memberDao = memberDao;
+        this.memberJdbc = memberJdbc;
     }
 
     @Override
@@ -90,7 +93,7 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public void memberCsvOut() throws DataAccessException {
         //CSV出力
-        memberDao.memberCsvOut();
+        memberJdbc.memberCsvOut();
     }
 
     @Override
