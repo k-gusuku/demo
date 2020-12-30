@@ -209,23 +209,20 @@ public class ProductImageStockController {
     // 商品一覧のCSV出力処理
     @GetMapping("/productImageStockList/csv")
     public ResponseEntity<byte[]> getProductImageStockListCsv(Model model) {
-
         // 商品を全件取得して、CSVをサーバーに保存する
         productImageStockService.productCsvOut();
 
         byte[] bytes = null;
 
         try {
-
             bytes = productImageStockService.getFile("productImageStock.csv");
 
         } catch (IOException e) {
             e.printStackTrace();
         }
-
         HttpHeaders header = new HttpHeaders();
         header.add("Content-Type", "text/csv; charset=UTF-8");
-        header.setContentDispositionFormData("filename", "product.csv");
+        header.setContentDispositionFormData("filename", "productImageStock.csv");
 
         // productInformation.csvを戻す
         return new ResponseEntity<>(bytes, header, HttpStatus.OK);

@@ -5,7 +5,6 @@ import com.example.demo.base.dao.productimagestock.ProductImageStockDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.dao.DataAccessException;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -17,9 +16,6 @@ import java.util.List;
 public class ProductImageStockDaoImpl implements ProductImageStockDao {
     @Lazy
     private final ProductImageStockDao productImageStockDao;
-
-    @Autowired
-    JdbcTemplate jdbc;
 
     @Autowired
     public ProductImageStockDaoImpl(ProductImageStockDao productImageStockDao) {
@@ -49,15 +45,5 @@ public class ProductImageStockDaoImpl implements ProductImageStockDao {
     @Override
     public int deleteOne(String productImageId) throws DataAccessException {
         return productImageStockDao.deleteOne(productImageId);
-    }
-
-    @Override
-    public void productImageStockCsvOut() throws DataAccessException {
-
-        String sql = "SELECT * FROM PRODUCT_IMAGE_STOCK";
-
-        ProductImageStockRowCallbackHandler handler = new ProductImageStockRowCallbackHandler();
-
-        jdbc.query(sql, handler);
     }
 }

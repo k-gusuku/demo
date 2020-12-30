@@ -2,6 +2,7 @@ package com.example.demo.base.service.impl;
 
 import com.example.demo.base.dao.productimagestock.ProductImageStockDao;
 import com.example.demo.base.dao.productimagestock.ProductImageStockDto;
+import com.example.demo.base.jdbc.productimagestock.ProductImageStockJdbc;
 import com.example.demo.base.service.ProductImageStockService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -22,10 +23,12 @@ import java.util.List;
 public class ProductImageStockServiceImpl implements ProductImageStockService {
     @Qualifier("ProductImageStockDaoImpl")
     private final ProductImageStockDao productImageStockDao;
+    private final ProductImageStockJdbc productImageStockJdbc;
 
     @Autowired
-    public ProductImageStockServiceImpl(ProductImageStockDao productImageStockDao) {
+    public ProductImageStockServiceImpl(ProductImageStockDao productImageStockDao, ProductImageStockJdbc productImageStockJdbc) {
         this.productImageStockDao = productImageStockDao;
+        this.productImageStockJdbc = productImageStockJdbc;
     }
 
     @Override
@@ -80,12 +83,11 @@ public class ProductImageStockServiceImpl implements ProductImageStockService {
     @Override
     public void productCsvOut() throws DataAccessException {
         //CSV出力
-        productImageStockDao.productImageStockCsvOut();
+        productImageStockJdbc.productImageStockCsvOut();
     }
 
     @Override
     public byte[] getFile(String fileName) throws IOException {
-
         // ファイルシステム(デフォルト)の取得
         FileSystem fs = FileSystems.getDefault();
 

@@ -3,6 +3,7 @@ package com.example.demo.base.service.impl
 
 import com.example.demo.base.dao.productimagestock.ProductImageStockDao
 import com.example.demo.base.dao.productimagestock.ProductImageStockDto
+import com.example.demo.base.jdbc.productimagestock.ProductImageStockJdbc
 import org.junit.experimental.runners.Enclosed
 import org.junit.runner.RunWith
 import org.springframework.boot.test.context.SpringBootTest
@@ -15,7 +16,7 @@ class ProductImageStockServiceImplSTest {
         def service = null as ProductImageStockServiceImpl
 
         def setup() {
-            service = new ProductImageStockServiceImpl(Mock(ProductImageStockDao))
+            service = new ProductImageStockServiceImpl(Mock(ProductImageStockDao), Mock(ProductImageStockJdbc))
         }
 
         def "selectOne動作確認"() {
@@ -79,7 +80,7 @@ class ProductImageStockServiceImplSTest {
         def service = null as ProductImageStockServiceImpl
 
         def setup() {
-            service = new ProductImageStockServiceImpl(Mock(ProductImageStockDao))
+            service = new ProductImageStockServiceImpl(Mock(ProductImageStockDao), Mock(ProductImageStockJdbc))
         }
 
         def "insertOne動作確認: 登録成功"() {
@@ -124,7 +125,7 @@ class ProductImageStockServiceImplSTest {
         def service = null as ProductImageStockServiceImpl
 
         def setup() {
-            service = new ProductImageStockServiceImpl(Mock(ProductImageStockDao))
+            service = new ProductImageStockServiceImpl(Mock(ProductImageStockDao), Mock(ProductImageStockJdbc))
         }
 
         def "updateOne動作確認: 更新成功"() {
@@ -169,7 +170,7 @@ class ProductImageStockServiceImplSTest {
         def service = null as ProductImageStockServiceImpl
 
         def setup() {
-            service = new ProductImageStockServiceImpl(Mock(ProductImageStockDao))
+            service = new ProductImageStockServiceImpl(Mock(ProductImageStockDao), Mock(ProductImageStockJdbc))
         }
 
         def "deleteOne動作確認: 削除成功"() {

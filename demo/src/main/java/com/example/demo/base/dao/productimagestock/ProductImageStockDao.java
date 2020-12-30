@@ -23,7 +23,7 @@ public interface ProductImageStockDao {
     /**
      * 商品イメージ画像の在庫テーブルから複数件データを取得.
      *
-     * @param productImageId 商品イメージID
+     * @param productImageId   商品イメージID
      * @param productImageName 商品イメージ名
      * @param productImageType 商品イメージの種類
      * @return 取得データ
@@ -57,11 +57,4 @@ public interface ProductImageStockDao {
      * @throws DataAccessException データ削除時に投げられるエラー
      */
     int deleteOne(String productImageId) throws DataAccessException;
-
-    /**
-     * SQL取得結果をサーバーにCSVで保存.
-     *
-     * @throws DataAccessException CSV保存時に投げられるエラー
-     */
-    void productImageStockCsvOut() throws DataAccessException;
 }
