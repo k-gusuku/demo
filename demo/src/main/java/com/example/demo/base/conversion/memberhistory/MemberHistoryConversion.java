@@ -5,9 +5,7 @@ import com.example.demo.base.dao.product.ProductDto;
 import com.example.demo.base.domain.memberhistory.MemberHistoryForm;
 
 public interface MemberHistoryConversion {
-
     MemberHistoryDto form2Dto(MemberHistoryForm memberHistoryForm);
     MemberHistoryForm dto2Form(MemberHistoryDto memberHistoryDto);
-    MemberHistoryForm productInformationDto2Form(ProductDto productDto);
-
+    MemberHistoryForm productDto2Form(ProductDto productDto);
 }

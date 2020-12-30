@@ -35,7 +35,8 @@ public class MemberHistoryConversionImpl implements MemberHistoryConversion {
         return memberHistoryForm;
     }
 
-    public MemberHistoryForm productInformationDto2Form(ProductDto productDto) {
+    @Override
+    public MemberHistoryForm productDto2Form(ProductDto productDto) {
         MemberHistoryForm memberHistoryForm = new MemberHistoryForm();
         memberHistoryForm.setProductId(productDto.getProductId());
         memberHistoryForm.setProductName(productDto.getProductName());

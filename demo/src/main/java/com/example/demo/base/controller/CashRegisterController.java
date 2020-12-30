@@ -38,10 +38,10 @@ public class CashRegisterController {
     }
 
     @GetMapping("/cashRegister_contents")
-    public String getProductInformation(@ModelAttribute MemberHistoryForm memberHistoryForm, Model model) {
+    public String getProduct(@ModelAttribute MemberHistoryForm memberHistoryForm, Model model) {
         List<MemberHistoryForm> memberHistoryFormList = productService.selectMany(memberHistoryForm.getProductId(), memberHistoryForm.getProductName()).stream().map(p -> {
             p.setProductImageId("img/" + p.getProductImageId());
-            return memberHistoryConversion.productInformationDto2Form(p);
+            return memberHistoryConversion.productDto2Form(p);
         }).collect(Collectors.toList());
 
         model.addAttribute("contents", "base/register/cashRegister::cashRegister_contents");
@@ -56,7 +56,7 @@ public class CashRegisterController {
         System.out.println("productId =" + productId);
 
         if (productId != null && productId.length() > 0) {
-            memberHistoryForm = memberHistoryConversion.productInformationDto2Form(productService.selectOne(productId));
+            memberHistoryForm = memberHistoryConversion.productDto2Form(productService.selectOne(productId));
             String imageForProductDetails = "../img/" + memberHistoryForm.getProductImageId();
 
             model.addAttribute("contents", "base/register/productPurchase::productPurchase_contents");
@@ -105,6 +105,6 @@ public class CashRegisterController {
         }
 
         MemberHistoryForm memberHistoryFormReturn = new MemberHistoryForm();
-        return getProductInformation(memberHistoryFormReturn, model);
+        return getProduct(memberHistoryFormReturn, model);
     }
 }

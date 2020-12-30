@@ -224,7 +224,7 @@ public class ProductImageStockController {
         header.add("Content-Type", "text/csv; charset=UTF-8");
         header.setContentDispositionFormData("filename", "productImageStock.csv");
 
-        // productInformation.csvを戻す
+        // product.csvを戻す
         return new ResponseEntity<>(bytes, header, HttpStatus.OK);
     }
 }
