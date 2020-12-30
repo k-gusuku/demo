@@ -26,7 +26,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @Controller
-public class ProductController {
+public class ProductController extends ControllerCommonProcessing {
 
     @InitBinder
     public void initBinder(WebDataBinder binder) {
@@ -78,18 +78,6 @@ public class ProductController {
         radio.put("指定なし", null);
 
         return radio;
-    }
-
-    // 商品イメージ表示用に修正(パターン①)
-    private String productImageForDisplayPattern1(String productImageId) {
-        String productImageForDisplay = "img/" + productImageId + ".png";
-        return productImageForDisplay;
-    }
-
-    // 商品イメージ表示用に修正(パターン②)
-    private String productImageForDisplayPattern2(String productImageId) {
-        String productImageForDisplay = "../img/" + productImageId + ".png";
-        return productImageForDisplay;
     }
 
     // 商品情報のGETメソッド

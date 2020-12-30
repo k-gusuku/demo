@@ -25,7 +25,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Controller
-public class MemberController {
+public class MemberController extends ControllerCommonProcessing {
     @InitBinder
     public void initBinder(WebDataBinder binder) {
         // 未入力のStringをnullに設定する
@@ -62,7 +62,7 @@ public class MemberController {
 
         if (memberDto != null) {
             List<MemberHistoryForm> memberHistoryFormList = memberHistoryService.selectMemberHistory(memberForm.getMemberId()).stream().map(m -> {
-                m.setProductImageId("img/" + m.getProductImageId() + ".png");
+                m.setProductImageId(productImageForDisplayPattern1(m.getProductImageId()));
                 return memberHistoryConversion.dto2Form(m);
             }).collect(Collectors.toList());
             memberForm = memberConversion.dto2Form(memberDto);
@@ -85,7 +85,7 @@ public class MemberController {
         if (memberId != null && memberId.length() > 0) {
             MemberDto memberDto = memberService.selectOne(memberId);
             List<MemberHistoryForm> memberHistoryFormList = memberHistoryService.selectMemberHistory(memberId).stream().map(h -> {
-                h.setProductImageId("../img/" + h.getProductImageId() + ".png");
+                h.setProductImageId(productImageForDisplayPattern2(h.getProductImageId()));
                 return memberHistoryConversion.dto2Form(h);
             }).collect(Collectors.toList());
             memberForm = memberConversion.dto2Form(memberDto);

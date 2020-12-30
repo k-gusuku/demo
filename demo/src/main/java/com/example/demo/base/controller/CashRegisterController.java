@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Controller
-public class CashRegisterController {
+public class CashRegisterController extends ControllerCommonProcessing {
     @InitBinder
     public void initBinder(WebDataBinder binder) {
         // 未入力のStringをnullに設定する
@@ -40,7 +40,7 @@ public class CashRegisterController {
     @GetMapping("/cashRegister_contents")
     public String getProduct(@ModelAttribute MemberHistoryForm memberHistoryForm, Model model) {
         List<MemberHistoryForm> memberHistoryFormList = productService.selectMany(memberHistoryForm.getProductId(), memberHistoryForm.getProductName()).stream().map(p -> {
-            p.setProductImageId("img/" + p.getProductImageId() + ".png");
+            p.setProductImageId(productImageForDisplayPattern1(p.getProductImageId()));
             return memberHistoryConversion.productDto2Form(p);
         }).collect(Collectors.toList());
 
@@ -57,7 +57,7 @@ public class CashRegisterController {
 
         if (productId != null && productId.length() > 0) {
             memberHistoryForm = memberHistoryConversion.productDto2Form(productService.selectOne(productId));
-            String imageForProductDetails = "../img/" + memberHistoryForm.getProductImageId() + ".png";
+            String imageForProductDetails = productImageForDisplayPattern2(memberHistoryForm.getProductImageId());
 
             model.addAttribute("contents", "base/register/productPurchase::productPurchase_contents");
             model.addAttribute("imageForProductDetails", imageForProductDetails);
