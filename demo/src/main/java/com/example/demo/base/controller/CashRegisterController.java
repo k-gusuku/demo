@@ -57,7 +57,7 @@ public class CashRegisterController {
 
         if (productId != null && productId.length() > 0) {
             memberHistoryForm = memberHistoryConversion.productDto2Form(productService.selectOne(productId));
-            String imageForProductDetails = "../img/" + memberHistoryForm.getProductImageId();
+            String imageForProductDetails = "../img/" + memberHistoryForm.getProductImageId() + ".png";
 
             model.addAttribute("contents", "base/register/productPurchase::productPurchase_contents");
             model.addAttribute("imageForProductDetails", imageForProductDetails);
