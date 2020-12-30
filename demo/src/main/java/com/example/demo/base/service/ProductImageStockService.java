@@ -34,27 +34,24 @@ public interface ProductImageStockService {
      *
      * @param productImageStockDto 作成データ
      * @return 作成の有無
-     * @throws DataAccessException データ作成時にエラーが発生した場合に投げられる例外
      */
-    boolean insertOne(ProductImageStockDto productImageStockDto) throws DataAccessException;
+    boolean insertOne(ProductImageStockDto productImageStockDto);
 
     /**
      * 商品イメージ画像の在庫テーブルから1件データを更新
      *
      * @param productImageStockDto 更新データ
      * @return 更新の有無
-     * @throws DataAccessException データ更新時にエラーが発生した場合に投げられる例外
      */
-    boolean updateOne(ProductImageStockDto productImageStockDto) throws DataAccessException;
+    boolean updateOne(ProductImageStockDto productImageStockDto);
 
     /**
      * 商品イメージ画像の在庫テーブルから1件データを削除
      *
      * @param productImageId 削除データ商品イメージID
      * @return 削除の有無
-     * @throws DataAccessException データ削除時にエラーが発生した場合に投げられる例外
      */
-    boolean deleteOne(String productImageId) throws DataAccessException;
+    boolean deleteOne(String productImageId);
 
     /**
      * 商品情報一覧をCSV出力する
