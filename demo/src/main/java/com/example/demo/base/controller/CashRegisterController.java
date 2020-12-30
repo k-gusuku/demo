@@ -40,7 +40,7 @@ public class CashRegisterController {
     @GetMapping("/cashRegister_contents")
     public String getProduct(@ModelAttribute MemberHistoryForm memberHistoryForm, Model model) {
         List<MemberHistoryForm> memberHistoryFormList = productService.selectMany(memberHistoryForm.getProductId(), memberHistoryForm.getProductName()).stream().map(p -> {
-            p.setProductImageId("img/" + p.getProductImageId());
+            p.setProductImageId("img/" + p.getProductImageId() + ".png");
             return memberHistoryConversion.productDto2Form(p);
         }).collect(Collectors.toList());
 
