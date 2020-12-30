@@ -112,10 +112,6 @@ public class ProductController {
         System.out.println("productId =" + productId);
         radioProductImageType = initRadioProductImageType();
 
-        System.out.println("イメージ画像IDは" + productForm.getSearchForProductImageId() + "デス");
-        System.out.println("イメージ画像名は" + productForm.getSearchForProductImageName() + "デス");
-        System.out.println("イメージ画像タイプは" + productForm.getSearchForProductImageType() + "デス");
-
         // 商品イメージ検索用データの一時避難
         String searchForProductImageId = productForm.getSearchForProductImageId();
         String searchForProductImageName = productForm.getSearchForProductImageName();
