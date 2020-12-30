@@ -62,7 +62,7 @@ public class MemberController {
 
         if (memberDto != null) {
             List<MemberHistoryForm> memberHistoryFormList = memberHistoryService.selectMemberHistory(memberForm.getMemberId()).stream().map(m -> {
-                m.setProductImageId("img/" + m.getProductImageId());
+                m.setProductImageId("img/" + m.getProductImageId() + ".png");
                 return memberHistoryConversion.dto2Form(m);
             }).collect(Collectors.toList());
             memberForm = memberConversion.dto2Form(memberDto);
