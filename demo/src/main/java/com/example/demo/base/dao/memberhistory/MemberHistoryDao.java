@@ -12,20 +12,20 @@ import java.util.List;
 public interface MemberHistoryDao {
 
     /**
-     * 会員履歴を取得.
+     * 会員履歴を取得
      *
      * @param memberId 会員ID
      * @return 取得データ
-     * @throws DataAccessException データ取得時に投げられるエラー.
+     * @throws DataAccessException データ取得時にエラーが発生した場合に投げられる例外
      */
     List<MemberHistoryDto> selectMemberHistory(String memberId) throws DataAccessException;
 
     /**
-     * 会員履歴テーブルに1件デーータを作成.
+     * 会員履歴テーブルに1件デーータを作成
      *
      * @param memberHistoryDto 作成データ
      * @return データ作成件数
-     * @throws DataAccessException データ作成時に投げられるエラー.
+     * @throws DataAccessException データ作成時にエラーが発生した場合に投げられる例外
      */
     int insertOne(MemberHistoryDto memberHistoryDto) throws DataAccessException;
 }

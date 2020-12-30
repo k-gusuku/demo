@@ -10,7 +10,7 @@ import java.util.List;
 public interface MemberHistoryService {
 
     /**
-     * 会員履歴テーブルからデータを取得する.
+     * 会員履歴テーブルからデータを取得する
      *
      * @param memberId 会員ID
      * @return 取得データ.
