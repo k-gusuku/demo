@@ -270,7 +270,6 @@ public class ProductController {
         byte[] bytes = null;
 
         try {
-
             bytes = productService.getFile("product.csv");
 
         } catch (IOException e) {

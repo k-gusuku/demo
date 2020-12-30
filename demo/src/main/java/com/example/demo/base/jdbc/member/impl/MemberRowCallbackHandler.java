@@ -14,18 +14,16 @@ public class MemberRowCallbackHandler implements RowCallbackHandler {
     @Override
     public void processRow(ResultSet rs) throws SQLException {
         try {
-
             File file = new File("member.csv");
             FileWriter fw = new FileWriter(file.getAbsoluteFile());
             BufferedWriter bw = new BufferedWriter(fw);
 
             do {
-
                 String str = rs.getString("MEMBER_ID") + ","
                         + rs.getString("MEMBER_NAME") + ","
                         + rs.getDate("BIRTHDAY") + ","
                         + rs.getInt("AGE") + ","
-                        + rs.getInt("PHONE_NUMBER") + ","
+                        + rs.getString("PHONE_NUMBER") + ","
                         + rs.getString("ADDRESS");
 
                 bw.write(str);

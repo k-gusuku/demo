@@ -56,11 +56,4 @@ public interface ProductDao {
      * @throws DataAccessException データ削除時に投げられるエラー
      */
     int deleteOne(String productId) throws DataAccessException;
-
-    /**
-     * SQL取得結果をサーバーにCSVで保存.
-     *
-     * @throws DataAccessException CSV保存時に投げられるエラー
-     */
-    void productCsvOut() throws DataAccessException;
 }

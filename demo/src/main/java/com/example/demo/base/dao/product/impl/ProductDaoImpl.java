@@ -5,7 +5,6 @@ import com.example.demo.base.dao.product.ProductDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.dao.DataAccessException;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -17,9 +16,6 @@ import java.util.List;
 public class ProductDaoImpl implements ProductDao {
     @Lazy
     private final ProductDao productDao;
-
-    @Autowired
-    JdbcTemplate jdbc;
 
     @Autowired
     public ProductDaoImpl(ProductDao productDao) {
@@ -49,15 +45,5 @@ public class ProductDaoImpl implements ProductDao {
     @Override
     public int deleteOne(String productId) throws DataAccessException {
         return productDao.deleteOne(productId);
-    }
-
-    @Override
-    public void productCsvOut() throws DataAccessException {
-
-        String sql = "SELECT * FROM PRODUCT";
-
-        ProductRowCallbackHandler handler = new ProductRowCallbackHandler();
-
-        jdbc.query(sql, handler);
     }
 }

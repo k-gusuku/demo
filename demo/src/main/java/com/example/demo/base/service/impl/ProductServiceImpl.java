@@ -2,6 +2,7 @@ package com.example.demo.base.service.impl;
 
 import com.example.demo.base.dao.product.ProductDao;
 import com.example.demo.base.dao.product.ProductDto;
+import com.example.demo.base.jdbc.product.ProductJdbc;
 import com.example.demo.base.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -22,10 +23,12 @@ import java.util.List;
 public class ProductServiceImpl implements ProductService {
     @Qualifier("ProductDaoImpl")
     private final ProductDao productDao;
+    private final ProductJdbc productJdbc;
 
     @Autowired
-    public ProductServiceImpl(ProductDao productDao) {
+    public ProductServiceImpl(ProductDao productDao, ProductJdbc productJdbc) {
         this.productDao = productDao;
+        this.productJdbc = productJdbc;
     }
 
     @Override
@@ -80,7 +83,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public void productCsvOut() throws DataAccessException {
         //CSV出力
-        productDao.productCsvOut();
+        productJdbc.productCsvOut();
     }
 
     @Override

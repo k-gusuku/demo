@@ -2,6 +2,7 @@ package com.example.demo.base.service.impl
 
 import com.example.demo.base.dao.product.ProductDao
 import com.example.demo.base.dao.product.ProductDto
+import com.example.demo.base.jdbc.product.ProductJdbc
 import org.junit.experimental.runners.Enclosed
 import org.junit.runner.RunWith
 import org.springframework.boot.test.context.SpringBootTest
@@ -14,7 +15,7 @@ class ProductServiceImplSTest {
         def service = null as ProductServiceImpl
 
         def setup() {
-            service = new ProductServiceImpl(Mock(ProductDao))
+            service = new ProductServiceImpl(Mock(ProductDao), Mock(ProductJdbc))
         }
 
         def "selectOne動作確認"() {
@@ -77,7 +78,7 @@ class ProductServiceImplSTest {
         def service = null as ProductServiceImpl
 
         def setup() {
-            service = new ProductServiceImpl(Mock(ProductDao))
+            service = new ProductServiceImpl(Mock(ProductDao), Mock(ProductJdbc))
         }
 
         def dto = new ProductDto()
@@ -140,7 +141,7 @@ class ProductServiceImplSTest {
         def service = null as ProductServiceImpl
 
         def setup() {
-            service = new ProductServiceImpl(Mock(ProductDao))
+            service = new ProductServiceImpl(Mock(ProductDao), Mock(ProductJdbc))
         }
 
         def dto = new ProductDto()
@@ -203,7 +204,7 @@ class ProductServiceImplSTest {
         def service = null as ProductServiceImpl
 
         def setup() {
-            service = new ProductServiceImpl(Mock(ProductDao))
+            service = new ProductServiceImpl(Mock(ProductDao), Mock(ProductJdbc))
         }
 
         def "deleteOne動作確認: 削除成功"() {

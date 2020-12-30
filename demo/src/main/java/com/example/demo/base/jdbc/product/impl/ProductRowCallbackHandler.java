@@ -1,4 +1,4 @@
-package com.example.demo.base.dao.product.impl;
+package com.example.demo.base.jdbc.product.impl;
 
 import org.springframework.jdbc.core.RowCallbackHandler;
 
@@ -13,25 +13,21 @@ public class ProductRowCallbackHandler implements RowCallbackHandler {
 
     public void processRow(ResultSet rs) throws SQLException {
         try {
-
-            File file = new File("productInformation.csv");
+            File file = new File("product.csv");
             FileWriter fw = new FileWriter(file.getAbsoluteFile());
             BufferedWriter bw = new BufferedWriter(fw);
 
             do {
-
                 String str = rs.getString("PRODUCT_ID") + ","
                         + rs.getString("PRODUCT_NAME") + ","
                         + rs.getInt("PRODUCT_PRICE") + ","
                         + rs.getString("PRODUCT_TYPE") + ","
-                        + rs.getInt("PRODUCT_RENTAL_DAY_PRICE") + ","
-                        + rs.getInt("PRODUCT_RENTAL_WEEK_PRICE");
+                        + rs.getString("PRODUCT_IMAGE_ID");
 
                 bw.write(str);
                 bw.newLine();
 
             } while (rs.next());
-
             bw.flush();
             bw.close();
 
