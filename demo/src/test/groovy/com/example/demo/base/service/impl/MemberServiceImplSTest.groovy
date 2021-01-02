@@ -16,7 +16,7 @@ class MemberServiceImplSTest {
         def service = null as MemberServiceImpl
 
         def setup() {
-            service = new MemberServiceImpl(Mock(MemberDao), Mock(MemberJdbc))
+            service = new MemberServiceImpl(Mock(MemberDao), Mock(MemberJdbc), Mock(PasswordEncoder))
         }
 
         def "selectOne: 動作確認"() {
@@ -103,8 +103,7 @@ class MemberServiceImplSTest {
         def service = null as MemberServiceImpl
 
         def setup() {
-            service = new MemberServiceImpl(Mock(MemberDao), Mock(MemberJdbc))
-            service.passwordEncoder = Mock(PasswordEncoder)
+            service = new MemberServiceImpl(Mock(MemberDao), Mock(MemberJdbc), Mock(PasswordEncoder))
         }
 
         def dto = new MemberDto()
@@ -185,7 +184,7 @@ class MemberServiceImplSTest {
         def service = null as MemberServiceImpl
 
         def setup() {
-            service = new MemberServiceImpl(Mock(MemberDao), Mock(MemberJdbc))
+            service = new MemberServiceImpl(Mock(MemberDao), Mock(MemberJdbc), Mock(PasswordEncoder))
         }
 
         def dto = new MemberDto()
@@ -252,7 +251,7 @@ class MemberServiceImplSTest {
         def service = null as MemberServiceImpl
 
         def setup() {
-            service = new MemberServiceImpl(Mock(MemberDao), Mock(MemberJdbc))
+            service = new MemberServiceImpl(Mock(MemberDao), Mock(MemberJdbc), Mock(PasswordEncoder))
         }
 
         def "deleteOne: 動作確認：削除成功"() {

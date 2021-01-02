@@ -22,17 +22,17 @@ import java.util.List;
  */
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
-    @Autowired
-    PasswordEncoder passwordEncoder;
 
     @Qualifier("EmployeeDaoImpl")
     private final EmployeeDao employeeDao;
     private final EmployeeJdbc employeeJdbc;
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public EmployeeServiceImpl(EmployeeDao employeeDao, EmployeeJdbc employeeJdbc) {
+    public EmployeeServiceImpl(EmployeeDao employeeDao, EmployeeJdbc employeeJdbc, PasswordEncoder passwordEncoder) {
         this.employeeDao = employeeDao;
         this.employeeJdbc = employeeJdbc;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override

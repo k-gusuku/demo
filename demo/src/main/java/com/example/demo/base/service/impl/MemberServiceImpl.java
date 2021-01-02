@@ -23,16 +23,17 @@ import java.util.List;
 @Service
 public class MemberServiceImpl implements MemberService {
     @Autowired
-    PasswordEncoder passwordEncoder;
 
     @Qualifier("MemberDaoImpl")
     private final MemberDao memberDao;
     private final MemberJdbc memberJdbc;
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public MemberServiceImpl(MemberDao memberDao, MemberJdbc memberJdbc) {
+    public MemberServiceImpl(MemberDao memberDao, MemberJdbc memberJdbc, PasswordEncoder passwordEncoder) {
         this.memberDao = memberDao;
         this.memberJdbc = memberJdbc;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override

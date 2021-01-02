@@ -16,7 +16,7 @@ class EmployeeServiceImplSTest {
         def service = null as EmployeeServiceImpl
 
         def setup() {
-            service = new EmployeeServiceImpl(Mock(EmployeeDao), Mock(EmployeeJdbc))
+            service = new EmployeeServiceImpl(Mock(EmployeeDao), Mock(EmployeeJdbc), Mock(PasswordEncoder))
         }
 
         def "selectOne動作確認"() {
@@ -68,8 +68,7 @@ class EmployeeServiceImplSTest {
         def service = null as EmployeeServiceImpl
 
         def setup() {
-            service = new EmployeeServiceImpl(Mock(EmployeeDao), Mock(EmployeeJdbc))
-            service.passwordEncoder = Mock(PasswordEncoder)
+            service = new EmployeeServiceImpl(Mock(EmployeeDao), Mock(EmployeeJdbc), Mock(PasswordEncoder))
         }
 
         def "insertOne動作確認: 登録成功"() {
@@ -124,12 +123,12 @@ class EmployeeServiceImplSTest {
         def service = null as EmployeeServiceImpl
 
         def setup() {
-            service = new EmployeeServiceImpl(Mock(EmployeeDao), Mock(EmployeeJdbc))
+            service = new EmployeeServiceImpl(Mock(EmployeeDao), Mock(EmployeeJdbc), Mock(PasswordEncoder))
         }
 
         def "updateOne動作確認: 更新成功"() {
             given:
-            def dto = new EmployeeDto(employeeId: "100000000", employeeName: "従業員NAME", password: "testPass", role: "ROLE_ADMIN")
+            def dto = new EmployeeDto(employeeId: "100000000", employeeName: "従業員NAME")
 
             when:
             def result = service.updateOne(dto)
@@ -137,9 +136,7 @@ class EmployeeServiceImplSTest {
             then:
             1 * service.employeeDao.updateOne({
                 it.employeeId == "100000000" &&
-                        it.employeeName == "従業員NAME" &&
-                        it.password == "testPass" &&
-                        it.role == "ROLE_ADMIN"
+                        it.employeeName == "従業員NAME"
             } as EmployeeDto) >> 1
             and:
             // resultがtrueである確認
@@ -148,7 +145,7 @@ class EmployeeServiceImplSTest {
 
         def "updateOne動作確認: 更新失敗"() {
             given:
-            def dto = new EmployeeDto(employeeId: "100000000", employeeName: "従業員NAME", password: "testPass", role: "ROLE_ADMIN")
+            def dto = new EmployeeDto(employeeId: "100000000", employeeName: "従業員NAME")
 
             when:
             def result = service.updateOne(dto)
@@ -156,9 +153,7 @@ class EmployeeServiceImplSTest {
             then:
             1 * service.employeeDao.updateOne({
                 it.employeeId == "100000000" &&
-                        it.employeeName == "従業員NAME" &&
-                        it.password == "testPass" &&
-                        it.role == "ROLE_ADMIN"
+                        it.employeeName == "従業員NAME"
             } as EmployeeDto) >> 0
             and:
             // resultがfalseである確認
@@ -171,7 +166,7 @@ class EmployeeServiceImplSTest {
         def service = null as EmployeeServiceImpl
 
         def setup() {
-            service = new EmployeeServiceImpl(Mock(EmployeeDao), Mock(EmployeeJdbc))
+            service = new EmployeeServiceImpl(Mock(EmployeeDao), Mock(EmployeeJdbc), Mock(PasswordEncoder))
         }
 
         def "deleteOne動作確認: 削除成功"() {
