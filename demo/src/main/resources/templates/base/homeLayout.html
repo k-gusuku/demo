@@ -33,28 +33,28 @@
     <div class="row">
         <div class="col-sm-2 sidebar">
             <ui class="nav nav-pills nav-stacked">
-                <li role="presentation">
-                    <a class="btn btn-success" th:href="@{'/memberForMember_contents'}">会員情報画面はこちら</a>
+                <li role="presentation" sec:authorize="hasRole('GENERAL')">
+                    <a class="btn btn-success" th:href="@{'/memberForMember_contents'}">会員情報</a>
                 </li>
                 <br/>
-                <li role="presentation">
-                    <a class="btn btn-success" th:href="@{'/cashRegister_contents'}">レジシステム画面はこちら</a>
-                </li>
-                <br/>
-                <li role="presentation" sec:authorize="hasRole('ADMIN')">
-                    <a class="btn btn-primary" th:href="@{'/product_contents'}">商品情報画面はこちら</a>
+                <li role="presentation" sec:authorize="hasRole('GENERAL')">
+                    <a class="btn btn-success" th:href="@{'/cashRegister_contents'}">お買い物</a>
                 </li>
                 <br/>
                 <li role="presentation" sec:authorize="hasRole('ADMIN')">
-                    <a class="btn btn-primary" th:href="@{'/productImageStock_contents'}">商品イメージ情報画面はこちら</a>
+                    <a class="btn btn-primary" th:href="@{'/product_contents'}">商品情報</a>
                 </li>
                 <br/>
                 <li role="presentation" sec:authorize="hasRole('ADMIN')">
-                    <a class="btn btn-primary" th:href="@{'/member_contents'}">会員情報画面はこちら</a>
+                    <a class="btn btn-primary" th:href="@{'/productImageStock_contents'}">商品イメージ情報</a>
                 </li>
                 <br/>
                 <li role="presentation" sec:authorize="hasRole('ADMIN')">
-                    <a class="btn btn-primary" th:href="@{'/employee_contents'}">従業員情報画面はこちら</a>
+                    <a class="btn btn-primary" th:href="@{'/member_contents'}">会員情報</a>
+                </li>
+                <br/>
+                <li role="presentation" sec:authorize="hasRole('ADMIN')">
+                    <a class="btn btn-primary" th:href="@{'/employee_contents'}">従業員情報</a>
                 </li>
             </ui>
         </div>

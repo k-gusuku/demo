@@ -22,7 +22,6 @@ import java.util.List;
  */
 @Service
 public class MemberServiceImpl implements MemberService {
-    @Autowired
 
     @Qualifier("MemberDaoImpl")
     private final MemberDao memberDao;
