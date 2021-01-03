@@ -11,7 +11,7 @@
 <div th:fragment="newProductImageStockRegistration_contents">
     <div class="col-sm-5">
         <div class="page-header">
-            <h1>新規商品画像登録</h1>
+            <h1>新規商品イメージ登録</h1>
         </div>
         <form method="post" th:action="@{/newProductImageStockRegistration_contents}"
               th:object="${productImageStockForm}">
@@ -45,8 +45,10 @@
                         <div class="form-group"
                              th:classappend="${#fields.hasErrors('productImageType')}?'has-error'">
                             <div class="checkbox-inline" th:each="item:${radioProductImageType}">
-                                <input type="radio" name="radioProductImageType" th:text="${item.key}"
-                                       th:value="${item.value}" th:field="*{productImageType}"/>
+                                <label>
+                                    <input type="radio" name="radioProductImageType" th:text="${item.key}"
+                                           th:value="${item.value}" th:field="*{productImageType}"/>
+                                </label>
                             </div>
                             <br/>
                             <span class="text-danger" th:if="${#fields.hasErrors('productImageType')}"

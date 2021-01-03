@@ -8,7 +8,7 @@
 <div th:fragment="productImageStockDetail_contents">
     <div class="col-sm-5">
         <div class="page-header">
-            <h1>画像詳細</h1>
+            <h1>商品イメージ詳細</h1>
         </div>
         <img th:src="*{productImage}" style="width:627px;height:560px">
         <br/>
@@ -42,8 +42,10 @@
                     <td>
                         <div class="form-group">
                             <div class="checkbox-inline" th:each="item:${radioProductImageType}">
-                                <input type="radio" name="radioProductImageType" th:text="${item.key}"
-                                       th:value="${item.value}" th:field="*{productImageType}"/>
+                                <label>
+                                    <input type="radio" name="radioProductImageType" th:text="${item.key}"
+                                           th:value="${item.value}" th:field="*{productImageType}"/>
+                                </label>
                             </div>
                         </div>
                     </td>

@@ -55,8 +55,10 @@
                         <td>
                             <div class="form-group" th:classappend="${#fields.hasErrors('productType')}?'has-error'">
                                 <div class="checkbox-inline" th:each="item:${radioProductType}">
-                                    <input type="radio" name="radioProductType" th:text="${item.key}"
-                                           th:value="${item.value}" th:field="*{productType}"/>
+                                    <label>
+                                        <input type="radio" name="radioProductType" th:text="${item.key}"
+                                               th:value="${item.value}" th:field="*{productType}"/>
+                                    </label>
                                 </div>
                                 <br/>
                                 <span class="text-danger" th:if="${#fields.hasErrors('productType')}"
@@ -70,7 +72,9 @@
                         <td>
                             <div class="form-group"
                                  th:classapppend="${#fields.hasErrors('productImageId')}?'has-errors'">
-                                <input type="text" class="form-control" th:field="*{productImageId}"/>
+                                <label>
+                                    <input type="text" class="form-control" th:field="*{productImageId}"/>
+                                </label>
                                 <span class="text-danger" th:if="${#fields.hasErrors('productImageId')}"
                                       th:errors="*{productImageId}">error productImageId</span>
                             </div>
@@ -99,8 +103,10 @@
                 </div>
                 <div class="form-group">
                     <div class="checkbox-inline" th:each="item:${radioProductImageType}">
-                        <input type="radio" name="radioProductImageType" th:text="${item.key}"
-                               th:value="${item.value}" th:field="*{searchForProductImageType}"/>
+                        <label>
+                            <input type="radio" name="radioProductImageType" th:text="${item.key}"
+                                   th:value="${item.value}" th:field="*{searchForProductImageType}"/>
+                        </label>
                     </div>
                 </div>
                 <!-- 画像在庫検索ボタン -->
