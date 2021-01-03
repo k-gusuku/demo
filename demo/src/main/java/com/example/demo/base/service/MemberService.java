@@ -23,10 +23,9 @@ public interface MemberService {
      * 会員テーブルから会員が情報を取得
      *
      * @param memberId 会員ID
-     * @param memberName 会員名
      * @return 取得データ
      */
-    MemberDto selectOneForMember(String memberId, String memberName);
+    MemberDto selectOneForMember(String memberId);
 
     /**
      * 会員テーブルから全データを取得する.

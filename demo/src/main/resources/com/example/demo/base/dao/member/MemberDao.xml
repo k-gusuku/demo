@@ -42,8 +42,6 @@
             MEMBER
         WHERE
             MEMBER_ID = #{memberId}
-            AND
-            MEMBER_NAME = #{memberName}
     </select>
 
     <select id="selectMany" resultMap="BaseResultMap">

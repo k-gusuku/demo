@@ -43,8 +43,9 @@ public class MemberServiceImpl implements MemberService {
         return memberDao.selectOne(memberId);
     }
 
-    public MemberDto selectOneForMember(String memberId, String memberName) {
-        return memberDao.selectOneForMember(memberId, memberName);
+    @Override
+    public MemberDto selectOneForMember(String memberId) {
+        return memberDao.selectOneForMember(memberId);
     }
 
     @Override

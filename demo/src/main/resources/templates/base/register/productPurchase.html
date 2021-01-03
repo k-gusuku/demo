@@ -33,7 +33,8 @@
                         <th class="active col-sm-2">商品イメージID</th>
                         <td class="col-sm-3">
                             <div class="form-group">
-                                <input type="text" class="form-control" th:field="*{productImageId}" readonly="readonly"/>
+                                <input type="text" class="form-control" th:field="*{productImageId}"
+                                       readonly="readonly"/>
                             </div>
                         </td>
                     </tr>
@@ -61,16 +62,6 @@
                         <td>
                             <div class="form-group">
                                 <input type="text" class="form-control" th:field="*{productType}" readonly="readonly"/>
-                            </div>
-                        </td>
-                    </tr>
-                    <!-- 会員ID -->
-                    <tr>
-                        <th class="active">会員ID</th>
-                        <td>
-                            <div class="form-group" th:classappend="${#fields.hasErrors('memberId')}?'has-error'">
-                                <input type="text" class="form-control" th:field="*{memberId}"/>
-                                <span class="text-danger" th:if="${#fields.hasErrors('memberId')}" th:errors="*{memberId}">memberId error</span>
                             </div>
                         </td>
                     </tr>

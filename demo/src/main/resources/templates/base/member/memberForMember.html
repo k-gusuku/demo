@@ -11,18 +11,6 @@
             <div class="page-header">
                 <h1>会員情報</h1>
             </div>
-            <form method="get" action="/memberForMember_contents" th:object="${memberForm}">
-                <div class="form-group">
-                    <label>会員ID</label>
-                    <input type="text" th:field="*{memberId}"/>
-                </div>
-                <div class="form-group">
-                    <label>会員名</label>
-                    <input type="text" th:field="*{memberName}"/>
-                </div>
-                <button class="btn btn-warning" type="submit">検索</button>
-            </form>
-            <br/>
             <form method="post" th:action="@{/memberDetailForMember}" th:object="${memberForm}">
                 <table class="table table-bordered table-hover">
                     <tr>

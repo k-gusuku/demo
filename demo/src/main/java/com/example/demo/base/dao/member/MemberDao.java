@@ -24,11 +24,10 @@ public interface MemberDao {
      * 会員テーブルから会員が情報を取得
      *
      * @param memberId   会員ID
-     * @param memberName 会員名
      * @return 取得データ
      * @throws DataAccessException データ取得時にエラーが発生した場合に投げられる例外
      */
-    MemberDto selectOneForMember(String memberId, String memberName) throws DataAccessException;
+    MemberDto selectOneForMember(String memberId) throws DataAccessException;
 
     /**
      * 商品テーブルから複数件データを取得

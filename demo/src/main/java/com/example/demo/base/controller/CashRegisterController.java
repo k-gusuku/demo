@@ -3,15 +3,14 @@ package com.example.demo.base.controller;
 import com.example.demo.base.conversion.memberhistory.MemberHistoryConversion;
 import com.example.demo.base.dao.memberhistory.MemberHistoryDto;
 import com.example.demo.base.domain.memberhistory.MemberHistoryForm;
-import com.example.demo.base.domain.memberhistory.MemberHistoryGroupOrder;
 import com.example.demo.base.service.MemberHistoryService;
 import com.example.demo.base.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
@@ -68,21 +67,18 @@ public class CashRegisterController extends ControllerCommonProcessing {
 
     // 新規商品履歴登録のPOSTメソッド
     @PostMapping(value = "/productPurchase", params = "purchase")
-    public String postProductPurchase(@ModelAttribute @Validated(MemberHistoryGroupOrder.class) MemberHistoryForm memberHistoryForm, BindingResult bindingResult, Model model) {
-        if (bindingResult.hasErrors()) {
-            String imageForProductDetails = "../img/" + memberHistoryForm.getProductImageId();
-            model.addAttribute("contents", "base/register/productPurchase::productPurchase_contents");
-            model.addAttribute("imageForProductDetails", imageForProductDetails);
-            return "base/homeLayout";
-        }
+    public String postProductPurchase(@ModelAttribute MemberHistoryForm memberHistoryForm, Model model) {
         System.out.println(memberHistoryForm);
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String memberId = auth.getName();
 
         MemberHistoryDto memberHistoryDto = new MemberHistoryDto();
         memberHistoryDto.setProductId(memberHistoryForm.getProductId()); // 商品ID
         memberHistoryDto.setProductName(memberHistoryForm.getProductName()); // 商品名
         memberHistoryDto.setProductPrice(memberHistoryForm.getProductPrice()); // 商品金額
         memberHistoryDto.setProductType(memberHistoryForm.getProductType()); // 商品の種類
-        memberHistoryDto.setMemberId(memberHistoryForm.getMemberId()); // 会員ID
+        memberHistoryDto.setMemberId(memberId); // 会員ID
         memberHistoryDto.setProductImageId(memberHistoryForm.getProductImageId()); // 商品イメージID
 
         boolean memberHistoryResult = memberHistoryService.insertOne(memberHistoryDto);
@@ -104,7 +100,8 @@ public class CashRegisterController extends ControllerCommonProcessing {
             System.out.println("削除失敗");
         }
 
-        MemberHistoryForm memberHistoryFormReturn = new MemberHistoryForm();
-        return getProduct(memberHistoryFormReturn, model);
+        memberHistoryForm.setProductId(null);
+        memberHistoryForm.setProductName(null);
+        return getProduct(memberHistoryForm, model);
     }
 }

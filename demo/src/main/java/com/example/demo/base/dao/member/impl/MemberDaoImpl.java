@@ -32,8 +32,8 @@ public class MemberDaoImpl implements MemberDao {
     }
 
     @Override
-    public MemberDto selectOneForMember(String memberId, String memberName) throws DataAccessException {
-        return memberDao.selectOneForMember(memberId, memberName);
+    public MemberDto selectOneForMember(String memberId) throws DataAccessException {
+        return memberDao.selectOneForMember(memberId);
     }
 
     @Override

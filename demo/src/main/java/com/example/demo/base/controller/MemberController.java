@@ -1,11 +1,11 @@
 package com.example.demo.base.controller;
 
-import com.example.demo.base.conversion.memberhistory.MemberHistoryConversion;
 import com.example.demo.base.conversion.member.MemberConversion;
+import com.example.demo.base.conversion.memberhistory.MemberHistoryConversion;
 import com.example.demo.base.dao.member.MemberDto;
-import com.example.demo.base.domain.memberhistory.MemberHistoryForm;
 import com.example.demo.base.domain.member.MemberForm;
 import com.example.demo.base.domain.member.MemberGroupOrder;
+import com.example.demo.base.domain.memberhistory.MemberHistoryForm;
 import com.example.demo.base.service.MemberHistoryService;
 import com.example.demo.base.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +13,8 @@ import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -58,10 +60,13 @@ public class MemberController extends ControllerCommonProcessing {
     // 会員テーブルから会員が情報を取得するメソッド
     @GetMapping("/memberForMember_contents")
     public String getMemberForMember(@ModelAttribute MemberForm memberForm, Model model) {
-        MemberDto memberDto = memberService.selectOneForMember(memberForm.getMemberId(), memberForm.getMemberName());
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String memberId = auth.getName();
+
+        MemberDto memberDto = memberService.selectOneForMember(memberId);
 
         if (memberDto != null) {
-            List<MemberHistoryForm> memberHistoryFormList = memberHistoryService.selectMemberHistory(memberForm.getMemberId()).stream().map(m -> {
+            List<MemberHistoryForm> memberHistoryFormList = memberHistoryService.selectMemberHistory(memberId).stream().map(m -> {
                 m.setProductImageId(productImageForDisplayPattern1(m.getProductImageId()));
                 return memberHistoryConversion.dto2Form(m);
             }).collect(Collectors.toList());
