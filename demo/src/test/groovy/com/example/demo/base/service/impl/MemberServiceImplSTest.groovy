@@ -44,15 +44,13 @@ class MemberServiceImplSTest {
         def "selectOneForMember: 動作確認"() {
             given:
             def memberId = "100000000"
-            def memberName = "会員NAME"
 
             when:
-            def dto = service.selectOneForMember(memberId, memberName)
+            def dto = service.selectOneForMember(memberId)
 
             then:
             1 * service.memberDao.selectOneForMember(
-                    { memberId == "100000000" } as String,
-                    { memberName == "会員NAME" } as String
+                    { memberId == "100000000" } as String
             ) >> new MemberDto(memberId: "100000000", memberName: "会員NAME", birthday: new Date("1989/10/13"), age: 31, phoneNumber: "012223344", address: "東京都渋谷区")
             and:
             dto.each {

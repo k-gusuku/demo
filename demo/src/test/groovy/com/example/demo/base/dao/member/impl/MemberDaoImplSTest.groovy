@@ -64,10 +64,9 @@ class MemberDaoImplSTest {
 
         def "selectOneForMember: 取得データ有"() {
             def memberId = "100000000"
-            def memberName = "会員NAME"
 
             when:
-            def dto = memberDao.selectOneForMember(memberId, memberName)
+            def dto = memberDao.selectOneForMember(memberId)
 
             then:
             dto.each {
@@ -82,20 +81,13 @@ class MemberDaoImplSTest {
 
         @Unroll
         def "selectOneForMember: 取得データ無：#testCase"() {
-            def memberId = _memberId
-            def memberName = _memberName
+            def memberId = "999999999"
 
             when:
-            def dto = memberDao.selectOneForMember(memberId, memberName)
+            def dto = memberDao.selectOneForMember(memberId)
 
             then:
             dto == null
-
-            where:
-            _memberId   | _memberName | testCase
-            "999999999" | "名無し"       | "ID・名前の一致無"
-            "100000000" | "名無し"       | "IDの一致有・名前の一致無"
-            "999999999" | "会員NAME"    | "IDの一致無・名前の一致有"
         }
 
         def "selectMany動作確認: 会員ID検索：取得データ有"() {
