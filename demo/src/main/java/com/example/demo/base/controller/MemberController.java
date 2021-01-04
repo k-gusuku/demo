@@ -167,6 +167,7 @@ public class MemberController extends ControllerCommonProcessing {
 
         // 会員情報画面の検索結果用に従業員IDと従業員名を空にする。
         memberForm.setMemberId(null);
+        memberForm.setPassword(null);
         memberForm.setMemberName(null);
         memberForm.setBirthday(null);
         memberForm.setAge(null);
