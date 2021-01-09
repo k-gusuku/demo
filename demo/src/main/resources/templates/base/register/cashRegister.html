@@ -27,6 +27,7 @@
             <th class="warning col-sm-2">商品名</th>
             <th class="warning col-sm-2">商品金額</th>
             <th class="warning col-sm-2">商品の種類</th>
+            <th class="warning col-sm-2">商品の在庫数</th>
             <th class="warning col-sm-2">イメージ</th>
             <th class="warning col-sm-2"></th>
         </tr>
@@ -35,6 +36,7 @@
             <td th:text="${product.productName}"></td>
             <td th:text="${product.productPrice}"></td>
             <td th:text="${product.productType}"></td>
+            <td th:text="${product.productInventory}"></td>
             <td>
                 <img th:src="${product.productImageId}" style="width:90px;height:60px">
             </td>

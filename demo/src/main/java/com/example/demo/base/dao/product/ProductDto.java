@@ -32,4 +32,9 @@ public class ProductDto {
      * 商品イメージID
      */
     private String productImageId;
+
+    /**
+     * 商品在庫数
+     */
+    private Long productInventory;
 }

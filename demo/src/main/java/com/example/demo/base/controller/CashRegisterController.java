@@ -92,13 +92,13 @@ public class CashRegisterController extends ControllerCommonProcessing {
 
         System.out.println("購入商品の削除処理");
 
-        boolean productResult = productService.deleteOne(memberHistoryForm.getProductId());
-
-        if (productResult) {
-            System.out.println("削除成功");
-        } else {
-            System.out.println("削除失敗");
-        }
+//        boolean productResult = productService.deleteOne(memberHistoryForm.getProductId());
+//
+//        if (productResult) {
+//            System.out.println("削除成功");
+//        } else {
+//            System.out.println("削除失敗");
+//        }
 
         memberHistoryForm.setProductId(null);
         memberHistoryForm.setProductName(null);

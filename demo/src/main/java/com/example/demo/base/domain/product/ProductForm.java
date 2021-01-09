@@ -45,6 +45,11 @@ public class ProductForm {
      */
     private String memberId;
 
+    /**
+     * 商品在庫数
+     */
+    private Long productInventory;
+
     // 検索用商品イメージID
     private String searchForProductImageId;
     // 検索用商品イメージ名

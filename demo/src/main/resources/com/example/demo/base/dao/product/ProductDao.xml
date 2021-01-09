@@ -8,6 +8,7 @@
         <result column="PRODUCT_PRICE" property="productPrice"/>
         <result column="PRODUCT_TYPE" property="productType"/>
         <result column="PRODUCT_IMAGE_ID" property="productImageId"/>
+        <result column="PRODUCT_INVENTORY" property="productInventory"/>
     </resultMap>
 
     <!--+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
@@ -20,7 +21,8 @@
             PRODUCT_NAME,
             PRODUCT_PRICE,
             PRODUCT_TYPE,
-            PRODUCT_IMAGE_ID
+            PRODUCT_IMAGE_ID,
+            PRODUCT_INVENTORY
         FROM
             PRODUCT
         WHERE
@@ -33,7 +35,8 @@
         PRODUCT_NAME,
         PRODUCT_PRICE,
         PRODUCT_TYPE,
-        PRODUCT_IMAGE_ID
+        PRODUCT_IMAGE_ID,
+        PRODUCT_INVENTORY
         FROM
         PRODUCT
         <where>
@@ -69,6 +72,9 @@
             <if test="productImageId != null">
                 PRODUCT_IMAGE_ID,
             </if>
+            <if test="productInventory != null">
+                PRODUCT_INVENTORY,
+            </if>
         </trim>
         <trim suffixOverrides="," suffix=")" prefix="values(">
             <if test="productId != null">
@@ -85,6 +91,9 @@
             </if>
             <if test="productImageId != null">
                 #{productImageId},
+            </if>
+            <if test="productInventory != null">
+                #{productInventory},
             </if>
         </trim>
     </insert>
@@ -107,6 +116,9 @@
             </if>
             <if test="productImageId != null">
                 PRODUCT_IMAGE_ID = #{productImageId},
+            </if>
+            <if test="productInventory != null">
+                PRODUCT_INVENTORY = #{productInventory},
             </if>
         </set>
         WHERE

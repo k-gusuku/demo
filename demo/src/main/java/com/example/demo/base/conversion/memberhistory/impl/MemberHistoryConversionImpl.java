@@ -43,6 +43,7 @@ public class MemberHistoryConversionImpl implements MemberHistoryConversion {
         memberHistoryForm.setProductPrice(productDto.getProductPrice());
         memberHistoryForm.setProductType(productDto.getProductType());
         memberHistoryForm.setProductImageId(productDto.getProductImageId());
+        memberHistoryForm.setProductInventory(productDto.getProductInventory());
         return memberHistoryForm;
     }
 }

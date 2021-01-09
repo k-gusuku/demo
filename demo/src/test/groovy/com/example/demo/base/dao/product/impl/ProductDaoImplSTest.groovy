@@ -48,6 +48,7 @@ class ProductDaoImplSTest {
                 assert it.productPrice == 2900L
                 assert it.productType == "ゲームソフト"
                 assert it.productImageId == "image_tetris"
+                assert it.productInventory == 3L
             }
         }
 
@@ -77,6 +78,7 @@ class ProductDaoImplSTest {
                 assert it.productPrice == 490L
                 assert it.productType == "本"
                 assert it.productImageId == "image_one-piece-1"
+                assert it.productInventory == 6L
             }
         }
 
@@ -191,7 +193,7 @@ class ProductDaoImplSTest {
 
         def "insertOne動作確認: 商品データを1件登録"() {
             given:
-            dto = new ProductDto(productId: "tetris", productName: "テトリス", productPrice: 2900L, productType: "ゲームソフト", productImageId: "image_tetris")
+            dto = new ProductDto(productId: "tetris", productName: "テトリス", productPrice: 2900L, productType: "ゲームソフト", productImageId: "image_tetris", productInventory: 3L)
 
             when:
             execute()
@@ -204,6 +206,7 @@ class ProductDaoImplSTest {
             assert rows.PRODUCT_PRICE == [2900L]
             assert rows.PRODUCT_TYPE == ["ゲームソフト"]
             assert rows.PRODUCT_IMAGE_ID == ["image_tetris"]
+            assert rows.PRODUCT_INVENTORY == [3L]
         }
     }
 
@@ -237,7 +240,7 @@ class ProductDaoImplSTest {
 
         def "updateOne動作確認: 商品データを1件更新"() {
             given:
-            dto = new ProductDto(productId: "tetris", productName: "テトリス更新", productPrice: 3900L, productType: "その他", productImageId: "image_tetris-2")
+            dto = new ProductDto(productId: "tetris", productName: "テトリス更新", productPrice: 3900L, productType: "その他", productImageId: "image_tetris-2", productInventory: 3L)
 
             when:
             execute()
@@ -250,6 +253,7 @@ class ProductDaoImplSTest {
             assert rows.PRODUCT_PRICE == [3900]
             assert rows.PRODUCT_TYPE == ["その他"]
             assert rows.PRODUCT_IMAGE_ID == ["image_tetris-2"]
+            assert rows.PRODUCT_INVENTORY == [3L]
         }
     }
 

@@ -16,6 +16,7 @@ public class ProductConversionImpl implements ProductConversion {
         productDto.setProductPrice(productForm.getProductPrice());
         productDto.setProductType(productForm.getProductType());
         productDto.setProductImageId(productForm.getProductImageId());
+        productDto.setProductInventory(productForm.getProductInventory());
         return productDto;
     }
 
@@ -27,6 +28,7 @@ public class ProductConversionImpl implements ProductConversion {
         productForm.setProductPrice(productDto.getProductPrice());
         productForm.setProductType(productDto.getProductType());
         productForm.setProductImageId(productDto.getProductImageId());
+        productForm.setProductInventory(productDto.getProductInventory());
         return productForm;
     }
 }

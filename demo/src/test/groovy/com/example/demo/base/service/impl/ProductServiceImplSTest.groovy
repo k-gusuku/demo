@@ -28,7 +28,7 @@ class ProductServiceImplSTest {
             then:
             1 * service.productDao.selectOne({
                 productId == "tetris"
-            } as String) >> new ProductDto(productId: "tetris", productName: "テトリス", productPrice: 2900L, productType: "ゲームソフト", productImageId: "image_tetris")
+            } as String) >> new ProductDto(productId: "tetris", productName: "テトリス", productPrice: 2900L, productType: "ゲームソフト", productImageId: "image_tetris", productInventory: 3L)
             and:
             dto.each {
                 assert it.productId == "tetris"
@@ -36,6 +36,7 @@ class ProductServiceImplSTest {
                 assert it.productPrice == 2900L
                 assert it.productType == "ゲームソフト"
                 assert it.productImageId == "image_tetris"
+                assert it.productInventory == 3L
             }
         }
 
@@ -51,7 +52,7 @@ class ProductServiceImplSTest {
             1 * service.productDao.selectMany(
                     { productId == "tetris" } as String,
                     { productName == "スイッチ" } as String
-            ) >> [new ProductDto(productId: "tetris", productName: "テトリス", productPrice: 2900L, productType: "ゲームソフト", productImageId: "image_tetris"), new ProductDto(productId: "switch", productName: "スイッチ", productPrice: 29000L, productType: "その他", productImageId: "image_switch")]
+            ) >> [new ProductDto(productId: "tetris", productName: "テトリス", productPrice: 2900L, productType: "ゲームソフト", productImageId: "image_tetris", productInventory: 6L), new ProductDto(productId: "switch", productName: "スイッチ", productPrice: 29000L, productType: "その他", productImageId: "image_switch", productInventory: 3L)]
             and:
             dtoList.size() == 2
             dtoList[0].each {
@@ -60,6 +61,7 @@ class ProductServiceImplSTest {
                 assert it.productPrice == 2900L
                 assert it.productType == "ゲームソフト"
                 assert it.productImageId == "image_tetris"
+                assert it.productInventory == 6L
 
             }
             dtoList[1].each {
@@ -68,7 +70,7 @@ class ProductServiceImplSTest {
                 assert it.productPrice == 29000L
                 assert it.productType == "その他"
                 assert it.productImageId == "image_switch"
-
+                assert it.productInventory == 3L
             }
         }
     }
@@ -91,6 +93,7 @@ class ProductServiceImplSTest {
                 it.productPrice = 2900L
                 it.productType = "ゲームソフト"
                 it.productImageId = "image_tetris"
+                it.productInventory = 3L
             }
 
             when:
@@ -102,7 +105,8 @@ class ProductServiceImplSTest {
                         it.productName == "テトリス" &&
                         it.productPrice == 2900L &&
                         it.productType == "ゲームソフト" &&
-                        it.productImageId == "image_tetris"
+                        it.productImageId == "image_tetris" &&
+                        it.productInventory == 3L
             } as ProductDto) >> 1
             and:
             // resultがtrueである確認
@@ -117,6 +121,7 @@ class ProductServiceImplSTest {
                 it.productPrice = 2900L
                 it.productType = "ゲームソフト"
                 it.productImageId = "image_tetris"
+                it.productInventory = 3L
             }
 
             when:
@@ -128,7 +133,8 @@ class ProductServiceImplSTest {
                         it.productName == "テトリス" &&
                         it.productPrice == 2900L &&
                         it.productType == "ゲームソフト" &&
-                        it.productImageId == "image_tetris"
+                        it.productImageId == "image_tetris" &&
+                        it.productInventory == 3L
             } as ProductDto) >> 0
             and:
             // resultがfalseである確認
@@ -154,6 +160,7 @@ class ProductServiceImplSTest {
                 it.productPrice = 2900L
                 it.productType = "ゲームソフト"
                 it.productImageId = "image_tetris"
+                it.productInventory = 3L
             }
 
             when:
@@ -165,7 +172,8 @@ class ProductServiceImplSTest {
                         it.productName == "テトリス" &&
                         it.productPrice == 2900L &&
                         it.productType == "ゲームソフト" &&
-                        it.productImageId == "image_tetris"
+                        it.productImageId == "image_tetris" &&
+                        it.productInventory == 3L
             } as ProductDto) >> 1
             and:
             // resultがtrueである確認
@@ -180,6 +188,7 @@ class ProductServiceImplSTest {
                 it.productPrice = 2900L
                 it.productType = "ゲームソフト"
                 it.productImageId = "image_tetris"
+                it.productInventory = 3L
             }
 
             when:
@@ -191,7 +200,8 @@ class ProductServiceImplSTest {
                         it.productName == "テトリス" &&
                         it.productPrice == 2900L &&
                         it.productType == "ゲームソフト" &&
-                        it.productImageId == "image_tetris"
+                        it.productImageId == "image_tetris" &&
+                        it.productInventory == 3L
             } as ProductDto) >> 0
             and:
             // resultがfalseである確認

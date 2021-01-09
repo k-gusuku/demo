@@ -66,6 +66,20 @@
                             </div>
                         </td>
                     </tr>
+                    <!-- 商品在庫数 -->
+                    <tr>
+                        <th class="active">商品在庫数</th>
+                        <td>
+                            <div class="form-group"
+                                 th:classapppend="${#fields.hasErrors('productInventory')}?'has-errors'">
+                                <label>
+                                    <input type="text" class="form-control" th:field="*{productInventory}"/>
+                                </label>
+                                <span class="text-danger" th:if="${#fields.hasErrors('productInventory')}"
+                                      th:errors="*{productInventory}">error productInventory</span>
+                            </div>
+                        </td>
+                    </tr>
                     <!-- イメージID -->
                     <tr>
                         <th class="active">イメージID</th>

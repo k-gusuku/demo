@@ -44,4 +44,9 @@ public class MemberHistoryDto {
      * 販売日
      */
     private Date saleDay;
+
+    /**
+     * 商品在庫数
+     */
+    private Long productInventory;
 }
