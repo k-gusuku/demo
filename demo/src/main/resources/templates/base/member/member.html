@@ -26,7 +26,6 @@
             <th class="warning col-sm-2">会員ID</th>
             <th class="warning col-sm-2">会員名</th>
             <th class="warning col-sm-2">生年月日</th>
-            <th class="warning col-sm-2">年齢</th>
             <th class="warning col-sm-2">電話番号</th>
             <th class="warning col-sm-2">住所</th>
             <th class="warning col-sm-2"></th>
@@ -35,7 +34,6 @@
             <td th:text="${member.memberId}"></td>
             <td th:text="${member.memberName}"></td>
             <td th:text="${#dates.format(member.birthday,'YYYY/MM/dd')}"></td>
-            <td th:text="${member.age}"></td>
             <td th:text="${member.phoneNumber}"></td>
             <td th:text="${member.address}"></td>
             <td>

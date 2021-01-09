@@ -38,11 +38,6 @@ public class MemberDto {
     private Date birthday;
 
     /**
-     * 年齢
-     */
-    private Long age;
-
-    /**
      * 電話番号
      */
     private String phoneNumber;

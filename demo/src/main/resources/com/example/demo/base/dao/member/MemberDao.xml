@@ -8,7 +8,6 @@
         <result column="MEMBER_NAME" property="memberName"/>
         <result column="ROLE" property="role"/>
         <result column="BIRTHDAY" property="birthday"/>
-        <result column="AGE" property="age"/>
         <result column="PHONE_NUMBER" property="phoneNumber"/>
         <result column="ADDRESS" property="address"/>
     </resultMap>
@@ -21,7 +20,6 @@
             MEMBER_ID,
             MEMBER_NAME,
             BIRTHDAY,
-            AGE,
             PHONE_NUMBER,
             ADDRESS
         FROM
@@ -35,7 +33,6 @@
             MEMBER_ID,
             MEMBER_NAME,
             BIRTHDAY,
-            AGE,
             PHONE_NUMBER,
             ADDRESS
         FROM
@@ -49,7 +46,6 @@
         MEMBER_ID,
         MEMBER_NAME,
         BIRTHDAY,
-        AGE,
         PHONE_NUMBER,
         ADDRESS
         FROM
@@ -86,9 +82,6 @@
             <if test="birthday != null">
                 BIRTHDAY,
             </if>
-            <if test="age != null">
-                AGE,
-            </if>
             <if test="phoneNumber != null">
                 PHONE_NUMBER,
             </if>
@@ -111,9 +104,6 @@
             </if>
             <if test="birthday != null">
                 #{birthday},
-            </if>
-            <if test="age != null">
-                #{age},
             </if>
             <if test="phoneNumber != null">
                 #{phoneNumber},
@@ -138,9 +128,6 @@
             </if>
             <if test="birthday != null">
                 BIRTHDAY = #{birthday},
-            </if>
-            <if test="age != null">
-                AGE = #{age},
             </if>
             <if test="phoneNumber != null">
                 PHONE_NUMBER = #{phoneNumber},

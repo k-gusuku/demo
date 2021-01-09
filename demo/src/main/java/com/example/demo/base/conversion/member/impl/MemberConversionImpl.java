@@ -16,7 +16,6 @@ public class MemberConversionImpl implements MemberConversion {
         memberDto.setMemberName(memberForm.getMemberName());
         memberDto.setRole(memberForm.getRole());
         memberDto.setBirthday(memberForm.getBirthday());
-        memberDto.setAge(memberForm.getAge());
         memberDto.setPhoneNumber(memberForm.getPhoneNumber());
         memberDto.setAddress(memberForm.getAddress());
         return memberDto;
@@ -30,7 +29,6 @@ public class MemberConversionImpl implements MemberConversion {
         memberForm.setMemberName(memberDto.getMemberName());
         memberForm.setRole(memberDto.getRole());
         memberForm.setBirthday(memberDto.getBirthday());
-        memberForm.setAge(memberDto.getAge());
         memberForm.setPhoneNumber(memberDto.getPhoneNumber());
         memberForm.setAddress(memberDto.getAddress());
         return memberForm;

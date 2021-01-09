@@ -47,16 +47,6 @@
                             </div>
                         </td>
                     </tr>
-                    <!-- 年齢 -->
-                    <tr>
-                        <th class="active">年齢</th>
-                        <td>
-                            <div class="form-group" th:classappend="${#fields.hasErrors('age')}?'has-error'">
-                                <input type="text" class="form-control" th:field="*{age}"/>
-                                <span class="text-danger" th:if="${#fields.hasErrors('age')}" th:errors="*{age}">age error</span>
-                            </div>
-                        </td>
-                    </tr>
                     <!-- 電話番号 -->
                     <tr>
                         <th class="active">電話番号</th>

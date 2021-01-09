@@ -170,7 +170,6 @@ public class MemberController extends ControllerCommonProcessing {
         memberForm.setPassword(null);
         memberForm.setMemberName(null);
         memberForm.setBirthday(null);
-        memberForm.setAge(null);
         memberForm.setPhoneNumber(null);
         memberForm.setAddress(null);
 
@@ -270,7 +269,6 @@ public class MemberController extends ControllerCommonProcessing {
         memberForm.setMemberId(null);
         memberForm.setMemberName(null);
         memberForm.setBirthday(null);
-        memberForm.setAge(null);
         memberForm.setPhoneNumber(null);
         memberForm.setAddress(null);
 
