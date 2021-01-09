@@ -46,7 +46,6 @@ class MemberDaoImplSTest {
                 assert it.memberId == "100000000"
                 assert it.memberName == "会員NAME"
                 assert it.birthday == new Date("1989/10/13")
-                assert it.age == 31L
                 assert it.phoneNumber == "012223344"
                 assert it.address == "東京都渋谷区"
             }
@@ -73,7 +72,6 @@ class MemberDaoImplSTest {
                 assert it.memberId == "100000000"
                 assert it.memberName == "会員NAME"
                 assert it.birthday == new Date("1989/10/13")
-                assert it.age == 31L
                 assert it.phoneNumber == "012223344"
                 assert it.address == "東京都渋谷区"
             }
@@ -104,7 +102,6 @@ class MemberDaoImplSTest {
                 assert it.memberId == "100000000"
                 assert it.memberName == "会員NAME"
                 assert it.birthday == new Date("1989/10/13")
-                assert it.age == 31
                 assert it.phoneNumber == "012223344"
                 assert it.address == "東京都渋谷区"
             }
@@ -231,7 +228,6 @@ class MemberDaoImplSTest {
                 password = "password"
                 role = "ROLE_GENERAL"
                 birthday = new Date("1989/10/13")
-                age = 31
                 phoneNumber = "012223344"
                 address = "東京都渋谷区"
             }
@@ -247,7 +243,6 @@ class MemberDaoImplSTest {
             assert rows.MEMBER_NAME == ["会員NAME"]
             assert rows.ROLE == ["ROLE_GENERAL"]
             assert rows.BIRTHDAY == [new Date("1989/10/13")]
-            assert rows.AGE == [31]
             assert rows.PHONE_NUMBER == ["012223344"]
             assert rows.ADDRESS == ["東京都渋谷区"]
         }
@@ -287,7 +282,6 @@ class MemberDaoImplSTest {
                 memberId = "100000000"
                 memberName = "会員NAME更新"
                 birthday = new Date("2020/12/28")
-                age = 0
                 phoneNumber = "123456789"
                 address = "福岡県早良区"
             }
@@ -301,7 +295,6 @@ class MemberDaoImplSTest {
             assert rows.MEMBER_ID == ["100000000"]
             assert rows.MEMBER_NAME == ["会員NAME更新"]
             assert rows.BIRTHDAY == [new Date("2020/12/28")]
-            assert rows.AGE == [0]
             assert rows.PHONE_NUMBER == ["123456789"]
             assert rows.ADDRESS == ["福岡県早良区"]
         }

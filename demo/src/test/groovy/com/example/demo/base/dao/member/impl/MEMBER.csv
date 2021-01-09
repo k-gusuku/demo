@@ -1,4 +1,4 @@
-"MEMBER_ID", "PASSWORD" , "MEMBER_NAME", "ROLE"        , "BIRTHDAY"  , "AGE", "PHONE_NUMBER", "ADDRESS"
-"100000000", "testPass1", "会員NAME"    , "ROLE_GENERAL", "1989-10-13", "31" , "012223344"   , "東京都渋谷区"
-"100000001", "testPass2", "会員NAME"    , "ROLE_GENERAL", "1995-11-11", "25" , "012344444"   , "東京都渋谷区"
-"100000002", "testPass3", "具志堅太郎"   , "ROLE_GENERAL", "1990-12-25", "25" , "012355555"   , "沖縄県那覇市"
+"MEMBER_ID", "PASSWORD" , "MEMBER_NAME", "ROLE"        , "BIRTHDAY"  , "PHONE_NUMBER", "ADDRESS"
+"100000000", "testPass1", "会員NAME"    , "ROLE_GENERAL", "1989-10-13", "012223344"   , "東京都渋谷区"
+"100000001", "testPass2", "会員NAME"    , "ROLE_GENERAL", "1995-11-11", "012344444"   , "東京都渋谷区"
+"100000002", "testPass3", "具志堅太郎"   , "ROLE_GENERAL", "1990-12-25", "012355555"   , "沖縄県那覇市"

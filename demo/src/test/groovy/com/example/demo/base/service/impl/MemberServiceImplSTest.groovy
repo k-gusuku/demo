@@ -29,13 +29,12 @@ class MemberServiceImplSTest {
             then:
             1 * service.memberDao.selectOne({
                 memberId == "100000000"
-            } as String) >> new MemberDto(memberId: "100000000", memberName: "会員NAME", birthday: new Date("1989/10/13"), age: 31, phoneNumber: "012223344", address: "東京都渋谷区")
+            } as String) >> new MemberDto(memberId: "100000000", memberName: "会員NAME", birthday: new Date("1989/10/13"), phoneNumber: "012223344", address: "東京都渋谷区")
             and:
             dto.each {
                 assert it.memberId == "100000000"
                 assert it.memberName == "会員NAME"
                 assert it.birthday == new Date("1989/10/13")
-                assert it.age == 31
                 assert it.phoneNumber == "012223344"
                 assert it.address == "東京都渋谷区"
             }
@@ -51,13 +50,12 @@ class MemberServiceImplSTest {
             then:
             1 * service.memberDao.selectOneForMember(
                     { memberId == "100000000" } as String
-            ) >> new MemberDto(memberId: "100000000", memberName: "会員NAME", birthday: new Date("1989/10/13"), age: 31, phoneNumber: "012223344", address: "東京都渋谷区")
+            ) >> new MemberDto(memberId: "100000000", memberName: "会員NAME", birthday: new Date("1989/10/13"), phoneNumber: "012223344", address: "東京都渋谷区")
             and:
             dto.each {
                 assert it.memberId == "100000000"
                 assert it.memberName == "会員NAME"
                 assert it.birthday == new Date("1989/10/13")
-                assert it.age == 31
                 assert it.phoneNumber == "012223344"
                 assert it.address == "東京都渋谷区"
             }
@@ -75,13 +73,12 @@ class MemberServiceImplSTest {
             1 * service.memberDao.selectMany(
                     { memberId == "100000000" } as String,
                     { memberName == "会員NAME" } as String
-            ) >> [new MemberDto(memberId: "100000001", memberName: "会員NAME1", birthday: new Date("1989/10/13"), age: 31, phoneNumber: "012223344", address: "東京都渋谷区"), new MemberDto(memberId: "100000002", memberName: "会員NAME2", birthday: new Date("1990/12/25"), age: 25, phoneNumber: "012355555", address: "沖縄県那覇市")]
+            ) >> [new MemberDto(memberId: "100000001", memberName: "会員NAME1", birthday: new Date("1989/10/13"), phoneNumber: "012223344", address: "東京都渋谷区"), new MemberDto(memberId: "100000002", memberName: "会員NAME2", birthday: new Date("1990/12/25"), phoneNumber: "012355555", address: "沖縄県那覇市")]
             and:
             dtoList[0].each {
                 assert it.memberId == "100000001"
                 assert it.memberName == "会員NAME1"
                 assert it.birthday == new Date("1989/10/13")
-                assert it.age == 31
                 assert it.phoneNumber == "012223344"
                 assert it.address == "東京都渋谷区"
             }
@@ -89,7 +86,6 @@ class MemberServiceImplSTest {
                 assert it.memberId == "100000002"
                 assert it.memberName == "会員NAME2"
                 assert it.birthday == new Date("1990/12/25")
-                assert it.age == 25
                 assert it.phoneNumber == "012355555"
                 assert it.address == "沖縄県那覇市"
             }
@@ -114,7 +110,6 @@ class MemberServiceImplSTest {
                 it.memberName = "会員NAME"
                 it.role = "ROLE_GENERAL"
                 it.birthday = new Date("1989/10/13")
-                it.age = 31
                 it.phoneNumber = "012223344"
                 it.address = "東京都渋谷区"
             }
@@ -133,7 +128,6 @@ class MemberServiceImplSTest {
                         it.memberName == "会員NAME" &&
                         it.role == "ROLE_GENERAL" &&
                         it.birthday == new Date("1989/10/13") &&
-                        it.age == 31 &&
                         it.phoneNumber == "012223344" &&
                         it.address == "東京都渋谷区"
             } as MemberDto) >> 1
@@ -149,7 +143,6 @@ class MemberServiceImplSTest {
                 it.memberName = "会員NAME"
                 it.role = "ROLE_GENERAL"
                 it.birthday = new Date("1989/10/13")
-                it.age = 31
                 it.phoneNumber = "012223344"
                 it.address = "東京都渋谷区"
             }
@@ -168,7 +161,6 @@ class MemberServiceImplSTest {
                         it.memberName == "会員NAME" &&
                         it.role == "ROLE_GENERAL" &&
                         it.birthday == new Date("1989/10/13") &&
-                        it.age == 31 &&
                         it.phoneNumber == "012223344" &&
                         it.address == "東京都渋谷区"
             } as MemberDto) >> 0
@@ -193,7 +185,6 @@ class MemberServiceImplSTest {
                 it.memberId = "100000000"
                 it.memberName = "会員NAME"
                 it.birthday = new Date("1989/10/13")
-                it.age = 31
                 it.phoneNumber = "012223344"
                 it.address = "東京都渋谷区"
             }
@@ -206,7 +197,6 @@ class MemberServiceImplSTest {
                 it.memberId == "100000000" &&
                         it.memberName == "会員NAME" &&
                         it.birthday == new Date("1989/10/13") &&
-                        it.age == 31 &&
                         it.phoneNumber == "012223344" &&
                         it.address == "東京都渋谷区"
             } as MemberDto) >> 1
@@ -221,7 +211,6 @@ class MemberServiceImplSTest {
                 it.memberId = "100000000"
                 it.memberName = "会員NAME"
                 it.birthday = new Date("1989/10/13")
-                it.age = 31
                 it.phoneNumber = "012223344"
                 it.address = "東京都渋谷区"
             }
@@ -234,7 +223,6 @@ class MemberServiceImplSTest {
                 it.memberId == "100000000" &&
                         it.memberName == "会員NAME" &&
                         it.birthday == new Date("1989/10/13") &&
-                        it.age == 31 &&
                         it.phoneNumber == "012223344" &&
                         it.address == "東京都渋谷区"
             } as MemberDto) >> 0
