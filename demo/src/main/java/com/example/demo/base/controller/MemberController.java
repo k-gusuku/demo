@@ -238,7 +238,7 @@ public class MemberController extends ControllerCommonProcessing {
     }
 
     // 会員情報削除画面のPOSTメソッド
-    @PostMapping(value = "/memberDetailForMember", params = "delete")
+    @PostMapping(value = "/memberDetailForMember", params = "deleteForMember")
     public String postMemberDelete(@ModelAttribute MemberForm memberForm, Model model) {
         System.out.println("削除ボタンの処理");
         boolean result = memberService.deleteOne(memberForm.getMemberId());
