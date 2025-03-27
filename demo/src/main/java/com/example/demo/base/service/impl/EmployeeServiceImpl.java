@@ -26,6 +26,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Qualifier("EmployeeDaoImpl")
     // チェリーピック①
     private final EmployeeDao employeeDao;
+    // チェリーピック②
     private final EmployeeJdbc employeeJdbc;
     private final PasswordEncoder passwordEncoder;
 
