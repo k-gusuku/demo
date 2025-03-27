@@ -24,6 +24,7 @@ import java.util.List;
 public class EmployeeServiceImpl implements EmployeeService {
 
     @Qualifier("EmployeeDaoImpl")
+    // チェリーピック①
     private final EmployeeDao employeeDao;
     private final EmployeeJdbc employeeJdbc;
     private final PasswordEncoder passwordEncoder;
