@@ -28,6 +28,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     private final EmployeeDao employeeDao;
     // チェリーピック②
     private final EmployeeJdbc employeeJdbc;
+    // チェリーピック③
     private final PasswordEncoder passwordEncoder;
 
     @Autowired
